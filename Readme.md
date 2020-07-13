@@ -2,9 +2,9 @@
 
 m2m is a client module for machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
 
-The module's API is a FaaS (Function as a Service) also called "serverless" without needing to create your own public server infrastructure. Thus, making it easy for everyone to create applications in telematics, telemetry, IoT, data acquisition, network gateways and other machine-to-machine applications.
+The module's API is a FaaS (Function as a Service) also called "serverless" without needing to create your own public server infrastructure. Thus, making it easy for everyone to create applications for telematics, automation, IoT, data acquisition, network gateways and other machine-to-machine applications.
 
-Each user can create multiple client applications accessing multiple remote devices through its user assigned device/server *id's*. Communications between client and device applications are encrypted using TLS protocol.  Access to remote devices/servers is restricted to authenticated and authorized users only.
+Each user can instantly provision multiple remote devices/servers accessible through its user assigned device/server *id's* and create multiple client applications. Communications between client and device applications are encrypted using TLS protocol. Access to remote devices/servers is restricted to authenticated and authorized users only.
 
 To use the m2m client module, user must create an account and register their devices with [node-m2m](https://www.node-m2m.com) server.
 
@@ -27,8 +27,6 @@ To use the m2m client module, user must create an account and register their dev
 8. [Other FaaS functions](#other-faas-functions)
    - [Client request to get all available remote devices](#get-all-devices)
    - [Client request to get each device resources setup](#device-setup)
-
-
 
 
 ## Supported Devices <a name="supported-devices"></a>
@@ -90,14 +88,12 @@ device.connect(function(err, result){
     device.setChannel('random', function(err, data){
       if(err) return console.error('setData random error:', err.message);
 
-      data.value =   Math.floor(( Math.random() * 100) + 25);
-      // or
-      data.result =   Math.floor(( Math.random() * 100) + 25);
-      console.log('random value', data.result);
+      let value =   Math.floor(( Math.random() * 100) + 25);
+      data.send(value);
     });
 
     device.setGpio({type:'simulation', mode:'output', pin:33 }, function (err, gpio){
-      if(err) return console.error('output setGpio error:', err.message);
+      if(err) return console.error('setGpio output pin 33 error:', err.message);
 
       console.log('gpio output pin', gpio.pin, 'state', gpio.state);
     });
@@ -109,22 +105,20 @@ Start your device application.
 $ node device.js
 ```
 
-The first time you start your application, you will be prompted to provide your credentials.
+The first time you run your application, it will ask you to provide your credentials.
 ```js
 ? Enter your userid (email):
 ? Enter your password:
 ? Enter your security code:
 
 ```
-Enter your credentials.
+The next time you run your application, it will start automatically without asking for your credentials. It will use a saved user token for authentication.
 
-The next time you start your application, you don't need to provide your credentials. It will automatically use your saved user token for authentication.
-
-At anytime you can renew your user token using the command line argument **-r** when you start your application.
+At anytime you can renew your user token using the command line argument **-r** when you restart your application.
 ```js
 $ node device.js -r
 ```
-It will ask you to enter your credentials again. Enter your credentials and your token will be renewed.
+It will ask you to enter your credentials again. Enter your credentials to renew your token.
 
 ### Client Application Setup
 Similar with the remote device setup, create a client project directory and install m2m module.
@@ -143,7 +137,7 @@ client.connect(function(err, result){
 
     console.log('result:', result);
 
-    // create a device object with access to remote device 100
+    // create a local device object with access to remote device 100
     let device = client.accessDevice(100);
 
     // capture 'random' data using a function call
@@ -154,32 +148,26 @@ client.connect(function(err, result){
 
     // capture 'random' data using an event-based method
     // data value will be pushed from the remote device if 'random' data value changes
-    // remote device will scan/poll the data every 5 secs for any value changes
+    // the remote device will scan/poll the data every 5 secs for any value changes
     device.channel('random').watch(function(err, value){
         if(err) return console.error('watch random error:', err.message);
         console.log('watch random value', value); // 97, 101, 115 ...
     });
 
-    // Turn ON pin 33 of the simulated GPIO output
+    // Turn ON gpio output pin 33
     device.gpio({mode:'out', pin:33}).on();
 
-    // Turn OFF pin 33 with 2 secs delay
+    // Turn OFF gpio pin 33 with 2 secs delay
     device.gpio({mode:'out', pin:33}).off(2000);
 
     // or
 
-    // using an optional callback to confirm the state/status of the simulated GPIO output
-    device.gpio({mode:'out', pin:33}).on(function(err, state){
-        if(err) return console.error('output pin 33 ON error:', err.message);
-	    // true, device is ON
-        console.log('remote device output pin 33 ON', state);
-    });
+    // Turn ON gpio output pin 33
+    device.output(35).on();
 
-    device.gpio({mode:'out', pin:33}).off(2000, function(err, state){
-        if(err) return console.error('output pin 33 OFF error:', err.message);
-	    // false, device is OFF
-        console.log('remote device output pin 33 OFF', state);
-    });
+    // Turn OFF gpio pin 33 with 2 secs delay
+     device.output(35).off(2000);
+
 });
 ```
 Start your application.
@@ -229,14 +217,13 @@ device.connect('https://www.node-m2m.com', function(err, result){
 // implicitly connecting to default node-m2m server
 device.connect(function(err, result){
   if(err) return console.error('connect error:', err);
-
   console.log('result:', result);
 
   device.setChannel('temperature', function(err, data){
     if(err) return console.error('set temperature error:', err.message);
 
-    data.result =  i2c.getTemp();
-    console.log('temperature value', data.result);
+    let value =  i2c.getTemp();
+    data.send(value);
   });
 });
 ```
@@ -252,7 +239,6 @@ let client = new m2m.Client();
 
 client.connect(function(err, result){
   if(err) return console.error('connect error:', err);
-
   console.log('result:', result);
 
   let device = client.accessDevice(110);
@@ -260,6 +246,17 @@ client.connect(function(err, result){
   device.channel('temperature').watch(function(err, value){
     if(err) return console.error('temperature error:', err.message);
     console.log('temperature value', value); // 23.51, 23.49, 23.11
+  });
+
+  // or 
+
+  client.accessDevice(110, function (err, device){
+    if(err) return console.error('accessDevice 110 error:', err.message);
+
+    device.channel('temperature').watch(function(err, value){
+      if(err) return console.error('temperature error:', err.message);
+      console.log('temperature value', value); // 23.51, 23.49, 23.11
+    });
   });
 
 });
@@ -276,20 +273,21 @@ let client = new m2m.Client();
 
 client.connect(function(err, result){
   if(err) return console.error('connect error:', err);
-
   console.log('result:', result);
 
   let device = client.accessDevice(110);
 
-  // watch temperature data by scanning/polling it every 15 secs for any value changes
+  // watch temperature data
+  // the remote server will scan/poll it every 15 secs for any value changes
   device.channel('temperature').watch({interval:15000}, function(err, value){
     if(err) return console.error('temperature error:', err.message);
     console.log('temperature value', value); // 23.51, 23.49, 23.11
   });
 
   // unwatch temperature data after 5 minutes
+  // client will stop receiving temperature data from the remote device
   setTimeout(function(){
-    device3.channel('temperature').unwatch();
+    device.channel('temperature').unwatch();
   }, 5*60*1000);
 });
 ```
@@ -310,22 +308,35 @@ const m2m = require('m2m');
 let device = new m2m.Device(120);
 
 device.connect(function(err, result){
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
 
   console.log('result:', result);
 
-  // set pin 11 and 13 as GPIO inputs
-  device.setGpio({mode:'input', pin:[11,13]});
-
-  // or
-
   // set GPIO inputs with a callback to execute any custom logic
-  // callback will be executed if input gpio.pin state changes
-  device.setGpio({mode:'input', pin:[11,13]}, function(err, gpio){
-    if(err) return console.error('input setGpio error:', err.message);
+  // optional callback will be executed if any of the input pin state changes
+  // as triggered by any sensor/switch connected to pin 11 and 13 
+  device.setGpio({mode:'input', pin:[11, 13]}, function(err, gpio){
+    if(err) return console.error('setGpio input error:', err.message);
 
     console.log('input pin', gpio.pin, 'state', gpio.state);
-    // add custom logic here
+    // e.g.
+    // pin 11 is ON 
+    if(gpio.pin === 11 && gpio.state === true ){
+      // execute custom logic here
+    }
+    // pin 11 is OFF 
+    if(gpio.pin === 11 && gpio.state === false ){
+      // execute custom logic here
+    }
+    // pin 13 is ON 
+    if(gpio.pin === 13 && gpio.state === true ){
+      // execute custom logic here
+    }
+    // pin 13 is OFF 
+    if(gpio.pin === 13 && gpio.state === false ){
+      // execute custom logic here
+    }
+
   });
 });
 ```
@@ -340,22 +351,19 @@ const m2m = require('m2m');
 let device = new m2m.Device(130);
 
 device.connect(function(err, result){
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
 
   console.log('result:', result);
 
   device.setGpio({mode:'output', pin:[33,35]});
 
-  // or
-
-  // with a callback to execute any custom logic
-  // callback will be executed if output gpio.pin state changes
-  // as controlled by client applications
+  // optional callback will be executed if any of the output pin state changes
+  // as controlled by the client
   device.setGpio({mode:'output', pin:[33,35]}, function(err, gpio){
-    if(err) return console.error('output setGpio error:', err.message);
+    if(err) return console.error('setGpio output error:', err.message);
 
     console.log('output pin', gpio.pin, 'state', gpio.state);
-    // add custom logic here
+    // add your custom logic here
   });
 });
 ```
@@ -371,7 +379,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-    if(err) return console.error('Connect error:', err);
+    if(err) return console.error('connect error:', err);
     console.log('result:', result);
 
     let device1 = client.accessDevice(120);
@@ -429,7 +437,7 @@ const m2m = require('m2m');
 let device = new m2m.Device(1001);
 
 device.connect((err, result) => {
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
   console.log('result:', result);
   // set pin 40 as digital output to activate the actuator
   device.setGpio({mode:'output', pin:40});
@@ -449,7 +457,7 @@ const client = new m2m.Client();
 let interval;
 
 client.connect((err, result) => {
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
   console.log('result:', result);
 
   // accessing multiple devices using an array object
@@ -475,15 +483,17 @@ client.connect((err, result) => {
 
 function machineControl(devices){
   let t = 0;    // initial output time delay
-  let pin = 40; // actuator output pin
-  devices.forEach((device, id) => {
+  let pin = 40; // actuator gpio output pin
+  devices.forEach((device) => {
     t += 2000;
+    // turn ON device gpio output pin 40
     device.output(pin).on(t, (err, state) => {
       if(err) return console.error('actuator ON err:', err.message);
-      console.log('machine ', id, ' pin ', pin, ' output ON', state);
+      console.log('machine ', device.id, ' pin ', pin, ' output ON', state);
+      // turn OFF device gpio output pin 40
       device.output(pin).off(t + 400, (err, state) => {
         if(err) return console.error('actuator OFF err:', err.message);
-        console.log('machine ', id, ' pin ', pin, ' output OFF', state);
+        console.log('machine ', device.id, ' pin ', pin, ' output OFF', state);
       });
     });
   });
@@ -511,7 +521,7 @@ client.connect(function(err, result){
   server.channel('send-file').sendData( file , function(err, result){
     if(err) return console.error('send-file error:', err.message);
 
-    console.log('send-file', result); // {send: 'success'}
+    console.log('send-file', result); // {result: 'success'}
   });
 
   let mydata = [{name:'Ed'}, {name:'Jim', age:30}, {name:'Kim', age:42, address:'Seoul, South Korea'}];
@@ -519,7 +529,7 @@ client.connect(function(err, result){
   server.channel('send-data').sendData( mydata , function(err, result){
     if(err) return console.error('send-data error:', err.message);
 
-    console.log('send-data', result); // {result: 'success'}
+    console.log('send-data', result); // {data: 'valid'}
   });
 
   let num = 1.2456;
@@ -548,18 +558,24 @@ server.connect(function(err, result){
     fs.writeFile('myFile.txt', file, function (err) {
       if (err) throw err;
       console.log('file has been saved!');
-      // send back a response
-      data.response({send: 'success'});
-      // or
-      data.json({send: 'success'});
+      // send a response
+      data.send({result: 'success'});
     });
   });
 
   server.setChannel('send-data', function(err, data){
     if(err) return console.error('send-data error:', err.message);
 
-    console.log('data.payload', data.payload); // [{name:'Ed'}, {name:'Jim', age:30}, {name:'Kim', age:42, address:'Seoul, South Korea'}];
-    data.json({result: 'success'});
+    // data.payload  [{name:'Ed'}, {name:'Jim', age:30}, {name:'Kim', age:42, address:'Seoul, South Korea'}];
+    console.log('data.payload', data.payload);
+
+    // send a response
+    if(Array.isArray(data.payload)){
+      data.send({data: 'valid'});
+    }
+    else{
+      data.send({data: 'invalid'});
+    } 
   });
 
   server.setChannel('number', function(err, data){
@@ -581,7 +597,7 @@ const m2m = require('m2m');
 const client = new m2m.Client();
 
 client.connect((err, result) => {
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
   console.log('result:', result);
 
   // access server 300 using a callback
@@ -589,15 +605,15 @@ client.connect((err, result) => {
     if(err) return console.error('accessDevice 300 error:', err.message);
 
     // GET method api request
-    server.api('/random').getData((err, result) => {
+    server.api('/random').get((err, result) => {
       if(err) return console.error('/random error:', err.message);
-      console.log('/random value', result); // 24
+      console.log('/random result', result); // 24
     });
 
     // POST method api request
-    server.api('/findData').postData({name:'ed'}, (err, result) => {
+    server.api('/findData').post({name:'ed'}, (err, result) => {
       if(err) return console.error('/findData error:', err.message);
-      console.log('/findData value', result); // {data: 'ok'}
+      console.log('/findData result', result); // {result: 'ok'}
     });
   });
 
@@ -611,17 +627,14 @@ const m2m = require('m2m');
 const server = new m2m.Server(300);
 
 server.connect((err, result) => {
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
   console.log('result:', result);
 
   // GET method api setup
   server.getApi('/random', (err, data) => {
     if(err) return console.error('/random error:', err.message);
-    // set data.value as response
-    data.value = Math.floor(( Math.random() * 100) + 25);
-    console.log('/random', data.value);
-    // or
-    data.response(Math.floor(( Math.random() * 100) + 25));
+
+    data.send(Math.floor(( Math.random() * 100) + 25));
   });
 
   // POST method api setup
@@ -631,9 +644,7 @@ server.connect((err, result) => {
       // received a data.body
       console.log('data.body', data.body); // {name:'ed'}
       // send a response
-      data.json({data: 'ok'});
-      // or
-      data.response({data: 'ok'});
+      data.send({result: 'ok'});
     }, 5000);
   });
 });
@@ -668,7 +679,7 @@ const m2m = require('m2m');
 const client = new m2m.Client();
 
 client.connect(function (err, result) {
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
   console.log('result:', result);
 
   client.setOption({code:{allow:true, filename:'client.js'}, name:'Master App', location:'New York, NY', description:'Main App'});
@@ -685,7 +696,7 @@ const m2m = require('m2m');
 const device = new m2m.Device(1000);
 
 device.connect(function (err, result) {
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
   console.log('result:', result);
 
   // Don't set the name, location and description properties
@@ -731,7 +742,7 @@ const m2m = require('m2m');
 const client = new m2m.Client();
 
 client.connect((err, result) => {
-  if(err) return console.error('Connect error:', err.message);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   // user request to get all registered devices
@@ -755,7 +766,7 @@ const m2m = require('m2m');
 const client = new m2m.Client();
 
 client.connect((err, result) => {
-  if(err) return console.error('Connect error:', err);
+  if(err) return console.error('connect error:', err);
   console.log('result:', result);
 
   client.accessDevice(300, (err, device) => {
