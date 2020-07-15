@@ -2,11 +2,11 @@
 
 m2m is a client module for machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
 
-The module's API is a FaaS (Function as a Service) also called "serverless" without needing to create your own public server infrastructure. Thus, making it easy for everyone to create applications for telematics, automation, IoT, data acquisition, network gateways and other machine-to-machine applications.
+The module's API is a FaaS (Function as a Service) also called "serverless" without needing to create your own public server infrastructure making it easy for everyone to create applications for telematics, automation, IoT, data acquisition, network gateways and other machine-to-machine applications.
 
-Each user can instantly provision multiple remote devices/servers accessible through its user assigned device/server *id's* and create multiple client applications. Communications between client and device applications are encrypted using TLS protocol. Access to remote devices/servers is restricted to authenticated and authorized users only.
+Each user can instantly provision multiple remote devices/servers accessible through its user assigned device/server *id's* and create multiple client applications that will communicate and access the resources available for each remote device. Communications between client and device applications are encrypted using TLS protocol. Access to remote devices/servers is restricted to authenticated and authorized users only.
 
-To use the m2m client module, user must create an account and register their devices with [node-m2m](https://www.node-m2m.com) server.
+To use this module, user must create an account and register their devices with [node-m2m](https://www.node-m2m.com) server.
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
@@ -248,7 +248,7 @@ client.connect(function(err, result){
     console.log('temperature value', value); // 23.51, 23.49, 23.11
   });
 
-  // or 
+  // or
 
   client.accessDevice(110, function (err, device){
     if(err) return console.error('accessDevice 110 error:', err.message);
@@ -314,28 +314,12 @@ device.connect(function(err, result){
 
   // set GPIO inputs with a callback to execute any custom logic
   // optional callback will be executed if any of the input pin state changes
-  // as triggered by any sensor/switch connected to pin 11 and 13 
+  // as triggered by any sensor/switch connected to pin 11 and 13
   device.setGpio({mode:'input', pin:[11, 13]}, function(err, gpio){
     if(err) return console.error('setGpio input error:', err.message);
 
     console.log('input pin', gpio.pin, 'state', gpio.state);
-    // e.g.
-    // pin 11 is ON 
-    if(gpio.pin === 11 && gpio.state === true ){
-      // execute custom logic here
-    }
-    // pin 11 is OFF 
-    if(gpio.pin === 11 && gpio.state === false ){
-      // execute custom logic here
-    }
-    // pin 13 is ON 
-    if(gpio.pin === 13 && gpio.state === true ){
-      // execute custom logic here
-    }
-    // pin 13 is OFF 
-    if(gpio.pin === 13 && gpio.state === false ){
-      // execute custom logic here
-    }
+    // add your custom logic here
 
   });
 });
@@ -355,15 +339,31 @@ device.connect(function(err, result){
 
   console.log('result:', result);
 
-  device.setGpio({mode:'output', pin:[33,35]});
-
-  // optional callback will be executed if any of the output pin state changes
-  // as controlled by the client
-  device.setGpio({mode:'output', pin:[33,35]}, function(err, gpio){
+  // set gpio with an optional callback, it will be executed
+  // if any of the output pin state changes as controlled by the client
+  device.setGpio({mode:'output', pin:[33, 35]}, function(err, gpio){
     if(err) return console.error('setGpio output error:', err.message);
 
-    console.log('output pin', gpio.pin, 'state', gpio.state);
-    // add your custom logic here
+    // pin 33 is ON
+    if(gpio.pin === 33 && gpio.state === true ){
+      console.log('logic 1', 'input pin', gpio.pin, 'state', gpio.state);
+      // execute custom logic here
+    }
+    // pin 33 is OFF
+    if(gpio.pin === 33 && gpio.state === false ){
+      console.log('logic 2', 'input pin', gpio.pin, 'state', gpio.state);
+      // execute custom logic here
+    }
+    // pin 35 is ON
+    if(gpio.pin === 35 && gpio.state === true ){
+      console.log('logic 3', 'input pin', gpio.pin, 'state', gpio.state);
+      // execute custom logic here
+    }
+    // pin 35 is OFF
+    if(gpio.pin === 35 && gpio.state === false ){
+      console.log('logic 4', 'input pin', gpio.pin, 'state', gpio.state);
+      // execute custom logic here
+    }
   });
 });
 ```
@@ -386,35 +386,29 @@ client.connect(function(err, result){
     let device2 = client.accessDevice(130);
 
     // using gpio() method for gpio control
-    device1.gpio({mode:'in', pin:13}).getState(function(err, state){
+    device1.gpio({mode:'in', pin:13}).watch(function(err, state){
       if(err) return console.error('getState pin 13 error:', err.message);
       console.log('device1 input 13 state', state);
 
       if(state){
-        // turn ON device2 output pin 33 immediately
         device2.gpio({mode:'out', pin:33}).on();
-        // turn OFF device2 output pin 33 with a time delay of 2 secs
-        device2.gpio({mode:'out', pin:33}).off(2000);
+      }
+      else{
+        device2.gpio({mode:'out', pin:33}).off();
       }
     });
 
-    // using input()/in() or output()/out() method for gpio control
+    // using in/input() or out/output() method for gpio control
     device1.in(11).watch(function(err, state){
       if(err) return console.error('watch pin 11 error:', err.message);
       console.log('device1 input 11 state', state);
 
       if(state){
         device2.out(35).off();
-        return device2.out(33).on(1000);
       }
-      device2.out(35).on(function(err, state){
-        if(err) return console.error('device2 pin 35 ON state err:', err.message);
-        console.log('device2 pin 35 ON state', state);
-      });
-      device2.out(33).off(1000, function(err, state){
-        if(err) return console.error('device2 pin 33 OFF state err:', err.message);
-        console.log('device2 pin 33 OFF state', state);
-      });
+      else{
+        device2.out(35).on();
+      }
     });
 });
 ```
@@ -507,6 +501,7 @@ function machineControl(devices){
 #### Client
 ```js
 const m2m = require('m2m');
+const fs = require('fs');
 
 let client = new m2m.Client();
 
@@ -543,6 +538,7 @@ client.connect(function(err, result){
 #### Device/Server
 ```js
 const m2m = require('m2m');
+const fs = require('fs');
 
 let server = new m2m.Device(500);
 
@@ -575,7 +571,7 @@ server.connect(function(err, result){
     }
     else{
       data.send({data: 'invalid'});
-    } 
+    }
   });
 
   server.setChannel('number', function(err, data){

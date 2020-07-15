@@ -1,0 +1,56 @@
+{
+  "name": "m2m",
+  "version": "1.2.8",
+  "description": "m2m is a client module for machine-to-machine communication system framework node-m2m.",
+  "dependencies": {
+    "ws": "^7.3.1",
+    "inquirer": "^7.1.0",
+    "colors": "^1.4.0",
+    "nodemon": "^2.0.4"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "sinon": "^9.0.2"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "^8.0.0"
+  },
+  "main": "index.js",
+  "scripts":{
+    "test": "nyc --reporter=html --reporter=text mocha --throw-deprecation test/*.test.js"
+  },
+  "homepage": "https://github.com/Node-M2M/m2m",
+  "bugs": "https://github.com/Node-M2M/m2m/issues",
+  "repository": "Node-M2M/m2m",
+  "author": {
+    "name": "Ed Alegrid",
+    "email": "ealegrid@node-m2m.com"
+  },
+  "keywords": [
+    "bcm2835",
+    "gpio",
+    "pi",
+    "raspberry",
+    "raspberrypi",
+    "raspberry pi",
+    "raspberry pi 3",
+    "rpi",
+    "rpio",
+    "onoff",
+    "pwm",
+    "i2c",
+    "spi",
+    "m2m",
+    "iot",
+    "telematics",
+    "telemetry",
+    "SCADA",
+    "remote control",
+    "node-m2m",
+    "machine-to-machine",
+    "industrial control system"
+  ]
+}
+

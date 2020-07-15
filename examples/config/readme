@@ -1,0 +1,35 @@
+=======================================================
+
+  Browser Interaction with Client/Device applications
+
+=======================================================
+
+Node-M2M uses nodemon to restart client/device applications during node-m2m update, application code update, 
+remote command restarting, etc. 
+
+You can add the following section in your project's package.json as a basic auto restart configuration. 
+
+  "scripts": {
+    "start": "nodemon client.js --delay 2000ms"
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "restartable": "rs",
+    "ignore": [".git", "public"],
+    "ignoreRoot": [".git", "public"],
+    "execMap": {"js": "node"},
+    "watch": ["node_modules/m2m/mon"],
+    "env": {"NODE_ENV": "development"},
+    "ext": "js,json"
+  }
+
+
+Please check the corresponding client/device folders for an actual example of package.json for client/device application.
+Just change the application filename from the 'start' property with the actual filename of your application.
+
+For further details, please check nodemon documentation on how to configure nodemon along with npm package.json.
+
+
+
+
+
