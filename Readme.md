@@ -2,11 +2,11 @@
 
 m2m is a client module for machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
 
-The module's API is a FaaS (Function as a Service) also called "serverless" without needing to create your own public server infrastructure making it easy for everyone to create applications for telematics, automation, IoT, data acquisition, network gateways and other machine-to-machine applications.
+The module's API is a FaaS (Function as a Service) also called "serverless" without needing to create your own public server infrastructure making it easy for everyone to create applications for telematics, process automation, IoT, data acquisition, workflow orchestration, network gateways and other machine-to-machine application solutions.
 
-Each user can instantly provision multiple remote devices/servers accessible through its user assigned device/server *id's* and create multiple client applications that will communicate and access the resources available for each remote device. Communications between client and device applications are encrypted using TLS protocol. Access to remote devices/servers is restricted to authenticated and authorized users only.
+Each user can instantly provision multiple remote devices/servers accessible through its user assigned device *id's* and create multiple client applications that will communicate and access the resources available from your remote devices. Communications between client and device applications are encrypted using TLS protocol. Access to remote devices/servers is restricted to authenticated and authorized users only.
 
-To use this module, user must create an account and register their devices with [node-m2m](https://www.node-m2m.com) server.
+To use this module, user must create an account and register their devices with [node-m2m](https://www.node-m2m.com).
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
@@ -22,7 +22,7 @@ To use this module, user must create an account and register their devices with 
    - [Example 4 - Sending Data to Remote Device/Server](#example4)
 6. [Http REST API Simulation](#http-rest-api-simulation)
 7. [Browser Interaction](#browser-interaction)
-   - [Application Online Code Editing](#online-code-editing)
+   - [Online Code Editing](#online-code-editing)
    - [Restarting Application or Auto Restart Setup](#auto-restart-setup)
 8. [Other FaaS functions](#other-faas-functions)
    - [Client request to get all available remote devices](#get-all-devices)
@@ -31,7 +31,7 @@ To use this module, user must create an account and register their devices with 
 
 ## Supported Devices <a name="supported-devices"></a>
 
-* Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+ (generally all 40-pin models only)
+* Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+ (generally all 40-pin models)
 * Linux Computer
 * Windows PC
 * Mac Computer
@@ -56,7 +56,7 @@ $ npm install array-gpio
 
 For this quick tour, we will use two computers communicating with each other using the internet.
 
-One computer will act as the *remote device* that will generate random numbers and simulate a GPIO output using pin 33. It is essentially a basic server providing services such as generating random numbers and simulated gpio output.
+One computer will act as the *remote device* that will generate random numbers and simulate a GPIO output using pin 33.
 
 The other computer will host a *client application* that will access the random numbers and control the GPIO output using a console.
 
@@ -67,7 +67,7 @@ Before you start, create an account and register your remote device with node-m2
 
 ### Remote Device Setup
 
-Create a device project directory and install m2m module.
+Create a device project directory and install m2m.
 ```js
 $ npm install m2m
 ```
@@ -76,7 +76,7 @@ Create the file below as device.js within your device project directory.
 const m2m = require('m2m');
 
 // create a device object with a device id of 100
-// this id must must be registered with node-m2m server
+// this id must must be registered with node-m2m
 let device = new m2m.Device(100);
 
 // authenticate and connect with node-m2m server
@@ -105,7 +105,7 @@ Start your device application.
 $ node device.js
 ```
 
-The first time you run your application, it will ask you to provide your credentials.
+The first time you run your application, it will ask for your credentials.
 ```js
 ? Enter your userid (email):
 ? Enter your password:
@@ -121,7 +121,7 @@ $ node device.js -r
 It will ask you to enter your credentials again. Enter your credentials to renew your token.
 
 ### Client Application Setup
-Similar with the remote device setup, create a client project directory and install m2m module.
+Similar with the remote device setup, create a client project directory and install m2m.
 ```js
 $ npm install m2m
 ```
@@ -163,10 +163,10 @@ client.connect(function(err, result){
     // or
 
     // Turn ON gpio output pin 33
-    device.output(35).on();
+    device.output(33).on();
 
     // Turn OFF gpio pin 33 with 2 secs delay
-     device.output(35).off(2000);
+     device.output(33).off(2000);
 
 });
 ```
@@ -176,7 +176,7 @@ $ node client.js or node client.js -r
 ```
 Similar with remote device setup, you will be prompted to enter your credentials.
 
-You should get an output result as shown below (random values will be differrent) .
+You should get a similar output result as shown below.
 ```js
 ...
 random value 97
@@ -347,22 +347,22 @@ device.connect(function(err, result){
     // pin 33 is ON
     if(gpio.pin === 33 && gpio.state === true ){
       console.log('logic 1', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic here
+      // execute custom logic 1 here
     }
     // pin 33 is OFF
     if(gpio.pin === 33 && gpio.state === false ){
       console.log('logic 2', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic here
+      // execute custom logic 2 here
     }
     // pin 35 is ON
     if(gpio.pin === 35 && gpio.state === true ){
       console.log('logic 3', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic here
+      // execute custom logic 3 here
     }
     // pin 35 is OFF
     if(gpio.pin === 35 && gpio.state === false ){
       console.log('logic 4', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic here
+      // execute custom logic 4 here
     }
   });
 });
@@ -387,7 +387,7 @@ client.connect(function(err, result){
 
     // using gpio() method for gpio control
     device1.gpio({mode:'in', pin:13}).watch(function(err, state){
-      if(err) return console.error('getState pin 13 error:', err.message);
+      if(err) return console.error('watch pin 13 error:', err.message);
       console.log('device1 input 13 state', state);
 
       if(state){
