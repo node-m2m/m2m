@@ -1,7 +1,7 @@
 var assert = require('assert');
 var sinon = require('sinon');
 
-const m2m = require('..');
+const m2m = require('m2m');
 const c = require('../lib/client.js');
 
 let id1 = null;
