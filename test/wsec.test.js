@@ -30,22 +30,17 @@ describe('\nSecurity object test ...', function () {
 		      done();count++;
         }
 		  };
-
       let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
   		c.setTestOption(true, spl);
-   
       let m2m = {id:100, _pid:'d-c', d:true, start:true, src:'device',reg:true};
- 
       let args = null; 
-
       c.sec.m2mRestart(args, m2m, cb);
    
     });
   });
   describe('Using sec.m2mRestart() - 1st registration (string args & no tk) ...', function () {
     it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
- 
-      let count = 0; 
+       let count = 0; 
       let cb = function(err, result){
 		    if(err) throw err;
 		    assert.strictEqual(result, 'success');
@@ -53,13 +48,9 @@ describe('\nSecurity object test ...', function () {
 		      done();count++;
         }
 		  };
- 
       let m2m = {id:100, _pid:'d-c', d:true, start:true, src:'device',	reg:true};
-
       let args = c.defaultNode;
-
       c.sec.m2mRestart(args, m2m, cb);
-   
     });
   });
   describe('Using sec.m2mRestart() - 1st registration (no args & corrupted tk) ...', function () {

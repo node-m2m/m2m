@@ -1529,7 +1529,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.status w/o or invalid options...', function () {
@@ -1543,7 +1542,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.restart ...', function () {
@@ -1557,7 +1555,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode but w/ options = {} ...', function () {
@@ -1571,7 +1568,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode ...', function () {
@@ -1592,7 +1588,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode w/o filename ...', function () {
@@ -1613,7 +1608,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode w/o appData ...', function () {
@@ -1634,7 +1628,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode ...', function () {
@@ -1655,7 +1648,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode but w/ different rxd.id ...', function () {
@@ -1677,7 +1669,6 @@ describe('\nWebsocket object test ...', function () {
 			assert.strictEqual(e.message, 'invalid id');
 			done(); 
     }
-       
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode but w/ options = {} ...', function () {
@@ -1691,7 +1682,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.getRegisteredDevices ...', function () {
@@ -1712,7 +1702,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
 	describe('Using websocket.ClientRxData(rxd) method w/ rxd.getRegisteredDevices (2nd attempt) ...', function () {
@@ -1733,7 +1722,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.exit ...', function () {
@@ -1747,7 +1735,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ no rxd.error ...', function () {
@@ -1761,7 +1748,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
-   
     });
   });
   describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) method w/ client ...', function () {
@@ -1789,7 +1775,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
 		}
 		done(); 
-   
     });
   });
   describe('Using websocket.refreshConnection() method w/ client ...', function () {
@@ -1806,7 +1791,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
 	  }
 		done(); 
-   
     });
   });
   describe('Using websocket.refreshConnection() method w/ device ...', function () {
@@ -1823,7 +1807,6 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
 	  }
 		done(); 
-   
     });
   });
 });

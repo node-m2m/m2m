@@ -962,15 +962,11 @@ describe('\nCreating a device object ...', function () {
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
       }
-    
       let spl = {id:230, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
-
       const device = new m2m.Device(230);
       assert.strictEqual( typeof device, 'object' );
-
       let eventName = 'gpio-Output' + device.id + 35;
-
       let count = 0; 
       let callback = function (err, gpio){
         if(count === 0){
@@ -978,7 +974,6 @@ describe('\nCreating a device object ...', function () {
         	done();count++;
         }
       }
-
       device.setGpio({mode:'output', pin:[33, 35], id:device.id}, callback );
       c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:35, state:false});
     });
@@ -1070,7 +1065,6 @@ describe('\nCreating a device object ...', function () {
 				assert.strictEqual(e.message, 'Sorry, gpio control is not available on your device');
         //done();
       }
-
       try{   
       	device.setGpio({mode:'output', pin:55, type:'int'}, callback );
       }
@@ -1078,8 +1072,7 @@ describe('\nCreating a device object ...', function () {
 				assert.strictEqual(e.message, 'Sorry, gpio control is not available on your device');
         //done();
       }
- 
-      try{   
+       try{   
       	device.setGpio({mode:'input', pin:55, type:'internal'}, callback );
       }
       catch(e){
