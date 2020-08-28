@@ -843,7 +843,6 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create a non-event input w/ valid rcvd data', function () {
     it('should set multiple gpio inputs', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -872,7 +871,6 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an event-based input w/ valid rcvd data', function () {
     it('should set multiple gpio inputs', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -901,7 +899,6 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an event-based input w/ error in rcvd data', function () {
     it('should invoke callback w/ error', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -929,7 +926,6 @@ describe('\nCreating a device object ...', function () {
   });
 	describe('Using setGpio() method in Raspberry Pi to create an output w/ error in rcvd data', function () {
     it('should invoke callback w/ error', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -957,7 +953,6 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd  get "state" data', function () {
     it('should invoke callback w/o error', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -980,12 +975,11 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd "on" data', function () {
     it('should invoke callback w/o error', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
       }
-    
+
       let spl = {id:235, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
 
@@ -1008,7 +1002,6 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd "off" data', function () {
     it('should invoke callback w/o error', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -1036,7 +1029,6 @@ describe('\nCreating a device object ...', function () {
   });
 	describe('Using setGpio() method in non-raspberry pi sytem', function () {
     it('should throw an invalid arguments or feature error', function (done) {
-
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
