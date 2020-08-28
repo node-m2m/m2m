@@ -1649,7 +1649,7 @@ describe('\nCreating a client object ...', function () {
     	});
   	});
  	});
-  describe('create a device object w/ setupInfo() method w/o callback', function () {
+  /*describe('create a device object w/ setupInfo() method w/o callback', function () {
     it('It should throw an error', function (done) {
 
       const client = new m2m.Client();
@@ -1668,5 +1668,5 @@ describe('\nCreating a client object ...', function () {
 
     	});
   	});
- 	});
+ 	});*/
 });
