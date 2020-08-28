@@ -1554,28 +1554,29 @@ describe('\nCreating a client object ...', function () {
  	});
   it('It should proceed w/o an error if invoke again', function (done) {
     let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], _pid:'r-a', c:true, app:true, src:'client', reg:true};
+
     c.setTestOption(true, spl);
 
     const client = new m2m.Client();
 
-		let count = 0;
+    let count = 0;
     client.connect(function(err, result){
       client.getDevices(function(err, devices){
-				if(err) throw err;
-				assert.strictEqual(typeof devices, 'object');
+        if(err) throw err;
+        assert.strictEqual(typeof devices, 'object');
         assert.strictEqual(devices[0], 100);
         if(count === 0){
-        	done();count++;
-				}
-			});	
-	    let device = client.accessDevice(100);
-    	try{
-	    	c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', _pid:'getDevices', devices:[100, 200]});
-			}
-			catch(e){
-				throw 'invalid test';
-	    }
- 		});
+        done();count++;
+        }
+      });	
+      let device = client.accessDevice(100);
+      try{
+      c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', _pid:'getDevices', devices:[100, 200]});
+      }
+      catch(e){
+      throw 'invalid test';
+      }
+    });
   });
   describe('create a device object w/ setupInfo() method w/o an error', function () {
     it('It should return w/o an error object', function (done) {
