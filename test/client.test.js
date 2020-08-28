@@ -1507,22 +1507,21 @@ describe('\nCreating a client object ...', function () {
       client.connect(function(err, result){
         client.getDevices(function(err, devices){
           if(err) {
-            assert.strictEqual(devices, null);
-            assert.strictEqual(err.message, 'invalid devices');
-          	done();
+          assert.strictEqual(devices, null);
+          assert.strictEqual(err.message, 'invalid devices');
+          done();
           }
-					//done();
-				});	
-  
-      	try{
-		    	c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', error:'invalid devices', _pid:'getDevices', devices:[100, 200]});
-				}
-				catch(e){
-					throw 'invalid test';
-		    }
+        });	
 
-    	});
-  	});
+        try{
+        c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', error:'invalid devices', _pid:'getDevices', devices:[100, 200]});
+        }
+        catch(e){
+        throw 'invalid test';
+        }
+
+      });
+    });
  	});
   describe('create a device object w/ getDevices method', function () {
     it('It should return the available remote devices w/o error', function (done) {
@@ -1535,25 +1534,23 @@ describe('\nCreating a client object ...', function () {
       let count = 0;
       client.connect(function(err, result){
         client.getDevices(function(err, devices){
-					if(err) return console.error('getDevices err:', err);
-					console.log('devices', devices);
+          if(err) return console.error('getDevices err:', err);
+          console.log('devices', devices);
           assert.strictEqual(typeof devices, 'object');
           assert.strictEqual(devices[0], 100);
           if(count === 0){
-          	done();count++;
-					}
-				});	
-
-		    let device = client.accessDevice(100);
-   
-      	try{
-		    	c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', _pid:'getDevices', devices:[100, 200]});
-				}
-				catch(e){
-					throw 'invalid test';
-		    }
-    	});
-  	});
+          done();count++;
+          }
+        });	
+        let device = client.accessDevice(100);
+        try{
+        c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', _pid:'getDevices', devices:[100, 200]});
+        }
+        catch(e){
+        throw 'invalid test';
+        }
+      });
+    });
  	});
   it('It should proceed w/o an error if invoke again', function (done) {
     let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], _pid:'r-a', c:true, app:true, src:'client', reg:true};
@@ -1586,39 +1583,39 @@ describe('\nCreating a client object ...', function () {
       c.setTestOption(true, spl);
       const client = new m2m.Client();
       client.connect(function(err, result){
-		    let device = client.accessDevice(200);
+        let device = client.accessDevice(200);
         device.setupInfo(function(err, data){
           if(err) throw err;
           assert.strictEqual(data, true);
           done();
-    		});
-      	try{
-		    	c.emitter.emit(device.id + 'setupData', {id:device.id, _pid:'setupData', setupData:true});
-				}
-				catch(e){
-					throw 'invalid test';
-		    }
-    	});
-  	});
+        });
+        try{
+        c.emitter.emit(device.id + 'setupData', {id:device.id, _pid:'setupData', setupData:true});
+        }
+        catch(e){
+        throw 'invalid test';
+        }
+      });
+    });
  	});
   describe('create a device object w/ setupInfo() method w/ error', function () {
     it('It should return w/ an error object', function (done) {
       const client = new m2m.Client();
       client.connect(function(err, result){
-		    let device = client.accessDevice(200);
+        let device = client.accessDevice(200);
         device.setupInfo(function(err, data){
           if(err){
-            assert.strictEqual(data, null);
-            assert.strictEqual(err.message, 'invalid devices');
-           	done();
+          assert.strictEqual(data, null);
+          assert.strictEqual(err.message, 'invalid devices');
+          done();
           }
-    		});
-       	try{
-		    	c.emitter.emit(device.id + 'setupData', {id:device.id, error:'invalid devices', _pid:'setupData', setupData:true, devices:[100, 200]});
-				}
-				catch(e){
-					throw 'invalid test';
-		    }
+        });
+        try{
+          c.emitter.emit(device.id + 'setupData', {id:device.id, error:'invalid devices', _pid:'setupData', setupData:true, devices:[100, 200]});
+        }
+        catch(e){
+          throw 'invalid test';
+        }
     	});
   	});
  	});
@@ -1626,15 +1623,15 @@ describe('\nCreating a client object ...', function () {
     it('It should throw an error', function (done) {
       const client = new m2m.Client();
       client.connect(function(err, result){
-		    let device = client.accessDevice(200);
-      	try{
+        let device = client.accessDevice(200);
+        try{
           device.setupInfo();
-				}
-				catch(e){
+        }
+        catch(e){
           assert.strictEqual(e.message, 'callback is required');
-					done();
-		    }
-    	});
-  	});
- 	});
+          done();
+        }
+      });
+    });
+  });
 });
