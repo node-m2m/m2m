@@ -13,7 +13,7 @@ client.connect(function(err, result){
     let remoteDevice = client.accessDevice(100); 
 
     // using a simple function call data capture
-    remoteDevice.getData('random', function(err, value){
+    remoteDevice.channel('random').getData(function(err, value){
         if(err) return console.error('getData random error:', err.message);
 
         console.log('getData random value', value); // 97
@@ -23,7 +23,7 @@ client.connect(function(err, result){
     // from the remote device if 'random' data value changes 
     // 'random' data will be scanned/polled every 5 secs 
     // by the remote device for any value changes 
-    remoteDevice.watch('random', function(err, value){
+    remoteDevice.channel('random').watch(function(err, value){
         if(err) return console.error('watch random error:', err.message);
 
         console.log('watch random value', value); // 97, 101, 115 ... 
