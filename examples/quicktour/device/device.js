@@ -14,8 +14,9 @@ device.connect(function(err, result){
     device.setChannel('random', function(err, data){
       if(err) return console.error('channel random error:', err.message); 
  
-      data.value =   Math.floor(( Math.random() * 100) + 25); 
-      console.log('random value', data.value); 
+      let rn =   Math.floor(( Math.random() * 100) + 25); 
+      console.log('random number', rn); 
+      data.send(rn);
     });
 
      // Set GPIO pin 33 as simulated output as indicated by the "type" property
