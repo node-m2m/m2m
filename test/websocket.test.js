@@ -4,10 +4,9 @@ const assert = require('assert');
 const c = require('../lib/client.js');
 
 describe('\nWebsocket object test ...', function () {
-  describe('Check reg value using .init() and .initCheck() methods', function () {
+  /*describe('Check reg value using .init() and .initCheck() methods', function () {
     it('should throw an error if reg is false', function (done) {
 
-      //let m2m = {id:'90cc8ed8', appId:'90cc8ed8', _pid:'a-c', c:true, app:true, src:'client', reg:true};
       let spl = {
 				id: '12ab8c91',
 				appId: '12ab8c91',
@@ -33,13 +32,12 @@ describe('\nWebsocket object test ...', function () {
 				assert.strictEqual(e.message, 'process terminated');
 		    done();
       }  
-
     });
-  });
+
+  });*/
   describe('Quickly invoke public websocket methods', function () {
     it('should complete the process w/o error', function (done) {
 
-      //let m2m = {id:'90cc8ed8', appId:'90cc8ed8', _pid:'a-c', c:true, app:true, src:'client', reg:true};
       let spl = {
 				id: '12ab8c91',
 				appId: '12ab8c91',
@@ -1223,7 +1221,8 @@ describe('\nWebsocket object test ...', function () {
     it('It should not update the code ...', function (done) {
 
     let options = {
-      //code: { allow: true, filename: 'test/device.js' },
+      // options w/o filename 
+      /*code: { allow: true, filename: 'test/device.js' },*/
       code: { allow: true },
 			name: 'Master App',
 			location: 'Boston, MA',
@@ -1231,21 +1230,6 @@ describe('\nWebsocket object test ...', function () {
     };
 
     let rxd = {id:100, updateCode:true, src:'browser', dst:'device', options:options, appData:'test'};
-    try{
-    	c.websocket.DeviceRxData(rxd);
-    }
-		catch(e){
-			throw 'invalid test';
-    }
-    done();  
-   
-    });
-  });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.updateCode but w/ options = {} ...', function () {
-    it('It should not update the code ...', function (done) {
-
-    let rxd = {id:100, src:'browser', dst:'device', updateCode:true, options:{}}; 
-
     try{
     	c.websocket.DeviceRxData(rxd);
     }
@@ -1298,10 +1282,28 @@ describe('\nWebsocket object test ...', function () {
   describe('Using websocket.DeviceRxData(rxd) method w/ rxd.enable = true ...', function () {
     it('It should start watching again the device channel data or input pins ...', function (done) {
 
-    let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+    let spl = {id:310, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 		c.setTestOption(true, spl);
 
-    let rxd = {id:300, enable:true, src:'browser', dst:'device'};
+    let rxd = {id:310, enable:true, src:'browser', dst:'device'};
+
+    try{  
+    	c.websocket.DeviceRxData(rxd);
+    }
+    catch(e){
+      throw 'invalid test';
+    }
+    done();
+       
+    });
+  });
+  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.input = true ...', function () {
+    it('It should start watching again the device channel data or input pins ...', function (done) {
+
+    let spl = {id:310, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+		c.setTestOption(true, spl);
+
+    let rxd = {id:310, input:true, event:true, src:'browser', dst:'device'};
 
     try{  
     	c.websocket.DeviceRxData(rxd);
@@ -1331,7 +1333,6 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-
   // **clientRxData**
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.channel ...', function () {
     it('It should process/start watching the channel data ...', function (done) {
@@ -1495,6 +1496,7 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
+  // this is the same w/ client.test  
 	/*describe('Using websocket.ClientRxData(rxd) method w/ rxd.getDevices ...', function () {
     it('It should process the data accordingly...', function (done) {
 
@@ -1529,6 +1531,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.status w/o or invalid options...', function () {
@@ -1542,6 +1545,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.restart ...', function () {
@@ -1555,6 +1559,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode but w/ options = {} ...', function () {
@@ -1568,6 +1573,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode ...', function () {
@@ -1588,6 +1594,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode w/o filename ...', function () {
@@ -1608,6 +1615,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode w/o appData ...', function () {
@@ -1628,6 +1636,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode ...', function () {
@@ -1648,6 +1657,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode but w/ different rxd.id ...', function () {
@@ -1669,9 +1679,10 @@ describe('\nWebsocket object test ...', function () {
 			assert.strictEqual(e.message, 'invalid id');
 			done(); 
     }
+       
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode but w/ options = {} ...', function () {
+  describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode and w/ options = {} ...', function () {
     it('It should not upload the code ...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'uploadCode', uploadCode:true, options:{}};
@@ -1682,6 +1693,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.getRegisteredDevices ...', function () {
@@ -1702,6 +1714,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
 	describe('Using websocket.ClientRxData(rxd) method w/ rxd.getRegisteredDevices (2nd attempt) ...', function () {
@@ -1722,6 +1735,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ rxd.exit ...', function () {
@@ -1735,6 +1749,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.ClientRxData(rxd) method w/ no rxd.error ...', function () {
@@ -1748,6 +1763,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
     }
     done(); 
+   
     });
   });
   describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) method w/ client ...', function () {
@@ -1775,6 +1791,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
 		}
 		done(); 
+   
     });
   });
   describe('Using websocket.refreshConnection() method w/ client ...', function () {
@@ -1791,6 +1808,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
 	  }
 		done(); 
+   
     });
   });
   describe('Using websocket.refreshConnection() method w/ device ...', function () {
@@ -1807,6 +1825,7 @@ describe('\nWebsocket object test ...', function () {
 			throw 'invalid test';
 	  }
 		done(); 
+   
     });
   });
 });

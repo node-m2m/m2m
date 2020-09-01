@@ -471,11 +471,14 @@ describe('\nCreating a device object ...', function () {
 
       let callback = function (err, gpio){
         assert.strictEqual( typeof gpio, 'object' );
+        gpio.setGpioState(gpio.pin, gpio.state);
+        gpio.getGpioState(gpio.pin, gpio.state);
+        gpio.send({pin:gpio.pin, state:true, src:'device', dst:'client'});
         done();
       }
 
       device.setGpio({mode:'output', pin:[33, 35], type:'external' , id:device.id }, callback );
-      c.emitter.emit(eventName, {event:false, id:device.id, output:true, pin:33, state:true});
+      c.emitter.emit(eventName, {event:false, src:'device', dst:'client', id:device.id, output:true, pin:33, state:true});
     });
   });
   describe('should set external gpio inputs w/ invalid mode', function () {
@@ -841,8 +844,109 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:true, src:'browser', dst:'device', id:device.id, name:'test-random', initValue:'109', result:'245' }); 
     });
   });
+  describe('Using setGpio() method in Raspberry Pi to create an input w/ invalid pin', function () {
+    it('should invoke callback w/ error object', function (done) {
+
+      if(os.arch() !== 'arm'){
+        done();
+        return console.log('Sorry, this test module requires a raspberry pi as test device'); 
+      }
+    
+      let spl = {id:231, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+			c.setTestOption(true, spl);
+
+      const device = new m2m.Device(231);
+      assert.strictEqual( typeof device, 'object' );
+         
+      let callback = function (err, gpio){}
+
+      try{
+        device.setGpio({mode:'input', pin:43}, callback );
+      }
+      catch(e){
+        assert.strictEqual( e.message, 'invalid pin' );
+				done();
+      }
+
+    });
+  });
+  describe('Using setGpio() method in Raspberry Pi to create an input w/ valid pin 15', function () {
+    it('should invoke callback w/ gpio object', function (done) {
+
+      if(os.arch() !== 'arm'){
+        done();
+        return console.log('Sorry, this test module requires a raspberry pi as test device'); 
+      }
+    
+      let spl = {id:233, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+			c.setTestOption(true, spl);
+
+      const device = new m2m.Device(233);
+      assert.strictEqual( typeof device, 'object' );
+
+			let eventName = 'gpio-Input' + device.id + 15;
+
+      let count = 0; 
+      let callback = function (err, gpio){
+        if(count === 0){
+					assert.strictEqual( err, null );
+          assert.strictEqual( typeof gpio, 'object' );
+          assert.strictEqual( gpio.state, false );
+	       	done();count++;
+        }
+      }
+
+      try{
+      	device.setGpio({mode:'input', pin:15}, callback );
+      }
+      catch(e){
+        throw 'invalid test'; 
+      }
+
+      c.emitter.emit(eventName, {event:false, id:device.id, input:'state', pin:15, state:false});
+
+    });
+  });
+  describe('Using setGpio() method in Raspberry Pi to create an input w/ valid pin 41', function () {
+    it('should invoke callback w/ error object', function (done) {
+
+      if(os.arch() !== 'arm'){
+        done();
+        return console.log('Sorry, this test module requires a raspberry pi as test device'); 
+      }
+    
+      let spl = {id:233, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+			c.setTestOption(true, spl);
+
+      const device = new m2m.Device(233);
+      assert.strictEqual( typeof device, 'object' );
+
+			let eventName = 'gpio-Input' + device.id + 41;
+
+      let count = 0; 
+      let callback = function (err, gpio){
+        if(count === 0){
+          assert.strictEqual( gpio, null );
+					assert.strictEqual( err.message, 'invalid pin ' + 41 );
+	       	done();count++;
+        }
+      }
+
+      try{
+      	device.setGpio({mode:'input', pin:41}, callback );
+      }
+      catch(e){
+        throw 'invalid test'; 
+      }
+
+      c.emitter.emit(eventName, {event:false, id:device.id, input:'state', pin:41, state:false});
+
+    });
+  });
+
   describe('Using setGpio() method in Raspberry Pi to create a non-event input w/ valid rcvd data', function () {
     it('should set multiple gpio inputs', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -861,7 +965,6 @@ describe('\nCreating a device object ...', function () {
         if(count === 0){
           console.log('gpio', gpio);
         	assert.strictEqual( typeof gpio, 'object' );
-        	assert.strictEqual( gpio.state, gpio.state ? true : false );
           done();count++;
         }
       }
@@ -871,6 +974,7 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an event-based input w/ valid rcvd data', function () {
     it('should set multiple gpio inputs', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -889,7 +993,7 @@ describe('\nCreating a device object ...', function () {
         if(count === 0){
           console.log('gpio', gpio);
         	assert.strictEqual( typeof gpio, 'object' );
-        	assert.strictEqual( gpio.state, gpio.state ? true : false );
+        	//assert.strictEqual( gpio.state, gpio.state ? true : false );
           done();count++;
         }
       }
@@ -899,6 +1003,7 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an event-based input w/ error in rcvd data', function () {
     it('should invoke callback w/ error', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -926,6 +1031,7 @@ describe('\nCreating a device object ...', function () {
   });
 	describe('Using setGpio() method in Raspberry Pi to create an output w/ error in rcvd data', function () {
     it('should invoke callback w/ error', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -951,35 +1057,142 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {error:'invalid test', event:false, id:device.id, output:'state', pin:35, state:true});
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd  get "state" data', function () {
-    it('should invoke callback w/o error', function (done) {
+  /*describe('Using setGpio() method as simulation method w/ valid pin 36', function () {
+    it('should invoke callback w/ gpio object', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
       }
-      let spl = {id:230, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+    
+      let spl = {id:233, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
-      const device = new m2m.Device(230);
+
+      const device = new m2m.Device(233);
       assert.strictEqual( typeof device, 'object' );
-      let eventName = 'gpio-Output' + device.id + 35;
+
+			let eventName = 'gpio-Output' + device.id + 36;
+
       let count = 0; 
       let callback = function (err, gpio){
         if(count === 0){
+					assert.strictEqual( err, null );
+          assert.strictEqual( typeof gpio, 'object' );
           assert.strictEqual( gpio.state, false );
+	       	done();count++;
+        }
+      }
+
+      try{
+      	device.setGpio({mode:'output', pin:36, type:'simulation'}, callback );
+      }
+      catch(e){
+        throw 'invalid test'; 
+      }
+
+      c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:36, state:false});
+
+    });
+  });*/
+  describe('Using setGpio() method in Raspberry Pi to create an output w/ invalid pin 43', function () {
+    it('should invoke callback w/ error object', function (done) {
+
+      if(os.arch() !== 'arm'){
+        done();
+        return console.log('Sorry, this test module requires a raspberry pi as test device'); 
+      }
+    
+      let spl = {id:232, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+			c.setTestOption(true, spl);
+
+      const device = new m2m.Device(232);
+      assert.strictEqual( typeof device, 'object' );
+
+      let eventName = 'gpio-Output' + device.id + 43;
+
+      let callback = function (err, gpio){}
+
+      try{
+      	device.setGpio({mode:'output', pin:43}, callback );
+      }
+      catch(e){
+				assert.strictEqual( e.message, 'invalid pin' );
+        done();
+      }
+      
+    });
+  });
+  describe('Using setGpio() method in Raspberry Pi to create an output w/ invalid pin 41', function () {
+    it('should invoke callback w/ error object', function (done) {
+
+      if(os.arch() !== 'arm'){
+        done();
+        return console.log('Sorry, this test module requires a raspberry pi as test device'); 
+      }
+    
+      let spl = {id:234, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+			c.setTestOption(true, spl);
+
+      const device = new m2m.Device(234);
+      assert.strictEqual( typeof device, 'object' );
+
+			let eventName = 'gpio-Output' + device.id + 41;
+
+      let count = 0; 
+      let callback = function (err, gpio){
+        if(count === 0){
+          assert.strictEqual( gpio, null );
+          assert.strictEqual( err.message, 'invalid pin ' + 41 );
         	done();count++;
         }
       }
+
+      try{
+      	device.setGpio({mode:'output', pin:41}, callback );
+      }
+      catch(e){
+        throw 'invalid test'; 
+      }
+
+      c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:41, state:false});
+
+    });
+  });
+  describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd  get "state" data', function () {
+    it('should invoke callback w/o error', function (done) {
+
+      if(os.arch() !== 'arm'){
+        done();
+        return console.log('Sorry, this test module requires a raspberry pi as test device'); 
+      }
+    
+      let spl = {id:230, _pid:'r-d', d:true, device:true, src:'device', reg:true};
+			c.setTestOption(true, spl);
+
+      const device = new m2m.Device(230);
+      assert.strictEqual( typeof device, 'object' );
+
+      let eventName = 'gpio-Output' + device.id + 35;
+
+      let count = 0; 
+      let callback = function (err, gpio){
+        if(count === 0){
+        	done();count++;
+        }
+      }
+
       device.setGpio({mode:'output', pin:[33, 35], id:device.id}, callback );
       c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:35, state:false});
     });
   });
   describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd "on" data', function () {
     it('should invoke callback w/o error', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
       }
-
+    
       let spl = {id:235, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
 
@@ -1002,6 +1215,7 @@ describe('\nCreating a device object ...', function () {
   });
   describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd "off" data', function () {
     it('should invoke callback w/o error', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -1029,6 +1243,7 @@ describe('\nCreating a device object ...', function () {
   });
 	describe('Using setGpio() method in non-raspberry pi sytem', function () {
     it('should throw an invalid arguments or feature error', function (done) {
+
       if(os.arch() !== 'arm'){
         done();
         return console.log('Sorry, this test module requires a raspberry pi as test device'); 
@@ -1055,16 +1270,16 @@ describe('\nCreating a device object ...', function () {
       }
       catch(e){
 				assert.strictEqual(e.message, 'Sorry, gpio control is not available on your device');
-        //done();
       }
+
       try{   
       	device.setGpio({mode:'output', pin:55, type:'int'}, callback );
       }
       catch(e){
 				assert.strictEqual(e.message, 'Sorry, gpio control is not available on your device');
-        //done();
       }
-       try{   
+ 
+      try{   
       	device.setGpio({mode:'input', pin:55, type:'internal'}, callback );
       }
       catch(e){
