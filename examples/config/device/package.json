@@ -7,9 +7,6 @@
   "engines": {
     "node": ">= 8.0.0"
   },
-  "dependencies": {
-    "m2m": "^1.2.6"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon device.js --delay 2000ms"
