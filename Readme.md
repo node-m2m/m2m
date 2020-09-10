@@ -172,7 +172,7 @@ client.connect(function(err, result){
 ```
 Start your application.
 ```js
-$ node client.js or node client.js -r
+$ node client.js
 ```
 Similar with remote device setup, you will be prompted to enter your credentials.
 
