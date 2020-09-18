@@ -9,7 +9,6 @@ let id2 = null;
 
 fs.mkdir('node_modules/m2m/lib/sec', {recursive:true}, function (err){
 	if(err) throw err;
-	console.log('m2m test directories created');
 	fs.writeFileSync('node_modules/m2m/mon', 'test');
 });
 
@@ -22,7 +21,7 @@ before(() => {
 
 describe('\nStarting m2m ...', function () {
   describe('requiring m2m module', function () {
-    it('should return an object with 4 method properties', function () {
+    it('should return an object with 4 methods', function () {
 
       c.setTestOption(true);
 
@@ -68,7 +67,7 @@ describe('\nCreating a client object ...', function () {
       }
       done();
     });
-    it('should override the constructor option using the .setOption() method', function (done) {
+    it('should override the constructor option using the .setOption()', function (done) {
       let newOptions = {code:{allow:true, filename:'client1.js'}, name:'Test App', location:'New York, NY', description:'New Test App'};
 
       try{
@@ -156,7 +155,7 @@ describe('\nCreating a client object ...', function () {
 	    }
     });
   });
-  describe('create an array device object using an array argument w/ getDevices method', function () {
+  describe('create an array device object using an array argument w/ getDevices', function () {
     it('should return an array object with a length equal to argument.length', function () {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
@@ -283,8 +282,8 @@ describe('\nCreating a client object ...', function () {
       client.connect(callback);
     });
   });
-  describe('Testing local device object property - device.getData()', function () {
-    it('It should throw an error if a callback argument is not provided', function (done) {
+  describe('Test a local device object property - device.getData()', function () {
+    it('should throw an error if a callback argument is not provided', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -300,7 +299,7 @@ describe('\nCreating a client object ...', function () {
       }
       
     });
-    it('It should throw an error if channel argument is not a string', function (done) {
+    it('should throw an error if channel argument is not a string', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -572,7 +571,7 @@ describe('\nCreating a client object ...', function () {
     });
   });
   describe('Test a local device object property - channel().unwatch()', function () {
-    it('It should return the result as true if watch channel name is valid', function (done) {
+    it('should return the result as true if watch channel name is valid', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -588,7 +587,7 @@ describe('\nCreating a client object ...', function () {
         done();
       });
     });
-    it('It should throw an error if watch channel name is invalid', function (done) {
+    it('should throw an error if watch channel name is invalid', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -604,7 +603,7 @@ describe('\nCreating a client object ...', function () {
       });
 
     });
-		it('It should return a valid result if a valid argument is provided', function (done) {
+		it('should return a valid result if a valid argument is provided', function (done) {
 
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
@@ -627,7 +626,7 @@ describe('\nCreating a client object ...', function () {
       }
 
     });
-    it('It should return a valid result if the recvd data is a valid data (value property)', function (done) {
+    it('should return a valid result if the recvd data is a valid data (value property)', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -648,7 +647,7 @@ describe('\nCreating a client object ...', function () {
 				throw 'invalid test';
       }
     });
-    it('It should an error object if the rcvd data has an error', function (done) {
+    it('should an error object if the rcvd data has an error', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -666,8 +665,8 @@ describe('\nCreating a client object ...', function () {
 
     });
   });
-  describe('Testing local device object property - channel().sendData()', function () {
-    it('It should throw an error if the payload argument is not provided', function (done) {
+  describe('Test a local device object property - channel().sendData()', function () {
+    it('should throw an error if the payload argument is not provided', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -682,7 +681,7 @@ describe('\nCreating a client object ...', function () {
         done();
       }
     });
-    it('It should send the data if no callback argument is provided', function (done) {
+    it('should send the data if no callback argument is provided', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
 
@@ -1370,7 +1369,6 @@ describe('\nCreating a client object ...', function () {
 				assert.strictEqual(e.message, 'invalid arguments');
 				done();
       }
-
       c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
 
     });
@@ -1558,8 +1556,8 @@ describe('\nCreating a client object ...', function () {
       c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
     });
   }); 
-  describe('create a local device object w/ getDevices() method and w/ error object', function () {
-    it('It should return w/ an error object', function (done) {
+  describe('create a local device object w/ getDevices() and w/ error object', function () {
+    it('should return w/ an error object', function (done) {
 
       let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], error:'test-error', _pid:'r-a', c:true, app:true, src:'client', reg:true};
       c.setTestOption(true, spl);
@@ -1586,8 +1584,8 @@ describe('\nCreating a client object ...', function () {
     	});
   	});
  	});
-  describe('create a device object w/ getDevices method', function () {
-    it('It should return the available remote devices w/o error', function (done) {
+  describe('create a device object w/ getDevices()', function () {
+    it('should return the available remote devices w/o error', function (done) {
 
       let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], _pid:'r-a', c:true, app:true, src:'client', reg:true};
       c.setTestOption(true, spl);
@@ -1617,7 +1615,7 @@ describe('\nCreating a client object ...', function () {
     	});
   	});
  	});
-  it('It should proceed w/o an error if invoke again', function (done) {
+  it('should proceed w/o an error if invoke again', function (done) {
     let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], _pid:'r-a', c:true, app:true, src:'client', reg:true};
     c.setTestOption(true, spl);
 
@@ -1645,8 +1643,8 @@ describe('\nCreating a client object ...', function () {
 
  		});
   });
-  describe('create a device object w/ setupInfo() method w/o an error', function () {
-    it('It should return w/o an error object', function (done) {
+  describe('create a device object w/ setupInfo() w/o an error', function () {
+    it('should return w/o an error object', function (done) {
 
       let spl = {id:'12ab8c92', appId:'12ab8c92', _pid:'r-a', c:true, app:true, src:'client', reg:true};
       c.setTestOption(true, spl);
@@ -1673,8 +1671,8 @@ describe('\nCreating a client object ...', function () {
     	});
   	});
  	});
-  describe('create a device object w/ setupInfo() method w/ error', function () {
-    it('It should return w/ an error object', function (done) {
+  describe('create a device object w/ setupInfo() w/ error', function () {
+    it('should return w/ an error object', function (done) {
 
       const client = new m2m.Client();
 
@@ -1700,8 +1698,8 @@ describe('\nCreating a client object ...', function () {
     	});
   	});
  	});
-  describe('create a device object w/ setupInfo() method w/o callback', function () {
-    it('It should throw an error', function (done) {
+  describe('create a device object w/ setupInfo() w/o callback', function () {
+    it('should throw an error', function (done) {
 
       const client = new m2m.Client();
 

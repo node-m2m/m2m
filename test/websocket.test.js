@@ -69,8 +69,8 @@ describe('\nWebsocket object test ...', function () {
 
     });
   });
-  describe('Using websocket.connect() method w/ src.client & dogTimer = 1800002 ...', function () {
-    it('It should connect w/o an error', function (done) {
+  describe('Using websocket.connect() w/ src.client & dogTimer = 1800002 ...', function () {
+    it('should connect w/o an error', function (done) {
 
       let spl = {id:'90cc8ed8', appId:'90cc8ed8', _pid:'r-a', c:true, app:true, src:'client', reg:true};
 			c.setTestOption(true, spl);
@@ -96,8 +96,8 @@ describe('\nWebsocket object test ...', function () {
  
     });
   });
-  describe('Using websocket.connect() method w/ src.client & dogTimer = 18000 ...', function () {
-    it('It should connect w/o an error', function (done) {
+  describe('Using websocket.connect() w/ src.client & dogTimer = 18000 ...', function () {
+    it('should connect w/o an error', function (done) {
 
       let spl = {id:'90cc8ed8', appId:'90cc8ed8', _pid:'r-a', c:true, app:true, src:'client', reg:true};
 			c.setTestOption(true, spl);
@@ -123,8 +123,8 @@ describe('\nWebsocket object test ...', function () {
  
     });
   });
-  describe('Using websocket.connect() method w/ src.device & dogTimer = 54000010 ...', function () {
-    it('It should connect w/o an error', function (done) {
+  describe('Using websocket.connect() w/ src.device & dogTimer = 54000010 ...', function () {
+    it('should connect w/o an error', function (done) {
       			
       let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -151,8 +151,8 @@ describe('\nWebsocket object test ...', function () {
  
     });
   });
-  describe('Using websocket.connect() method w/ src.device & dogTimer = 540000 ...', function () {
-    it('It should connect w/o an error', function (done) {
+  describe('Using websocket.connect() w/ src.device & dogTimer = 540000 ...', function () {
+    it('should connect w/o an error', function (done) {
       			
       let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -180,7 +180,7 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   describe('Using setEmitSendListener w/ spl.src = client & rxd.src = client...', function () {
-    it('It should connect w/o an error', function () {
+    it('should connect w/o an error', function () {
 
       let spl = {id:'12ab8c91', appId:'12ab8c91', _pid:'r-a', c:true, app:true, src:'client', reg:true};
       c.setTestOption(true, spl);
@@ -195,7 +195,7 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   describe('Using setEmitSendListener w/ spl.src = client & rxd.src = browser...', function () {
-    it('It should connect w/o an error', function () {
+    it('should connect w/o an error', function () {
 
       try{
       	c.emitter.emit('emit-send', { src:'browser', dst:'device', enforce:function(){}, id:100, pin:33, _pid:'gpio-output',  output:true, state:false });
@@ -207,7 +207,7 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   describe('Using setEmitSendListener w/ spl.src = device & rxd.src = client...', function () {
-    it('It should connect w/o an error', function () {
+    it('should connect w/o an error', function () {
 
       let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
  			c.setTestOption(true, spl);
@@ -247,8 +247,8 @@ describe('\nWebsocket object test ...', function () {
 
     });
   });
-  describe('Using websocket.setDogTimer() method w/ device & ws.readyState = 1 ...', function () {
-    it('It should set the dogTimer interval ...', function (done) {
+  describe('Using websocket.setDogTimer() w/ device & ws.readyState = 1 ...', function () {
+    it('should set the dogTimer interval ...', function (done) {
  
       let spl = {	id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true };
  			c.setTestOption(true, spl);
@@ -259,8 +259,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in client w/ code 10 ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in client w/ code 10 ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -285,8 +285,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in client w/ code 100 ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in client w/ code 100 ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let count = 0;
     let cb = function(err, result){
@@ -315,8 +315,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in client w/ code 110 (access token updated) w/ clientActive = 1 ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in client w/ code 110 (access token updated) w/ clientActive = 1 ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -338,8 +338,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.initRxData() method in client w/ code 200 (reconnection) clientActive = 0 ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+	describe('Using websocket.initRxData() in client w/ code 200 (reconnection) clientActive = 0 ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -365,8 +365,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in client w/ code 200 (reconnection) clientActive = 1 ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in client w/ code 200 (reconnection) clientActive = 1 ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -395,8 +395,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in client w/ code 200 (reconnection) w/ spl.app ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in client w/ code 200 (reconnection) w/ spl.app ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -422,8 +422,8 @@ describe('\nWebsocket object test ...', function () {
 
     });
   });
-	describe('Using websocket.initRxData() method in client w/ code 300 ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+	describe('Using websocket.initRxData() in client w/ code 300 ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -450,8 +450,8 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   // this test should proceed code 500 and below
-  describe('Using websocket.initRxData() method in client w/ code 510 - invalid credentials ...', function () {
-    it('It should not initialize the client, result is authentication fail ...', function (done) {
+  describe('Using websocket.initRxData() in client w/ code 510 - invalid credentials ...', function () {
+    it('should not initialize the client, result is authentication fail ...', function (done) {
  
     let count = 0;
     let cb = function(err, result){
@@ -478,8 +478,8 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   // device
-  describe('Using websocket.initRxData() method in device w/ code 10 ...', function () {
-    it('It should initialize the device according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 10 ...', function () {
+    it('should initialize the device according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -504,8 +504,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.initRxData() method in device w/ code 100 ...', function () {
-    it('It should initialize the device according to rcvd code ...', function (done) {
+	describe('Using websocket.initRxData() in device w/ code 100 ...', function () {
+    it('should initialize the device according to rcvd code ...', function (done) {
  
     let count = 0;
     let cb = function(err, result){
@@ -533,8 +533,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in device w/ code 110 (token update success) ...', function () {
-    it('It should initialize the device according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 110 (token update success) ...', function () {
+    it('should initialize the device according to rcvd code ...', function (done) {
 
     let cb = function(err, result){
 	    if(err) throw err;
@@ -557,8 +557,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in device w/ code 150 (m2m module update) ...', function () {
-    it('It should initialize the device according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 150 (m2m module update) ...', function () {
+    it('should initialize the device according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -580,8 +580,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in device w/ code 110 (token update fail) ...', function () {
-    it('It should invoke cb w/ error ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 110 (token update fail) ...', function () {
+    it('should invoke cb w/ error ...', function (done) {
  
     let cb = function(err, result){
       if(err){  
@@ -604,8 +604,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in device w/ code 200 (reconnection) clientActive = 1 ...', function () {
-    it('It should initialize the client according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 200 (reconnection) clientActive = 1 ...', function () {
+    it('should initialize the client according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -635,8 +635,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.initRxData() method in device w/ code 200 (reconnection) clientActive = 0 ...', function () {
-    it('It should initialize the device according to rcvd code ...', function (done) {
+	describe('Using websocket.initRxData() in device w/ code 200 (reconnection) clientActive = 0 ...', function () {
+    it('should initialize the device according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -664,8 +664,8 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   // this test should proceed code 500 and below
-  describe('Using websocket.initRxData() method in device w/ code 510 - invalid credentials ...', function () {
-    it('It should not initialize the device, result is authentication fail ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 510 - invalid credentials ...', function () {
+    it('should not initialize the device, result is authentication fail ...', function (done) {
  
     let count = 0;
     let cb = function(err, result){
@@ -691,8 +691,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in device w/ code 500 - invalid credentials ...', function () {
-    it('It should not initialize the device, result is authentication fail ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 500 - invalid credentials ...', function () {
+    it('should not initialize the device, result is authentication fail ...', function (done) {
  
 		let count = 0;
     let cb = function(err, result){
@@ -717,8 +717,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.initRxData() method in device w/ code 500 w/ clientActive > 1 ...', function () {
-    it('It should initialize the device according to rcvd code ...', function (done) {
+	describe('Using websocket.initRxData() in device w/ code 500 w/ clientActive > 1 ...', function () {
+    it('should initialize the device according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -741,8 +741,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in device w/ code 530 - invalid device ...', function () {
-    it('It should not initialize the device, result is invalid device ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 530 - invalid device ...', function () {
+    it('should not initialize the device, result is invalid device ...', function (done) {
 
     let cb = function(err, result){
 	    if(err) throw err;
@@ -765,8 +765,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.initRxData() method in device w/ code 600 - sc renew ...', function () {
-    it('It should initialize the device according to rcvd code ...', function (done) {
+  describe('Using websocket.initRxData() in device w/ code 600 - sc renew ...', function () {
+    it('should initialize the device according to rcvd code ...', function (done) {
  
     let cb = function(err, result){
 	    if(err) throw err;
@@ -790,8 +790,8 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   // DeviceRxData
-	describe('Using websocket.DeviceRxData(rxd) method w/ src.device ...', function () {
-    it('It should throw an error ...', function (done) {
+	describe('Using websocket.DeviceRxData(rxd) w/ src.device ...', function () {
+    it('should throw an error ...', function (done) {
 
     let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 		c.setTestOption(true, spl);
@@ -807,8 +807,8 @@ describe('\nWebsocket object test ...', function () {
 
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.restart ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.restart ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
     let rxd = {id:100, restart:true, src:'browser', dst:'device'};
 
@@ -822,8 +822,8 @@ describe('\nWebsocket object test ...', function () {
 
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ spl.id = rxd.id ..', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ spl.id = rxd.id ..', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device'};
     try{
@@ -836,8 +836,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.channel & rxd.event = true ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.channel & rxd.event = true ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:true, watch:true, name:'test-data'};
 
@@ -851,8 +851,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.DeviceRxData(rxd) method w/ rxd.channel ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+	describe('Using websocket.DeviceRxData(rxd) w/ rxd.channel ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', name:'test-data'};
     try{
@@ -865,8 +865,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.DeviceRxData(rxd) method w/ rxd.output & rxd.event = true ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+	describe('Using websocket.DeviceRxData(rxd) w/ rxd.output & rxd.event = true ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:true, output:true, pin:33};
 
@@ -880,8 +880,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.output & rxd.unwatch ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.output & rxd.unwatch ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:false, unwatch:true, output:true, pin:33};
 
@@ -895,8 +895,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.output ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.output ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', output:true, pin:33};
 
@@ -910,8 +910,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.input & rxd.event = true  ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.input & rxd.event = true  ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:true, input:true, pin:11};
     try{
@@ -924,8 +924,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.channel & rxd.event = true  ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.channel & rxd.event = true  ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:true, watch:true, name:'test-data'};
     try{
@@ -938,8 +938,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.channel & rxd.unwatch ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.channel & rxd.unwatch ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:false, unwatch:true, name:'test-data'};
     try{
@@ -952,8 +952,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.input & rxd.unwatch  ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.input & rxd.unwatch  ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:false, unwatch:true, input:true, pin:11};
     try{
@@ -966,8 +966,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.input & rxd.unwatch for watchInputData = 0 ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.input & rxd.unwatch for watchInputData = 0 ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, src:'client', dst:'device', event:false, unwatch:true, input:true, pin:11};
     try{
@@ -980,8 +980,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) method w/ device 1st attempt ...', function () {
-    it('It should warn user of closed ws...', function (done) {
+  describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) w/ device 1st attempt ...', function () {
+    it('should warn user of closed ws...', function (done) {
 
     let cb = function(err, result){
 	    if(err) throw err;
@@ -1003,8 +1003,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) method w/ device 2nd attempt ...', function () {
-    it('It should warn user of closed ws...', function (done) {
+  describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) w/ device 2nd attempt ...', function () {
+    it('should warn user of closed ws...', function (done) {
 
     let cb = function(err, result){
 	    if(err) throw err;
@@ -1028,8 +1028,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method  w/ rxd.setupData ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd)  w/ rxd.setupData ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
 		let rxd = {id:100, setupData:true, src:'client', dst:'device'};
     try{
@@ -1042,8 +1042,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.status w/ options...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.status w/ options...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
     let options = {
       code: { allow: true },
@@ -1063,8 +1063,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.DeviceRxData(rxd) method w/ rxd.status w/o options ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+	describe('Using websocket.DeviceRxData(rxd) w/ rxd.status w/o options ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
     
 		let rxd = {id:150, status:true, src:'client', dst:'device'};
     try{
@@ -1076,8 +1076,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.restart ...', function () {
-    it('It should process the device data according to rcvd data ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.restart ...', function () {
+    it('should process the device data according to rcvd data ...', function (done) {
 
     let rxd = {id:100, restart:true, src:'browser', dst:'device'};
     try{
@@ -1090,8 +1090,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.uploadCode but w/ rxd.options = {} ...', function () {
-    it('It should upload the code ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.uploadCode but w/ rxd.options = {} ...', function () {
+    it('should upload the code ...', function (done) {
 
     let rxd = {id:100, uploadCode:true, src:'browser', dst:'device', options:{}};
 
@@ -1105,8 +1105,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.uploadCode but w/ different rxd.id ...', function () {
-    it('It should throw an error ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.uploadCode but w/ different rxd.id ...', function () {
+    it('should throw an error ...', function (done) {
 
     let options = {
       code: { allow: true, filename: 'test/device.js' },
@@ -1130,8 +1130,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method rxd.uploadCode & valid options  ...', function () {
-    it('It should upload the code ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) rxd.uploadCode & valid options  ...', function () {
+    it('should upload the code ...', function (done) {
 
     let options = {
       code: { allow: true, filename: 'test/device.js' },
@@ -1152,8 +1152,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.updateCode & different rxd.id  ...', function () {
-    it('It should throw an error ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.updateCode & different rxd.id  ...', function () {
+    it('should throw an error ...', function (done) {
 
     let options = {
       code: { allow: true, filename: 'test/device.js' },
@@ -1174,8 +1174,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.updateCode = true ...', function () {
-    it('It should update the code ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.updateCode = true ...', function () {
+    it('should update the code ...', function (done) {
 
     let options = {
       code: { allow: true, filename: 'test/device.js' },
@@ -1195,8 +1195,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.updateCode w/o rxd.appData ...', function () {
-    it('It should not update the code ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.updateCode w/o rxd.appData ...', function () {
+    it('should not update the code ...', function (done) {
 
     let options = {
       code: { allow: true, filename: 'test/device.js' },
@@ -1217,8 +1217,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.updateCode w/o filename ...', function () {
-    it('It should not update the code ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.updateCode w/o filename ...', function () {
+    it('should not update the code ...', function (done) {
 
     let options = {
       // options w/o filename 
@@ -1241,8 +1241,8 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   // ClientRxData
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.input ...', function () {
-    it('It should process/start watching the channel data ...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.input ...', function () {
+    it('should process/start watching the channel data ...', function (done) {
 
     let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
  		c.setTestOption(true, spl);
@@ -1261,8 +1261,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.enable = false ...', function () {
-    it('It should disable/suspend device channel data or input pins watching ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.enable = false ...', function () {
+    it('should disable/suspend device channel data or input pins watching ...', function (done) {
 
     let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 		c.setTestOption(true, spl);
@@ -1279,8 +1279,8 @@ describe('\nWebsocket object test ...', function () {
        
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.enable = true ...', function () {
-    it('It should start watching again the device channel data or input pins ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.enable = true ...', function () {
+    it('should start watching again the device channel data or input pins ...', function (done) {
 
     let spl = {id:310, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 		c.setTestOption(true, spl);
@@ -1297,8 +1297,8 @@ describe('\nWebsocket object test ...', function () {
        
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.input = true ...', function () {
-    it('It should start watching again the device channel data or input pins ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.input = true ...', function () {
+    it('should start watching again the device channel data or input pins ...', function (done) {
 
     let spl = {id:310, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 		c.setTestOption(true, spl);
@@ -1315,8 +1315,8 @@ describe('\nWebsocket object test ...', function () {
        
     });
   });
-  describe('Using websocket.DeviceRxData(rxd) method w/ rxd.exit ...', function () {
-    it('It should unwatch device channel data and input pins ...', function (done) {
+  describe('Using websocket.DeviceRxData(rxd) w/ rxd.exit ...', function () {
+    it('should unwatch device channel data and input pins ...', function (done) {
 
     let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
  		c.setTestOption(true, spl);
@@ -1334,8 +1334,8 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   // **clientRxData**
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.channel ...', function () {
-    it('It should process/start watching the channel data ...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.channel ...', function () {
+    it('should process/start watching the channel data ...', function (done) {
 
 		let spl = {id:'12ab8c91', appId:'12ab8c91', _pid:'r-a', c:true, app:true, src:'client', reg:true};
     c.setTestOption(true, spl);
@@ -1352,8 +1352,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.activeStart ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.activeStart ...', function () {
+    it('should process the data accordingly...', function (done) {
 
 		let spl = {id:'12ab8c91', appId:'12ab8c91', _pid:'r-a', c:true, app:true, src:'client', reg:true};
     c.setTestOption(true, spl);
@@ -1370,8 +1370,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.channel ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.channel ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', name:'test-data'};
     try{
@@ -1384,8 +1384,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.channel ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.channel ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', name:'test-data'};
     try{
@@ -1398,8 +1398,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.channel & rxd.unwatch() ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.channel & rxd.unwatch() ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', event:false, unwatch:true, src:'browser', dst:'device', name:'test-data'};
     try{
@@ -1412,8 +1412,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.input ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.input ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'gpio-input', event:true, watch:true, input:true, pin:15};
     try{
@@ -1426,8 +1426,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.input & rxd.unwatch ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.input & rxd.unwatch ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'gpio-input', unwatch:true, input:true, pin:15};
     try{
@@ -1440,8 +1440,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.ClientRxData(rxd) method w/ rxd.output ...', function () {
-    it('It should process the data accordingly...', function (done) {
+	describe('Using websocket.ClientRxData(rxd) w/ rxd.output ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'gpio-output', event:false, watch:false, output:true, pin:35};
     try{
@@ -1454,8 +1454,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.output & rxd.event ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.output & rxd.event ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'gpio-output', event:true, output:true, pin:35};
     try{
@@ -1468,8 +1468,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.output & rxd.unwatch ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.output & rxd.unwatch ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'gpio-output', event:false, unwatch:true, output:true, pin:35};
     try{
@@ -1482,8 +1482,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.ClientRxData(rxd) method w/ rxd.setupData ...', function () {
-    it('It should process the data accordingly...', function (done) {
+	describe('Using websocket.ClientRxData(rxd) w/ rxd.setupData ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'setup', setupData:true};
     try{
@@ -1497,8 +1497,8 @@ describe('\nWebsocket object test ...', function () {
     });
   });
   // this is the same w/ client.test  
-	/*describe('Using websocket.ClientRxData(rxd) method w/ rxd.getDevices ...', function () {
-    it('It should process the data accordingly...', function (done) {
+	/*describe('Using websocket.ClientRxData(rxd) w/ rxd.getDevices ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let spl = {id:'12ab8c91', appId:'12ab8c91', _pid:'r-a', c:true, app:true, src:'client', reg:true};
     c.setTestOption(true, spl);
@@ -1513,8 +1513,8 @@ describe('\nWebsocket object test ...', function () {
     done();   
     });
   });*/
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.status w/ options ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.status w/ options ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let options = {
       code: { allow: true },
@@ -1534,8 +1534,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.status w/o or invalid options...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.status w/o or invalid options...', function () {
+    it('should process the data accordingly...', function (done) {
     
     let rxd = {id:'12ab8c91', appId:'12ab8c91', options:{}, src:'browser', dst:'device', _pid:'client-status', status:true};
     try{
@@ -1548,8 +1548,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.restart ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.restart ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'client-restart', restart:true};
     try{
@@ -1562,8 +1562,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode but w/ options = {} ...', function () {
-    it('It should not update the code ...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.updateCode but w/ options = {} ...', function () {
+    it('should not update the code ...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'updateCode', updateCode:true, options:{}, appData:'test-data'};
     try{
@@ -1576,8 +1576,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.updateCode ...', function () {
+    it('should process the data accordingly...', function (done) {
 
 		let options = {
       code: { allow: true, filename: 'test/client.js' },
@@ -1597,8 +1597,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode w/o filename ...', function () {
-    it('It should not update the code ...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.updateCode w/o filename ...', function () {
+    it('should not update the code ...', function (done) {
 
     // no filename
 		let options = {
@@ -1618,8 +1618,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.updateCode w/o appData ...', function () {
-    it('It should not update the code...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.updateCode w/o appData ...', function () {
+    it('should not update the code...', function (done) {
 
 		let options = {
       code: { allow: true },
@@ -1639,8 +1639,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.uploadCode ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let options = {
       code: { allow: true },
@@ -1660,8 +1660,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode but w/ different rxd.id ...', function () {
-    it('It should not upload the code ...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.uploadCode but w/ different rxd.id ...', function () {
+    it('should not upload the code ...', function (done) {
 
     let options = {
       code: { allow: true },
@@ -1682,8 +1682,8 @@ describe('\nWebsocket object test ...', function () {
        
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.uploadCode and w/ options = {} ...', function () {
-    it('It should not upload the code ...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.uploadCode and w/ options = {} ...', function () {
+    it('should not upload the code ...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'uploadCode', uploadCode:true, options:{}};
     try{
@@ -1696,8 +1696,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.getRegisteredDevices ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.getRegisteredDevices ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let options = {
       code: { allow: true },
@@ -1717,8 +1717,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-	describe('Using websocket.ClientRxData(rxd) method w/ rxd.getRegisteredDevices (2nd attempt) ...', function () {
-    it('It should process the data accordingly...', function (done) {
+	describe('Using websocket.ClientRxData(rxd) w/ rxd.getRegisteredDevices (2nd attempt) ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let options = {
       code: { allow: true },
@@ -1738,8 +1738,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ rxd.exit ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ rxd.exit ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', exit:true, src:'browser', dst:'device'};
     try{
@@ -1752,8 +1752,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.ClientRxData(rxd) method w/ no rxd.error ...', function () {
-    it('It should process the data accordingly...', function (done) {
+  describe('Using websocket.ClientRxData(rxd) w/ no rxd.error ...', function () {
+    it('should process the data accordingly...', function (done) {
 
     let rxd = {id:'12ab8c91', appId:'12ab8c91', src:'browser', dst:'device', _pid:'test' };
     try{
@@ -1766,8 +1766,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) method w/ client ...', function () {
-    it('It should warn user of closed ws...', function (done) {
+  describe('Using websocket.wsReconnectAttempt(e, args, m2m, cb) w/ client ...', function () {
+    it('should warn user of closed ws...', function (done) {
 
 		let cb = function(err, result){
 		  if(err) throw err;
@@ -1794,8 +1794,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.refreshConnection() method w/ client ...', function () {
-    it('It should refresh the ws...', function (done) {
+  describe('Using websocket.refreshConnection() w/ client ...', function () {
+    it('should refresh the ws...', function (done) {
  
     let spl = {id:'12ab8c91', appId:'12ab8c91', _pid:'r-a', c:true, app:true, src:'client', reg:true};
 
@@ -1811,8 +1811,8 @@ describe('\nWebsocket object test ...', function () {
    
     });
   });
-  describe('Using websocket.refreshConnection() method w/ device ...', function () {
-    it('It should throw an error ...', function (done) {
+  describe('Using websocket.refreshConnection() w/ device ...', function () {
+    it('should throw an error ...', function (done) {
  
     let spl = {	id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true };
 

@@ -4,13 +4,13 @@ const assert = require('assert');
 const c = require('../lib/client.js');
 
 describe('\nSecurity object test ...', function () {
-  describe('Create a server object using server.connect() method', function () {
+  describe('Create a server object using server.connect()', function () {
 
     c.setTestOption(true);
 
     const server = new m2m.Server(100);
 
-    it('It should connect and return a "success" result', function () {
+    it('should connect and return a "success" result', function () {
 
       server.connect({server:'https://www.node-m2m.com', userid:'js@m2m.com', pw:'!JonSnow20', sc:'c123'}, function(err, result){
 				if(err) return console.error('connect error:', err);
@@ -21,7 +21,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.m2mRestart() - 1st registration (no args & no tk) ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
       let count = 0; 
       let cb = function(err, result){
 		    if(err) throw err;
@@ -39,7 +39,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.m2mRestart() - 1st registration (string args & no tk) ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
        let count = 0; 
       let cb = function(err, result){
 		    if(err) throw err;
@@ -54,7 +54,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.m2mRestart() - 1st registration (no args & corrupted tk) ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -74,7 +74,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.m2mRestart() - 1st registration (string args & corrupted tk) ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -94,7 +94,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
 	describe('Using sec.m2mRestart() - 1st registration (object args & corrupted tk) ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -114,7 +114,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.m2mRestart() - m2m.device (no args & device tk) ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -133,8 +133,8 @@ describe('\nSecurity object test ...', function () {
    
     });
   });
-  describe('Using sec.m2mRestart() method - m2m.device w/ missing id...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+  describe('Using sec.m2mRestart() - m2m.device w/ missing id...', function () {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -153,8 +153,8 @@ describe('\nSecurity object test ...', function () {
 
     });
   });
-  describe('Using sec.m2mRestart() method - device w/ diffrent device.id...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+  describe('Using sec.m2mRestart() - device w/ diffrent device.id...', function () {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -173,8 +173,8 @@ describe('\nSecurity object test ...', function () {
 
     });
   });
-  describe('Using sec.m2mRestart() method - change app from device to client ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+  describe('Using sec.m2mRestart() - change app from device to client ...', function () {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -193,8 +193,8 @@ describe('\nSecurity object test ...', function () {
    
     });
   });
-  describe('Using sec.m2mRestart() method - change app from client to device ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+  describe('Using sec.m2mRestart() - change app from client to device ...', function () {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -214,7 +214,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.m2mRestart() - m2m.device (no args & device tk) ...', function () {
-    it('It should prompt for credentials/redirected to sec.m2mStart()', function (done) {
+    it('should prompt for credentials/redirected to sec.m2mStart()', function (done) {
  
       let count = 0; 
       let cb = function(err, result){
@@ -234,7 +234,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.setAttributes() w/ valid argument ...', function () {
-    it('It should set the options/attributes using the argument...', function (done) {
+    it('should set the options/attributes using the argument...', function (done) {
  
      let args = {
         code: { allow: true, filename: 'test/device.js' },
@@ -257,7 +257,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.setAttributes() w/ invalid null argument ...', function () {
-    it('It should throw an error ...', function (done) {
+    it('should throw an error ...', function (done) {
 
       try{
       	c.setAttributes(null);
@@ -270,7 +270,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.setAttributes() w/ invalid code filename ...', function () {
-    it('It should set the options/attributes using arguments...', function (done) {
+    it('should set the options/attributes using arguments...', function (done) {
 
       let args = {
         code: { allow: true, filename: 'test/MyDeviceFileNameIsInvalid.js' },
@@ -290,7 +290,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.setAttributes() w/ invalid argument (non-object) ...', function () {
-    it('It should throw an error...', function (done) {
+    it('should throw an error...', function (done) {
 
       let args = 'test/device.js';
 
@@ -306,7 +306,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.setAttributes() w/ invalid code argument (non-object) ...', function () {
-    it('It should throw an error...', function (done) {
+    it('should throw an error...', function (done) {
 
       let args = {
         code: 'test/device.js',
@@ -327,7 +327,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.setAttributes() w/ invalid option name argument length ...', function () {
-    it('It should throw an error...', function (done) {
+    it('should throw an error...', function (done) {
 
       let args = {
         code: { allow: true, filename: 'test/device.js' },
@@ -348,7 +348,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
 	describe('Using sec.setAttributes() w/ invalid description argument length ...', function () {
-    it('It should throw an error...', function (done) {
+    it('should throw an error...', function (done) {
 
       let args = {
         code: { allow: true, filename: 'test/device.js' },
@@ -369,7 +369,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.setAttributes() w/ invalid location argument length ...', function () {
-    it('It should throw an error...', function (done) {
+    it('should throw an error...', function (done) {
 
       let args = {
         code: { allow: true, filename: 'test/device.js' },
@@ -390,7 +390,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
 	describe('Using sec.userPrompt() w/ valid credentials ...', function () {
-    it('It should prompt the user for credentials ...', function (done) {
+    it('should prompt the user for credentials ...', function (done) {
 
       let count = 0; 
       let cb = function(err, result){
@@ -413,7 +413,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
 	describe('Using sec.userPrompt() w/ invalid userid credential ...', function () {
-    it('It should throw an error ...', function (done) {
+    it('should throw an error ...', function (done) {
 
       let cb = function(err, result){
 		    if(err) throw err;
@@ -434,7 +434,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.userPrompt() w/ invalid pw credential ...', function () {
-    it('It should throw an error ...', function (done) {
+    it('should throw an error ...', function (done) {
 
       let cb = function(err, result){
 		    if(err) throw err;
@@ -457,7 +457,7 @@ describe('\nSecurity object test ...', function () {
     });
   });
   describe('Using sec.userPrompt() w/ invalid pw credential ...', function () {
-    it('It should throw an error ...', function (done) {
+    it('should throw an error ...', function (done) {
 
       let cb = function(err, result){
 		    if(err) throw err;
@@ -477,9 +477,9 @@ describe('\nSecurity object test ...', function () {
 
     });
   });
-  describe('Use client.connect() method w/ invalid pw', function () {
+  describe('Using client.connect() w/ invalid pw', function () {
     const client = new m2m.Client();
-    it('It should throw an error', function (done) {
+    it('should throw an error', function (done) {
 
       client.connect({auth:true, server:'https://www.node-m2m.com', userid:'js@m2m.com', pw:'JonSnow20', sc:'c123'}, function(err, result){
         if(err){
@@ -490,9 +490,9 @@ describe('\nSecurity object test ...', function () {
       });
     });
   });
-  describe('Use client.connect() method w/ invalid pw length', function () {
+  describe('Using client.connect() w/ invalid pw length', function () {
     const client = new m2m.Client();
-    it('It should throw an error', function (done) {
+    it('should throw an error', function (done) {
 
       client.connect({auth:true, server:'https://www.node-m2m.com', userid:'js@m2m.com', pw:'JonSnowFromTheGameOfThrones-TheDragonSlayer-SlayThemAllBloodyFools19', sc:'c123'}, function(err, result){
         if(err){
@@ -502,9 +502,9 @@ describe('\nSecurity object test ...', function () {
       });
     });
   });
-  describe('Use client.connect() method w/ invalid userid', function () {
+  describe('Using client.connect() w/ invalid userid', function () {
     const client = new m2m.Client();
-    it('It should throw an error', function () {
+    it('should throw an error', function () {
 
       client.connect({auth:true, server:'https://www.node-m2m.com', userid:'js@m2m', pw:'!JonSnow20', sc:'c123'}, function(err, result){
         if(err){
@@ -514,9 +514,9 @@ describe('\nSecurity object test ...', function () {
       });
     });
   });
-  describe('Use client.connect() method w/ invalid userid length', function () {
+  describe('Using client.connect() w/ invalid userid length', function () {
     const client = new m2m.Client();
-    it('It should throw an error', function () {
+    it('should throw an error', function () {
 
       client.connect({auth:true, server:'https://www.node-m2m.com', userid:'johnsnowdragonslayergameofthrones@m2m', pw:'!JonSnow20', sc:'c123'}, function(err, result){
         if(err){
@@ -526,9 +526,9 @@ describe('\nSecurity object test ...', function () {
       });
     });
   });
-  describe('Use client.connect() method w/ invalid sc', function () {
+  describe('Using client.connect() w/ invalid sc', function () {
     const client = new m2m.Client();
-    it('It should throw an error', function () {
+    it('should throw an error', function () {
 
       client.connect({auth:true, server:'https://www.node-m2m.com', userid:'js@m2m.com', pw:'!JonSnow20', sc:'c94355'}, function(err, result){
         if(err){
@@ -538,9 +538,9 @@ describe('\nSecurity object test ...', function () {
       });
     });
   });
-  describe('Create a client object and use client.connect() method', function () {
+  describe('Using client.connect() to create a client object', function () {
     const client = new m2m.Client();
-    it('It should return a success result', function () {
+    it('should return a success result', function () {
 
       client.connect({server:'https://www.node-m2m.com', userid:'js@m2m.com', pw:'!JonSnow20', sc:'c123', final:true}, function(err, result){
 				if(err) return console.error('connect error:', err);

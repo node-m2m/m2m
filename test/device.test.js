@@ -20,7 +20,7 @@ describe('\nCreating a device object ...', function () {
     });
   });
   describe('Set Device Option', function () {
-    it('set a module option using the .setOption() method', function () {
+    it('set a module option using the .setOption()', function () {
       let options = {code:{allow:true, filename:'device.js'}};
 
       const device = new m2m.Device(100);
@@ -103,7 +103,7 @@ describe('\nCreating a device object ...', function () {
 		  device.connect(callback);
 		});
 	});
-  describe('Set channel data using .setChannel() method', function () {
+  describe('Set channel data using .setChannel()', function () {
     it('should throw an error if 1st argument is not a string', function (done) {
       const device = new m2m.Device(250);
       assert.strictEqual( typeof device, 'object' );
@@ -158,7 +158,7 @@ describe('\nCreating a device object ...', function () {
     });
   });
 
-  describe('Set gpio data using .setGpio() method', function () {
+  describe('Set gpio data using .setGpio()', function () {
     it('should throw an error if pin and mode properties are missing', function (done) {
       
       if(os.arch() !== 'arm'){
@@ -168,13 +168,13 @@ describe('\nCreating a device object ...', function () {
 
       const device = new m2m.Device(200);
       assert.strictEqual( typeof device, 'object');
-       try{
-          device.setGpio({});
-        }
-        catch(e){
-          assert.strictEqual( e.message, 'invalid arguments');
-          done();
-        }
+      try{
+        device.setGpio({});
+      }
+      catch(e){
+        assert.strictEqual( e.message, 'invalid arguments');
+        done();
+      }
     });
     it('should throw an error if pin property is missing in simulation type', function (done) {
       const device = new m2m.Device(200);
@@ -580,8 +580,8 @@ describe('\nCreating a device object ...', function () {
       } 
     });
   });
-	describe('Using getApi() method w/ valid name', function () {
-    it('it should start connecting ...', function (done) {
+	describe('Using getApi() w/ valid name', function () {
+    it('should start connecting ...', function (done) {
 
       let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -606,8 +606,8 @@ describe('\nCreating a device object ...', function () {
 
     });
   });
-  describe('Using getApi() method w/ object args and a valid name', function () {
-    it('it should start connecting ...', function (done) {
+  describe('Using getApi() w/ object args and a valid name', function () {
+    it('should start connecting ...', function (done) {
 
  			let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -632,8 +632,8 @@ describe('\nCreating a device object ...', function () {
 
     });
   });
-  describe('Using getApi() method w/ object args and an invalid name', function () {
-    it('it should throw an error ...', function (done) {
+  describe('Using getApi() w/ object args and an invalid name', function () {
+    it('should throw an error ...', function (done) {
       const device = new m2m.Device(100);
       assert.strictEqual( typeof device, 'object' );
 
@@ -653,8 +653,8 @@ describe('\nCreating a device object ...', function () {
       } 
     });
   });
-	describe('Using getApi() method w/ invalid args', function () {
-    it('it should throw an error ...', function (done) {
+	describe('Using getApi() w/ invalid args', function () {
+    it('should throw an error ...', function (done) {
       const device = new m2m.Device(100);
       assert.strictEqual( typeof device, 'object' );
 
@@ -671,8 +671,8 @@ describe('\nCreating a device object ...', function () {
       } 
     });
   });
-  describe('Using setData() method w/o args', function () {
-    it('it should start connecting ...', function (done) {
+  describe('Using setData() w/o args', function () {
+    it('should start connecting ...', function (done) {
 
       let spl = {id:150, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -701,8 +701,8 @@ describe('\nCreating a device object ...', function () {
                 
     });
   });
-  describe('Using setData() method string args', function () {
-    it('it should start connecting ...', function (done) {
+  describe('Using setData() string args', function () {
+    it('should start connecting ...', function (done) {
 
       let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -731,8 +731,8 @@ describe('\nCreating a device object ...', function () {
          
     });
   });
-  describe('Using setData() method w/ object args and an invalid name', function () {
-    it('it should throw an error ...', function (done) {
+  describe('Using setData() w/ object args and an invalid name', function () {
+    it('should throw an error ...', function (done) {
 
       const device = new m2m.Device(200);
       assert.strictEqual( typeof device, 'object' );
@@ -752,8 +752,8 @@ describe('\nCreating a device object ...', function () {
       } 
     });
   });
-	describe('Using setData() method w/ valid arguments', function () {
-    it('it should return w/ error connecting ...', function (done) {
+	describe('Using setData() w/ valid arguments', function () {
+    it('should return w/ error connecting ...', function (done) {
 
       let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -781,8 +781,8 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit( eventName, {event:true, id:device.id, name:'test', error:'error-test', result:'passed' });          
     });
   });
-  describe('Using setData() method w/ valid non-event args object', function () {
-    it('it should start connecting ...', function (done) {
+  describe('Using setData() w/ valid non-event args object', function () {
+    it('should start connecting ...', function (done) {
 
       let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -812,8 +812,8 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:false, src:'browser', dst:'device', id:device.id, name:'test-random1', initValue:'109', result:'245' }); 
     });
   });
-  describe('Using setData() method w/ valid event-based args object', function () {
-    it('it should start connecting ...', function (done) {
+  describe('Using setData() w/ valid event-based args object', function () {
+    it('should start connecting ...', function (done) {
 
       let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
 			c.setTestOption(true, spl);
@@ -844,7 +844,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:true, src:'browser', dst:'device', id:device.id, name:'test-random', initValue:'109', result:'245' }); 
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an input w/ invalid pin', function () {
+  describe('Using setGpio() in Raspberry Pi to create an input w/ invalid pin', function () {
     it('should invoke callback w/ error object', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -870,7 +870,7 @@ describe('\nCreating a device object ...', function () {
 
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an input w/ valid pin 15', function () {
+  describe('Using setGpio() in Raspberry Pi to create an input w/ valid pin 15', function () {
     it('should invoke callback w/ gpio object', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -907,7 +907,7 @@ describe('\nCreating a device object ...', function () {
 
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an input w/ valid pin 41', function () {
+  describe('Using setGpio() in Raspberry Pi to create an input w/ valid pin 41', function () {
     it('should invoke callback w/ error object', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -944,7 +944,7 @@ describe('\nCreating a device object ...', function () {
     });
   });
 
-  describe('Using setGpio() method in Raspberry Pi to create a non-event input w/ valid rcvd data', function () {
+  describe('Using setGpio() in Raspberry Pi to create a non-event input w/ valid rcvd data', function () {
     it('should set multiple gpio inputs', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -972,7 +972,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:false, id:device.id, input:true, pin:11, state:true });
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an event-based input w/ valid rcvd data', function () {
+  describe('Using setGpio() in Raspberry Pi to create an event-based input w/ valid rcvd data', function () {
     it('should set multiple gpio inputs', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1001,7 +1001,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:true, id:device.id, input:'state', pin:13, state:true , initValue:true});
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an event-based input w/ error in rcvd data', function () {
+  describe('Using setGpio() in Raspberry Pi to create an event-based input w/ error in rcvd data', function () {
     it('should invoke callback w/ error', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1029,7 +1029,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {error:'invalid test', event:true, id:device.id, input:'state', pin:11, state:true});
     });
   });
-	describe('Using setGpio() method in Raspberry Pi to create an output w/ error in rcvd data', function () {
+	describe('Using setGpio() in Raspberry Pi to create an output w/ error in rcvd data', function () {
     it('should invoke callback w/ error', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1057,7 +1057,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {error:'invalid test', event:false, id:device.id, output:'state', pin:35, state:true});
     });
   });
-  /*describe('Using setGpio() method as simulation method w/ valid pin 36', function () {
+  /*describe('Using setGpio() as simulation w/ valid pin 36', function () {
     it('should invoke callback w/ gpio object', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1094,7 +1094,7 @@ describe('\nCreating a device object ...', function () {
 
     });
   });*/
-  describe('Using setGpio() method in Raspberry Pi to create an output w/ invalid pin 43', function () {
+  describe('Using setGpio() in Raspberry Pi to create an output w/ invalid pin 43', function () {
     it('should invoke callback w/ error object', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1122,7 +1122,7 @@ describe('\nCreating a device object ...', function () {
       
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an output w/ invalid pin 41', function () {
+  describe('Using setGpio() in Raspberry Pi to create an output w/ invalid pin 41', function () {
     it('should invoke callback w/ error object', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1158,7 +1158,7 @@ describe('\nCreating a device object ...', function () {
 
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd  get "state" data', function () {
+  describe('Using setGpio() in Raspberry Pi to create an output w/ valid rcvd  get "state" data', function () {
     it('should invoke callback w/o error', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1185,7 +1185,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:35, state:false});
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd "on" data', function () {
+  describe('Using setGpio() in Raspberry Pi to create an output w/ valid rcvd "on" data', function () {
     it('should invoke callback w/o error', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1213,7 +1213,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:false, on:true, state:true, id:device.id, output:'on', pin:33});
     });
   });
-  describe('Using setGpio() method in Raspberry Pi to create an output w/ valid rcvd "off" data', function () {
+  describe('Using setGpio() in Raspberry Pi to create an output w/ valid rcvd "off" data', function () {
     it('should invoke callback w/o error', function (done) {
 
       if(os.arch() !== 'arm'){
@@ -1241,7 +1241,7 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {event:false, off:true, state:false, id:device.id, output:'off', pin:33});
     });
   });
-	describe('Using setGpio() method in non-raspberry pi sytem', function () {
+	describe('Using setGpio() in non-raspberry pi sytem', function () {
     it('should throw an invalid arguments or feature error', function (done) {
 
       if(os.arch() !== 'arm'){
