@@ -2,11 +2,11 @@
 
 m2m is a client module for machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
 
-The module's API is a FaaS (Function as a Service) also called "serverless" making it easy for everyone to develop m2m applications such as telematics, data acquisition, process automation, IoT network gateways and many other machine-to-machine solutions.
+The module's API is a FaaS (Function as a Service) also called "serverless" making it easy for everyone to develop applications in telematics, data acquisition, process automation, IoT network gateways, business workflow automation and many others.
 
-Each user can create multiple remote devices/servers accessible through its user assigned device *id's* and multiple client applications. Communications between client and device applications are encrypted using TLS protocol. Access to remote devices/servers is restricted to authenticated and authorized users only.
+Each user can create multiple client applications accessing multiple remote devices/servers through its user assigned device *id's*. Access to remote devices/servers is restricted to authenticated users only. Communications between client and device/server applications are fully encrypted using TLS protocol.
 
-To use this module, user must create an account and register their devices with [node-m2m](https://www.node-m2m.com).
+To use this module, users must create an account and register their devices with [node-m2m](https://www.node-m2m.com).
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
