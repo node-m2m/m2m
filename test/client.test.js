@@ -12,6 +12,7 @@ fs.mkdir('node_modules/m2m/lib/sec', {recursive:true}, function (err){
 	fs.writeFileSync('node_modules/m2m/mon', 'test');
 });
 
+
 before(() => {
   sinon.stub(console, 'log'); 
   sinon.stub(console, 'info'); 
@@ -53,54 +54,6 @@ describe('\nCreating a client object ...', function () {
 
     });
   });
-  describe('Set Client Option', function () {
-    it('set the module options using the constructor', function (done) {
-      let options = {code:{allow:true, filename:'client1.js'}, name:'Test App', location:'New York, NY', description:'New Test App'};
-
-      try{
-      	const client = new m2m.Client(options);
-      	assert.strictEqual( typeof client, 'object' );
-      	assert.strictEqual( options,  c.options );
-      }
-			catch(e){
-        throw 'invalid test';  
-      }
-      done();
-    });
-    it('should override the constructor option using the .setOption()', function (done) {
-      let newOptions = {code:{allow:true, filename:'client1.js'}, name:'Test App', location:'New York, NY', description:'New Test App'};
-
-      try{
-      const client = new m2m.Client({code:{allow:false, filename:'client.js'}, name:'Master App', location:'Boston, MA', description:'Test App'});
-      assert.strictEqual( typeof client, 'object' );
-
-      client.setOption(newOptions);
-      }
-			catch(e){
-				throw 'invalid test';
-      }
-      assert.strictEqual( newOptions,  c.options );
-			done();
-    });
-  });
-  describe('create another client object with an option argument in the constructor', function () {
-    it('should return an object with a new unique id', function () {
-
-      try{ 
-		    const client = new m2m.Client({code:{allow:true, filename:'client.js'}, name:'Master App', location:'Boston, MA', description:'Test App'});
-		    id2 = client.id;
-
-		    assert.strictEqual( typeof client, 'object' );
-		    assert.strictEqual( client.client, true );
-		    assert.strictEqual( typeof client.id, 'string' );
-		    assert.strictEqual( client.id.length, 8 );
-		    assert.notStrictEqual(id1, id2);
-      } 
-      catch(e){
-				throw 'invalid test';
-      }
-    });
-  });
   describe('create a device object using a single argument device id', function () {
     it('should return an object if argument type is an integer', function () {
       const client = new m2m.Client();
@@ -113,18 +66,6 @@ describe('\nCreating a client object ...', function () {
       assert.strictEqual( device.id, 100 );
 
     });
-    it('should throw an error if arguments provided is invalid', function () {
-      const client = new m2m.Client();
-      assert.strictEqual( typeof client, 'object' );
-
-      try{
-        client.connect(function(){}); 
-      	client.accessDevice(100, 200);
-      }
-			catch(e){
-        assert.strictEqual( e.message, 'access id more than 1 must be contained in an array' ); 
-      }
-    });
     it('create a device object if the argument provided is an array w/ a single element', function (done) {
       const client = new m2m.Client();
       assert.strictEqual( typeof client, 'object' );
@@ -136,23 +77,6 @@ describe('\nCreating a client object ...', function () {
         assert.notStrictEqual( Array.isArray(device), true );
         done();
       });
-    });
-    // no test coverage improvement
-    it('should throw an error if argument is not an integer', function (done) {
-      const client = new m2m.Client();
-      assert.strictEqual( typeof client, 'object' );
-			client.connect(function(err, result){});
-
-      let count = 0;
-	    try{
-	      let device = client.accessDevice(100.5);
-	    }
-			catch(e){
-				assert.strictEqual( e.message, 'server id must be an integer number' );
-        if(count === 0){
-	      	done();count++;
-        }
-	    }
     });
   });
   describe('create an array device object using an array argument w/ getDevices', function () {
@@ -223,63 +147,6 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( device.id, 100);
         done();
       });
-    });
-  });
-  describe('Connecting to remote server', function () {
-    it('should throw an error if 1st argument is a string w/o a callback', function (done) {
-      const client = new m2m.Client();
-      assert.strictEqual( typeof client, 'object' );
-      try{
-        client.connect('https://www.node-m2m.com');
-      }
-      catch(e){
-        assert.strictEqual( e.message, 'invalid arguments');
-        done();
-      }
-    });
-    /*it('should throw an error if 1st argument is an object w/o a callback', function (done) {
-      const client = new m2m.Client();
-      assert.strictEqual( typeof client, 'object' );
-      try{
-        client.connect({server:'https://www.node-m2m.com'});
-      }
-      catch(e){
-        assert.strictEqual( e.message, 'invalid arguments');
-        done();
-      }
-    });*/
-    it('start connecting if 1st argument is a string w/ a callback', function (done) {
-      const client = new m2m.Client();
-      let count = 0;
-      assert.strictEqual( typeof client, 'object' );
-      let callback = function(err, result){
-        if(count === 0 && result === 'success'){
-					done(); count++;
-        }
-      }
-      client.connect('https://www.node-m2m.com', callback);
-    });
-    it('start connecting if 1st argument is an object and a callback is provided', function (done) {
-      const client = new m2m.Client();
-
-      assert.strictEqual( typeof client, 'object' );
-      let callback = function(err, result){
-        assert.strictEqual( err, null );
-        assert.strictEqual( result, 'success' );
-				done();
-      }
-      client.connect(callback);
-    });
-    it('start connecting if only a callback argument is provided', function (done) {
-      const client = new m2m.Client();
-
-      assert.strictEqual( typeof client, 'object' );
-      let callback = function(err, result){
-        assert.strictEqual( err, null );
-        assert.strictEqual( result, 'success' );
-				done();
-      }
-      client.connect(callback);
     });
   });
   describe('Test a local device object property - device.getData()', function () {
@@ -1555,93 +1422,92 @@ describe('\nCreating a client object ...', function () {
       
       c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
     });
-  }); 
-  describe('create a local device object w/ getDevices() and w/ error object', function () {
-    it('should return w/ an error object', function (done) {
-
-      let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], error:'test-error', _pid:'r-a', c:true, app:true, src:'client', reg:true};
-      c.setTestOption(true, spl);
-
+  });
+  describe('Connecting to remote server', function () {
+    it('should throw an error if arguments provided is invalid', function () {
       const client = new m2m.Client();
+      assert.strictEqual( typeof client, 'object' );
 
-      client.connect(function(err, result){
-        client.getDevices(function(err, devices){
-          if(err) {
-            assert.strictEqual(devices, null);
-            assert.strictEqual(err.message, 'invalid devices');
-          	done();
-          }
-					//done();
-				});	
-  
-      	try{
-		    	c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', error:'invalid devices', _pid:'getDevices', devices:[100, 200]});
-				}
-				catch(e){
-					throw 'invalid test';
-		    }
-
-    	});
-  	});
- 	});
-  describe('create a device object w/ getDevices()', function () {
-    it('should return the available remote devices w/o error', function (done) {
-
-      let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], _pid:'r-a', c:true, app:true, src:'client', reg:true};
-      c.setTestOption(true, spl);
-
+      try{
+        client.connect(function(){}); 
+      	client.accessDevice(100, 200);
+      }
+			catch(e){
+        assert.strictEqual( e.message, 'access id more than 1 must be contained in an array' ); 
+      }
+    });
+    // no test coverage improvement
+    it('should throw an error if argument is not an integer', function (done) {
       const client = new m2m.Client();
+      assert.strictEqual( typeof client, 'object' );
+			client.connect(function(err, result){});
 
       let count = 0;
-      client.connect(function(err, result){
-        client.getDevices(function(err, devices){
-					if(err) return console.error('getDevices err:', err);
-					console.log('devices', devices);
-          assert.strictEqual(typeof devices, 'object');
-          assert.strictEqual(devices[0], 100);
-          if(count === 0){
-          	done();count++;
-					}
-				});	
-
-		    let device = client.accessDevice(100);
-   
-      	try{
-		    	c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', _pid:'getDevices', devices:[100, 200]});
-				}
-				catch(e){
-					throw 'invalid test';
-		    }
-    	});
-  	});
- 	});
-  it('should proceed w/o an error if invoke again', function (done) {
-    let spl = {id:'12ab8c92', appId:'12ab8c92', userDevices:[], _pid:'r-a', c:true, app:true, src:'client', reg:true};
-    c.setTestOption(true, spl);
-
-    const client = new m2m.Client();
-
-		let count = 0;
-    client.connect(function(err, result){
-      client.getDevices(function(err, devices){
-				if(err) throw err;
-				assert.strictEqual(typeof devices, 'object');
-        assert.strictEqual(devices[0], 100);
-        if(count === 0){
-        	done();count++;
-				}
-			});	
-
-	    let device = client.accessDevice(100);
-
-    	try{
-	    	c.emitter.emit('12ab8c92' + 'getDevices', {id:'12ab8c92', _pid:'getDevices', devices:[100, 200]});
-			}
-			catch(e){
-				throw 'invalid test';
+	    try{
+	      let device = client.accessDevice(100.5);
 	    }
+			catch(e){
+				assert.strictEqual( e.message, 'server id must be an integer number' );
+        if(count === 0){
+	      	done();count++;
+        }
+	    }
+    });
+    it('should throw an error if 1st argument is a string w/o a callback', function (done) {
+      const client = new m2m.Client();
+      assert.strictEqual( typeof client, 'object' );
+      try{
+        client.connect('https://www.node-m2m.com');
+      }
+      catch(e){
+        assert.strictEqual( e.message, 'invalid arguments');
+        done();
+      }
+    });
+    it('should throw an error if 1st argument is an object w/o a callback', function (done) {
+      const client = new m2m.Client();
+      assert.strictEqual( typeof client, 'object' );
+      try{
+        client.connect({server:'https://www.node-m2m.com'});
+      }
+      catch(e){
+        assert.strictEqual( e.message, 'invalid arguments');
+        done();
+      }
+    });
+    it('start connecting if the connect method 1st argument is a string w/ a callback', function (done) {
+      const client = new m2m.Client();
+      let count = 0;
+      assert.strictEqual( typeof client, 'object' );
+      let callback = function(err, result){
+        if(count === 0 && result === 'success'){
+					done(); count++;
+        }
+      }
+      client.connect('https://www.node-m2m.com', callback);
+    });
+    it('start connecting if the connect meyhod 1st argument is an object and a callback is provided', function (done) {
+      const client = new m2m.Client();
 
- 		});
+      assert.strictEqual( typeof client, 'object' );
+      let callback = function(err, result){
+        assert.strictEqual( err, null );
+        assert.strictEqual( result, 'success' );
+				done();
+      }
+      client.connect({server:'https://www.node-m2m.com'}, callback);
+    });
+    it('start connecting if connect has only a callback argument is provided', function (done) {
+      const client = new m2m.Client();
+
+      assert.strictEqual( typeof client, 'object' );
+      let callback = function(err, result){
+        assert.strictEqual( err, null );
+        assert.strictEqual( result, 'success' );
+				done();
+      }
+      client.connect(callback);
+    });
   });
   describe('create a device object w/ setupInfo() w/o an error', function () {
     it('should return w/o an error object', function (done) {
@@ -1698,8 +1564,8 @@ describe('\nCreating a client object ...', function () {
     	});
   	});
  	});
-  describe('create a device object w/ setupInfo() w/o callback', function () {
-    it('should throw an error', function (done) {
+  describe('create a device object invoking device.setupInfo() w/o a callback', function () {
+    it('should throw an error since callback is required', function (done) {
 
       const client = new m2m.Client();
 
@@ -1714,7 +1580,6 @@ describe('\nCreating a client object ...', function () {
           assert.strictEqual(e.message, 'callback is required');
 					done();
 		    }
-
     	});
   	});
  	});

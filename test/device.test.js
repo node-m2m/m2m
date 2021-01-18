@@ -19,18 +19,6 @@ describe('\nCreating a device object ...', function () {
 
     });
   });
-  describe('Set Device Option', function () {
-    it('set a module option using the .setOption()', function () {
-      let options = {code:{allow:true, filename:'device.js'}};
-
-      const device = new m2m.Device(100);
-      assert.strictEqual( typeof device, 'object' );
-
-      device.setOption(options);
-      assert.strictEqual( options,  c.options );
-
-    });
-  });
   describe('create a device object using a single argument device id of type string', function () {
     it('should return an object with a property id of type integer', function () {
       const device = new m2m.Device('100');
@@ -1057,43 +1045,6 @@ describe('\nCreating a device object ...', function () {
       c.emitter.emit(eventName, {error:'invalid test', event:false, id:device.id, output:'state', pin:35, state:true});
     });
   });
-  /*describe('Using setGpio() as simulation w/ valid pin 36', function () {
-    it('should invoke callback w/ gpio object', function (done) {
-
-      if(os.arch() !== 'arm'){
-        done();
-        return console.log('Sorry, this test module requires a raspberry pi as test device'); 
-      }
-    
-      let spl = {id:233, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
-
-      const device = new m2m.Device(233);
-      assert.strictEqual( typeof device, 'object' );
-
-			let eventName = 'gpio-Output' + device.id + 36;
-
-      let count = 0; 
-      let callback = function (err, gpio){
-        if(count === 0){
-					assert.strictEqual( err, null );
-          assert.strictEqual( typeof gpio, 'object' );
-          assert.strictEqual( gpio.state, false );
-	       	done();count++;
-        }
-      }
-
-      try{
-      	device.setGpio({mode:'output', pin:36, type:'simulation'}, callback );
-      }
-      catch(e){
-        throw 'invalid test'; 
-      }
-
-      c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:36, state:false});
-
-    });
-  });*/
   describe('Using setGpio() in Raspberry Pi to create an output w/ invalid pin 43', function () {
     it('should invoke callback w/ error object', function (done) {
 
