@@ -2,9 +2,11 @@
 
 m2m is a client module for machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
 
-The module's API is a FaaS (Function as a Service) also called "serverless" making it easy for everyone to develop applications in telematics, data acquisition, process automation, IoT network gateways, business workflow automation and many others.
+The module's API is a FaaS (Function as a Service) also called "serverless" making it easy for everyone to develop applications in telematics, data acquisition, process automation, IoT network gateways, workflow orchestration and many others.
 
-Each user can create multiple client applications accessing multiple remote devices/servers through its user assigned device *id's*. Access to remote devices/servers is restricted to authenticated users only. Communications between client and device/server applications are fully encrypted using TLS protocol.
+Each user can create multiple client applications accessing multiple remote devices/micro servers through its user assigned device *id's*.
+
+Access to remote devices/servers is restricted to authenticated users only. Communications between client and device/server applications are fully encrypted using TLS protocol.
 
 To use this module, users must create an account and register their devices with [node-m2m](https://www.node-m2m.com).
 
@@ -22,8 +24,10 @@ To use this module, users must create an account and register their devices with
    - [Example 4 - Sending Data to Remote Device/Server](#example4)
 6. [Http REST API Simulation](#http-rest-api-simulation)
 7. [Browser Interaction](#browser-interaction)
-   - [Online Code Editing](#online-code-editing)
-   - [Restarting Application or Auto Restart Setup](#auto-restart-setup)
+   - [Naming Your Client Application for Tracking Purposes](#client-name-tracking)
+   - [Remote Application Code Editing](#online-code-editing)
+   - [Auto Restart Setup](#auto-restart-setup)
+   - [Auto Configuration for Code Edit and Auto Restart](#auto-config)
 8. [Other FaaS functions](#other-faas-functions)
    - [Client request to get all available remote devices](#get-all-devices)
    - [Client request to get each device resources setup](#device-setup)
@@ -38,27 +42,36 @@ To use this module, users must create an account and register their devices with
 
 ## Node.js version requirement <a name="node-version"></a>
 
-* Node.js Versions: 8.x, 9.x, 10.x, 11.x, 12.x
+* Node.js versions: 8.x, 9.x, 10.x, 11.x, 12.x, 14.x
 
 ## Installation <a name="installation"></a>
 ```js
 $ npm install m2m
 ```
 
-This module uses array-gpio for Raspberry Pi peripheral access (GPIO, I2C, SPI and PWM).
-
-You need to install it as a separate module for Raspberry Pi devices.
+![]()
+###  Raspberry Pi peripheral access (GPIO, I2C, SPI and PWM). <a name="rpi-peripheral-access"></a>
+For projects requiring raspberry pi peripheral access such as GPIO, I2C, SPI and PWM, you will need to install *array-gpio* as a separate module.
 ```js
 $ npm install array-gpio
 ```
 
+![]()
 ## Quick Tour <a name="quicktour"></a>
 
-For this quick tour, we will use two computers communicating with each other using the internet.
+For this quick tour, we will let two computers communicate with each other using the internet.
 
-One computer will act as the *remote device* that will generate random numbers and simulate a GPIO output using pin 33.
+We will create a micro server (*remote device*) that will generate random numbers as its sole service.
 
-The other computer will host a *client application* that will access the random numbers and control the GPIO output using a console.
+And a client application (*remote client*) that will access the random numbers from the remote device.
+
+The remote client will access the random numbers using two methods.
+
+The first one using a pull-method, the client will capture the random numbers using a one time function call.
+
+And the second one using a push-method, the client will watch the random numbers for any changes to its value <br> every 5 seconds. If the value changes, only then the remote device will send the new random value to the remote client.   
+
+
 
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
 [](quicktour.svg)
@@ -91,12 +104,6 @@ device.connect(function(err, result){
       let value =   Math.floor(( Math.random() * 100) + 25);
       data.send(value);
     });
-
-    device.setGpio({type:'simulation', mode:'output', pin:33 }, function (err, gpio){
-      if(err) return console.error('setGpio output pin 33 error:', err.message);
-
-      console.log('gpio output pin', gpio.pin, 'state', gpio.state);
-    });
 });
 ```
 
@@ -120,7 +127,7 @@ $ node device.js -r
 ```
 It will ask you to enter your credentials again. Enter your credentials to renew your token.
 
-### Client Application Setup
+### Remote Client Setup
 Similar with the remote device setup, create a client project directory and install m2m.
 ```js
 $ npm install m2m
@@ -140,7 +147,7 @@ client.connect(function(err, result){
     // create a local device object with access to remote device 100
     let device = client.accessDevice(100);
 
-    // capture 'random' data using a function call
+    // capture 'random' data using a one-time function call
     device.channel('random').getData(function(err, value){
         if(err) return console.error('getData random error:', err.message);
         console.log('random value', value); // 97
@@ -151,23 +158,8 @@ client.connect(function(err, result){
     // the remote device will scan/poll the data every 5 secs for any value changes
     device.channel('random').watch(function(err, value){
         if(err) return console.error('watch random error:', err.message);
-        console.log('watch random value', value); // 97, 101, 115 ...
+        console.log('watch random value', value); // 81, 68, 115 ...
     });
-
-    // Turn ON gpio output pin 33
-    device.gpio({mode:'out', pin:33}).on();
-
-    // Turn OFF gpio pin 33 with 2 secs delay
-    device.gpio({mode:'out', pin:33}).off(2000);
-
-    // or
-
-    // Turn ON gpio output pin 33
-    device.output(33).on();
-
-    // Turn OFF gpio pin 33 with 2 secs delay
-     device.output(33).off(2000);
-
 });
 ```
 Start your application.
@@ -181,8 +173,6 @@ You should get a similar output result as shown below.
 ...
 random value 97
 watch random value 81
-remote device output pin 33 ON true
-remote device output pin 33 OFF false
 watch random value 68
 watch random value 115
 ...
@@ -248,7 +238,7 @@ client.connect(function(err, result){
     console.log('temperature value', value); // 23.51, 23.49, 23.11
   });
 
-  // or
+  // or use accessDevice() method w/ a callback
 
   client.accessDevice(110, function (err, device){
     if(err) return console.error('accessDevice 110 error:', err.message);
@@ -258,7 +248,6 @@ client.connect(function(err, result){
       console.log('temperature value', value); // 23.51, 23.49, 23.11
     });
   });
-
 });
 ```
 #### Client application in London
@@ -296,8 +285,8 @@ client.connect(function(err, result){
 
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/example2.svg?sanitize=true)
 
-### Configure device1 for GPIO input monitoring
-Install array-gpio both on device1 and device2 for GPIO monitoring and control
+### Configure device1 for gpio input monitoring
+Install array-gpio both on device1 and device2
 ```js
 $ npm install m2m array-gpio
 ```
@@ -312,20 +301,16 @@ device.connect(function(err, result){
 
   console.log('result:', result);
 
-  // set GPIO inputs with a callback to execute any custom logic
-  // optional callback will be executed if any of the input pin state changes
-  // as triggered by any sensor/switch connected to pin 11 and 13
   device.setGpio({mode:'input', pin:[11, 13]}, function(err, gpio){
     if(err) return console.error('setGpio input error:', err.message);
 
     console.log('input pin', gpio.pin, 'state', gpio.state);
     // add your custom logic here
-
   });
 });
 ```
 
-### Configure device2 for GPIO output control
+### Configure device2 for gpio output control
 ```js
 $ npm install m2m array-gpio
 ```
@@ -339,36 +324,16 @@ device.connect(function(err, result){
 
   console.log('result:', result);
 
-  // set gpio with an optional callback, it will be executed
-  // if any of the output pin state changes as controlled by the client
   device.setGpio({mode:'output', pin:[33, 35]}, function(err, gpio){
     if(err) return console.error('setGpio output error:', err.message);
 
-    // pin 33 is ON
-    if(gpio.pin === 33 && gpio.state === true ){
-      console.log('logic 1', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic 1 here
-    }
-    // pin 33 is OFF
-    if(gpio.pin === 33 && gpio.state === false ){
-      console.log('logic 2', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic 2 here
-    }
-    // pin 35 is ON
-    if(gpio.pin === 35 && gpio.state === true ){
-      console.log('logic 3', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic 3 here
-    }
-    // pin 35 is OFF
-    if(gpio.pin === 35 && gpio.state === false ){
-      console.log('logic 4', 'input pin', gpio.pin, 'state', gpio.state);
-      // execute custom logic 4 here
-    }
+    console.log('output pin', gpio.pin, 'state', gpio.state);
+    // add your custom logic here
   });
 });
 ```
 
-### Client application to control device1 and device2
+### Client to monitor device1 gpio inputs and control device2 gpio outputs
 ```js
 $ npm install m2m
 ```
@@ -385,28 +350,34 @@ client.connect(function(err, result){
     let device1 = client.accessDevice(120);
     let device2 = client.accessDevice(130);
 
-    // using gpio() method for gpio control
-    device1.gpio({mode:'in', pin:13}).watch(function(err, state){
+    // using gpio() method for gpio input pin monitoring
+    // and output pin control
+    device1.gpio({mode:'in', pin:11}).watch(function(err, state){
       if(err) return console.error('watch pin 13 error:', err.message);
-      console.log('device1 input 13 state', state);
+      console.log('device1 input 11 state', state);
 
       if(state){
+        console.log('turn ON device2 output 33');
         device2.gpio({mode:'out', pin:33}).on();
       }
       else{
+        console.log('turn OFF device2 output 33');
         device2.gpio({mode:'out', pin:33}).off();
       }
     });
 
-    // using in/input() or out/output() method for gpio control
-    device1.in(11).watch(function(err, state){
+    // using in/input() or out/output() method
+    // for gpio input pin monitoring and output pin control
+    device1.in(13).watch(function(err, state){
       if(err) return console.error('watch pin 11 error:', err.message);
-      console.log('device1 input 11 state', state);
+      console.log('device1 input 13 state', state);
 
       if(state){
+        console.log('turn OFF device2 output 35');
         device2.out(35).off();
       }
       else{
+        console.log('turn ON device2 output 35');
         device2.out(35).on();
       }
     });
@@ -418,7 +389,7 @@ client.connect(function(err, result){
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/example3.svg?sanitize=true)
 [](example3.svg)
 
-#### Configure each remote machine's embedded rpi microcontroller with a unique device *id* and set pin 40 for GPIO output control
+#### Configure each remote machine's embedded rpi microcontroller with a unique device *id* <br> and set pin 40 for GPIO output control
 
 Install array-gpio on all remote machines for GPIO output control
 ```js
@@ -496,12 +467,12 @@ function machineControl(devices){
 ## Example 4 <a name="example4"></a>
 [](https://raw.githubusercontent.com/EdoLabs/src2/master/example4.svg?sanitize=true)
 [](example1.svg)
-### Sending Data To Remote Device or Server
+### Sending Data To Remote Server
 
 #### Client
 ```js
-const m2m = require('m2m');
 const fs = require('fs');
+const m2m = require('m2m');
 
 let client = new m2m.Client();
 
@@ -511,14 +482,16 @@ client.connect(function(err, result){
 
   let server = client.accessDevice(500);
 
-  let file = fs.readFileSync('myFile.txt', 'utf8');
+  // sending a text file to a remote server
+  let myfile = fs.readFileSync('myFile.txt', 'utf8');
 
-  server.channel('send-file').sendData( file , function(err, result){
+  server.channel('send-file').sendData( myfile , function(err, result){
     if(err) return console.error('send-file error:', err.message);
 
     console.log('send-file', result); // {result: 'success'}
   });
 
+  // sending json data to a remote server
   let mydata = [{name:'Ed'}, {name:'Jim', age:30}, {name:'Kim', age:42, address:'Seoul, South Korea'}];
 
   server.channel('send-data').sendData( mydata , function(err, result){
@@ -527,8 +500,8 @@ client.connect(function(err, result){
     console.log('send-data', result); // {data: 'valid'}
   });
 
+  // sending data to a remote server w/o a response
   let num = 1.2456;
-  // send a data w/o a response
   server.channel('number').sendData(num);
 
 });
@@ -546,6 +519,7 @@ server.connect(function(err, result){
   if(err) return console.error('connect error:', err);
   console.log('result:', result);
 
+  // channel 'send-file' service
   server.setChannel('send-file', function(err, data){
     if(err) return console.error('send-file error:', err.message);
 
@@ -559,12 +533,12 @@ server.connect(function(err, result){
     });
   });
 
+  // channel 'send-data' service
   server.setChannel('send-data', function(err, data){
     if(err) return console.error('send-data error:', err.message);
 
     // data.payload  [{name:'Ed'}, {name:'Jim', age:30}, {name:'Kim', age:42, address:'Seoul, South Korea'}];
     console.log('data.payload', data.payload);
-
     // send a response
     if(Array.isArray(data.payload)){
       data.send({data: 'valid'});
@@ -574,6 +548,7 @@ server.connect(function(err, result){
     }
   });
 
+  // channel 'number' service
   server.setChannel('number', function(err, data){
     if(err) return console.error('number error:', err.message);
 
@@ -648,86 +623,97 @@ server.connect((err, result) => {
 
 ## Browser Interaction <a name="browser-interaction"></a>
 
-### Application Online Code Editing <a name="online-code-editing"></a>
+### Naming Your Client Application For Tracking Purposes<a name="client-name-tracking"></a>
 
-Using the browser, you can download, edit and upload your client/device application code from or into your remote devices from anywhere.
+Unlike *device/server* applications, users can create *client* applications without registering it with **node-m2m** server.
 
-To allow the browser to communicate with your application, you need to set a *code* permission option as shown below.
+Node-m2m tracks all client applications through a dynamic string *client id*.
+If you have multiple client applications, <br> it may be difficult to track all your clients by just referring to its *client id* from the browser interface.
+
+You can assign a **name**, **location** and a **description** properties to your clients as shown below.
+
+This will make it easy to track your clients using the browser interface by referring to  its name, location and description.
 ```js
-{code:{allow:true, filename:'myAppFileName.js'}}
+const m2m = require('m2m');
+
+const client = new m2m.Client({name:'Main client', location:'Boston, MA', description:'Test client app'});
+
+client.connect((err, result) => {
+  if(err) return console.error('connect error:', err);
+  console.log('result:', result);
+  ...
+});
+```
+
+
+### Remote Application Code Editing <a name="online-code-editing"></a>
+
+Using the browser interface, you can download, edit and upload your application code from or into your remote clients and devices from anywhere.
+
+To allow the browser to communicate with your application, you need to edit your project's package.json and add the following *m2mConfig* property
+as shown below.
+
+
+```js
+"m2mConfig": {
+  "code": {
+    "allow": true,
+    "filename": "device.js"
+  }
+}
 ```
 You need to set the property *allow* to true and provide the *filename* of your application.
 
-Also for client application, you can set a *name*, *location* and *description* property option
-especially if you have multiple clients to monitor as shown below. For device application, you do not need to set these properties.
+From the example above, the filename of the application is *device.js*. Replace it with the actual filename of your application.
+
+
+### Auto Restart Setup <a name="auto-restart-setup"></a>
+
+Using the browser interface, you may need to restart your application after a module update, application code edit/update, remote restart command etc.
+
+Node-m2m uses the **nodemon** module to restart your application process.
+
+You can add the following *nodemonConfig* and *scripts* properties in your project's npm package.json as a basic auto restart configuration.
 ```js
-{code:{allow:true, filename:'myAppFilename.js'}, name:'myAppName', location:'myAppLocation', description:'myAppDescription'}}
-```
-#### Example
-
-##### Client Application
-
-```js
-// client.js
-
-const m2m = require('m2m');
-
-const client = new m2m.Client();
-
-client.connect(function (err, result) {
-  if(err) return console.error('connect error:', err);
-  console.log('result:', result);
-
-  client.setOption({code:{allow:true, filename:'client.js'}, name:'Master App', location:'New York, NY', description:'Main App'});
-
-  // client application logic ...
-});
-```
-##### Device Application
-```js
-// device.js
-
-const m2m = require('m2m');
-
-const device = new m2m.Device(1000);
-
-device.connect(function (err, result) {
-  if(err) return console.error('connect error:', err);
-  console.log('result:', result);
-
-  // Don't set the name, location and description properties
-  // You will provide them during device registration
-  device.setOption({code:{allow:true, filename:'device.js'}});
-
-  // device application logic ...
-});
-```
-### Restarting Application or Auto Restart Setup <a name="auto-restart-setup"></a>
-
-During browser interaction, your client/device application process will need to be restarted after a module update, application code update, remote command restart etc.
-
-Node-m2m uses nodemon to restart your application process. You can add the following section in your project's package.json as a basic auto restart configuration.
-```js
-"scripts": {
-  "start": "nodemon device.js --delay 2000ms"
-},
 "nodemonConfig": {
+  "delay":"2000",
   "verbose": true,
   "restartable": "rs",
   "ignore": [".git", "public"],
   "ignoreRoot": [".git", "public"],
   "execMap": {"js": "node"},
   "watch": ["node_modules/m2m/mon"],
-  "env": {"NODE_ENV": "development"},
   "ext": "js,json"
 }
+"scripts": {
+  "start": "nodemon device.js"
+},
 ```
-From the configuration section above, the filename of your application is *device.js*. Replace it with the actual filename of your application.
- Start your application using npm start.
+From the example above, the filename of the application is *device.js*. Replace it with the actual filename of your application when adding the scripts property. Then restart your node process using *npm start* command as shown below.
 ```js
 $ npm start
 ```
-For other custom nodemon configuration, please read nodemon documentation.
+For other custom nodemon configuration, please read the nodemon documentation.
+
+## Auto configuration for Code Edit and Auto Restart <a name="auto-config"></a>
+To automatically configure your package.json for code editing and auto restart, start your node process with -config flag.
+
+**m2m** will attempt to configure your package.json by adding/creating the *m2mConfig*, *nodemonConfig*, and *scripts* properties to your existing project's package.json. If your m2m project does not have an existing package.json, it will create a new one.  
+
+Assuming your application filename is *device.js*, start your node application as shown below.
+```js
+$ node device -config
+```
+
+Stop your node process using *ctrl-c*. Check and verify your package.json if it was properly configured.
+
+If the configuration is correct, you can now run your node process using *npm start* command.
+```js
+$ npm start
+```
+
+Your node process or application will automatically restart after a remote code update, an npm module update, a remote restart command etc. using the browser interface.
+
 
 ## Other FaaS functions <a name="other-faas-functions"></a>
 
