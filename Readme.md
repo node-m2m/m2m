@@ -14,37 +14,37 @@ To use this module, users must create an account and register their devices with
 
 # Table of contents
 1. [Supported Devices](#supported-devices)
-2. [Node.js version requirement](#node-version)
+2. [Node.js version requirement](#nodejs-version-requirement)
 3. [Installation](#installation)
-4. [Quick Tour](#quicktour)
+4. [Quick Tour](#quick-tour)
 5. [Examples](#examples)
-   - [Example 1 - Using MCP 9808 Temperature Sensor](#example1)
-   - [Example 2 - GPIO Input/Output Control](#example2)
-   - [Example 3 - Remote Machine Control](#example3)
-   - [Example 4 - Sending Data to Remote Device/Server](#example4)
+   - [Example 1 Using MCP 9808 Temperature Sensor](#example-1-using-mcp-9808-temperature-sensor)
+   - [Example 2 GPIO Input Monitor and Output Control](#example-2-gpio-input-monitor-and-output-control)
+   - [Example 3 Remote Machine Control](#example-3-remote-machine-control)
+   - [Example 4 Sending Data to Remote Device or Server](#example-4-sending-data-to-remote-device-or-server)
 6. [Http REST API Simulation](#http-rest-api-simulation)
 7. [Browser Interaction](#browser-interaction)
-   - [Naming Your Client Application for Tracking Purposes](#client-name-tracking)
-   - [Remote Application Code Editing](#online-code-editing)
+   - [Naming Your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
+   - [Remote Application Code Editing](#remote-application-code-editing)
    - [Auto Restart Setup](#auto-restart-setup)
-   - [Auto Configuration for Code Edit and Auto Restart](#auto-config)
+   - [Auto Configuration for Code Edit and Auto Restart](#auto-configuration-for-code-edit-and-auto-restart)
 8. [Other FaaS functions](#other-faas-functions)
-   - [Client request to get all available remote devices](#get-all-devices)
-   - [Client request to get each device resources setup](#device-setup)
+   - [Client request to get all available remote devices](#client-request-to-get-all-available-remote-devices)
+   - [Client request to get each device resources setup](#client-request-to-get-each-device-resources-setup)
 
 
-## Supported Devices <a name="supported-devices"></a>
+## Supported Devices
 
 * Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+ (generally all 40-pin models)
 * Linux Computer
 * Windows PC
 * Mac Computer
 
-## Node.js version requirement <a name="node-version"></a>
+## Node.js version requirement
 
 * Node.js versions: 8.x, 9.x, 10.x, 11.x, 12.x, 14.x
 
-## Installation <a name="installation"></a>
+## Installation
 ```js
 $ npm install m2m
 ```
@@ -57,7 +57,7 @@ $ npm install array-gpio
 ```
 
 ![]()
-## Quick Tour <a name="quicktour"></a>
+## Quick Tour
 
 For this quick tour, we will let two computers communicate with each other using the internet.
 
@@ -178,8 +178,9 @@ watch random value 115
 ...
 ```
 
-<a name="examples"></a>
-## Example 1 <a name="example1"></a>
+## Examples
+
+### Example 1 Using MCP 9808 Temperature Sensor
 
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/example1.svg?sanitize=true)
 [](example1.svg)
@@ -281,7 +282,7 @@ client.connect(function(err, result){
 });
 ```
 
-## Example 2 <a name="example2"></a>
+### Example 2 GPIO Input Monitor and Output Control
 
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/example2.svg?sanitize=true)
 
@@ -384,7 +385,7 @@ client.connect(function(err, result){
 });
 ```
 
-## Example 3 <a name="example3"></a>
+### Example 3 Remote Machine Control
 
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/example3.svg?sanitize=true)
 [](example3.svg)
@@ -464,7 +465,7 @@ function machineControl(devices){
   });
 }
 ```
-## Example 4 <a name="example4"></a>
+### Example 4 Sending Data to Remote Device or Server
 [](https://raw.githubusercontent.com/EdoLabs/src2/master/example4.svg?sanitize=true)
 [](example1.svg)
 ### Sending Data To Remote Server
@@ -559,7 +560,7 @@ server.connect(function(err, result){
 ```
 
 
-### Http REST API Simulation <a name="http-rest-api-simulation"></a>
+### Http REST API Simulation
 
 #### Client GET and POST method request
 ```js
@@ -621,9 +622,9 @@ server.connect((err, result) => {
 });
 ```
 
-## Browser Interaction <a name="browser-interaction"></a>
+## Browser Interaction
 
-### Naming Your Client Application For Tracking Purposes<a name="client-name-tracking"></a>
+### Naming Your Client Application for Tracking Purposes
 
 Unlike *device/server* applications, users can create *client* applications without registering it with **node-m2m** server.
 
@@ -646,7 +647,7 @@ client.connect((err, result) => {
 ```
 
 
-### Remote Application Code Editing <a name="online-code-editing"></a>
+### Remote Application Code Editing
 
 Using the browser interface, you can download, edit and upload your application code from or into your remote clients and devices from anywhere.
 
@@ -667,7 +668,7 @@ You need to set the property *allow* to true and provide the *filename* of your 
 From the example above, the filename of the application is *device.js*. Replace it with the actual filename of your application.
 
 
-### Auto Restart Setup <a name="auto-restart-setup"></a>
+### Auto Restart Setup
 
 Using the browser interface, you may need to restart your application after a module update, application code edit/update, remote restart command etc.
 
@@ -695,7 +696,7 @@ $ npm start
 ```
 For other custom nodemon configuration, please read the nodemon documentation.
 
-## Auto configuration for Code Edit and Auto Restart <a name="auto-config"></a>
+## Auto Configuration for Code Edit and Auto Restart
 To automatically configure your package.json for code editing and auto restart, start your node process with -config flag.
 
 **m2m** will attempt to configure your package.json by adding/creating the *m2mConfig*, *nodemonConfig*, and *scripts* properties to your existing project's package.json. If your m2m project does not have an existing package.json, it will create a new one.  
@@ -715,9 +716,9 @@ $ npm start
 Your node process or application will automatically restart after a remote code update, an npm module update, a remote restart command etc. using the browser interface.
 
 
-## Other FaaS functions <a name="other-faas-functions"></a>
+## Other FaaS functions
 
-### Client request to get all available remote devices <a name="get-all-devices"></a>
+### Client request to get all available remote devices
 ```js
 const m2m = require('m2m');
 
@@ -741,7 +742,7 @@ client.connect((err, result) => {
 });
 ```
 
-### Client request to get each device resources setup <a name="device-setup"></a>
+### Client request to get each device resources setup
 ```js
 const m2m = require('m2m');
 
