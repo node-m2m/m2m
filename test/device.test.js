@@ -6,7 +6,8 @@ const fs = require('fs');
 const m2m = require('m2m');
 const sinon = require('sinon');
 const assert = require('assert');
-const c = require('../lib/client.js');
+const { m2mTest } = require('../lib/client.js');
+
 
 describe('\nCreating a device object ...', function () {
   describe('create a device object using a single argument device id of type integer', function () {
@@ -129,7 +130,7 @@ describe('\nCreating a device object ...', function () {
     it('set a channel data if arguments are valid', function (done) {
 
       let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(200);
       assert.strictEqual( typeof device, 'object' );
@@ -142,7 +143,7 @@ describe('\nCreating a device object ...', function () {
         assert.strictEqual( typeof data, 'object' );
         done();
       });
-      c.emitter.emit(eventName, {event:true, id:device.id, name:channelName, result:'passed' });
+      m2mTest.testEmitter.emit(eventName, {event:true, id:device.id, name:channelName, result:'passed' });
     });
   });
 
@@ -203,7 +204,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
         device.setGpio({mode:'input', pin:15, type:'simulation'}, callback);
-        c.emitter.emit(eventName, {error:'invalid data', event:true, id:device.id, input:true, pin:15, state:true});
+        m2mTest.testEmitter.emit(eventName, {error:'invalid data', event:true, id:device.id, input:true, pin:15, state:true});
       }
       catch(e){
         throw 'invalid test';
@@ -263,7 +264,7 @@ describe('\nCreating a device object ...', function () {
 			catch(e){
         throw 'invalid test';
       }
-      c.emitter.emit(eventName, {event:false, id:device.id, output:true, pin:33, state:true});
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, output:true, pin:33, state:true});
       done();
     });
     it('should set multiple external gpio outputs in external type', function (done) {
@@ -279,7 +280,7 @@ describe('\nCreating a device object ...', function () {
     });
     it('should set multiple simulated gpio inputs if an optional callback is provided', function (done) {
       let spl = {id:210, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(210);
       assert.strictEqual( typeof device, 'object' );
@@ -294,12 +295,12 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'input', pin:[11,13], type:'simulation'}, callback );
-      c.emitter.emit(eventName, {event:true, id:device.id, input:'state', pin:13, state:true});
+      m2mTest.testEmitter.emit(eventName, {event:true, id:device.id, input:'state', pin:13, state:true});
     });
     it('should set multiple simulated gpio outputs if an optional callback is provided', function (done) {
     
 			let spl = {id:153, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
   
 		  const device = new m2m.Device(153);
       assert.strictEqual( typeof device, 'object' );
@@ -315,12 +316,12 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'output', pin:[36, 35], type:'simulation'}, callback );
-      c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:36, state:true});
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, output:'state', pin:36, state:true});
     });
     it('Should create a single gpio input object if a valid single pin argument is provided', function (done) {
     
       let spl = {id:250, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(250);
 
@@ -334,12 +335,12 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'input', pin:19, type:'simulation', id:device.id }, callback);
-      c.emitter.emit(eventName, {event:true, id:device.id, input:'state', pin:19, state:true});
+      m2mTest.testEmitter.emit(eventName, {event:true, id:device.id, input:'state', pin:19, state:true});
     });
     it('should set multiple simulated gpio inputs, invoke callback if a valid gpio data is available', function (done) {
     
       let spl = {id:245, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(245);
       assert.strictEqual( typeof device, 'object' );
@@ -358,12 +359,12 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'input', pin:[11, 13], type:'simulation' , id:device.id }, callback );
-      c.emitter.emit(eventName, {event:true, id:device.id, input:true, pin:11, state:true });
+      m2mTest.testEmitter.emit(eventName, {event:true, id:device.id, input:true, pin:11, state:true });
     });
     it('should set multiple simulated gpio outputs, invoke callback if a valid gpio data is available', function (done) {
     
       let spl = {id:270, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable( spl);
 
       const device = new m2m.Device(270);
       assert.strictEqual( typeof device, 'object' );
@@ -381,12 +382,12 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'output', pin:[33, 35], type:'simulation' , id:device.id }, callback );
-      c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:33, state:true });
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, output:'state', pin:33, state:true });
     });
     it('should set multiple simulated gpio outputs, invoke callback if a valid gpio "off" data is received', function (done) {
  
       let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(300);
       assert.strictEqual( typeof device, 'object' );
@@ -401,12 +402,12 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'output', pin:[33, 35], type:'simulation' , id:device.id }, callback );
-      c.emitter.emit(eventName, {id:device.id, output:true, off:true, pin:35, state:false});
+      m2mTest.testEmitter.emit(eventName, {id:device.id, output:true, off:true, pin:35, state:false});
     });
     it('should set multiple simulated gpio outputs, invoke callback if a valid gpio "on" data is received', function (done) {
  
       let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(100);
       assert.strictEqual( typeof device, 'object' );
@@ -424,12 +425,12 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'output', pin:[33, 35], type:'simulation' , id:device.id }, callback );
-      c.emitter.emit(eventName, {state:false, id:device.id, output:true, on:true, pin:33, state:true});
+      m2mTest.testEmitter.emit(eventName, {state:false, id:device.id, output:true, on:true, pin:33, state:true});
     });
     it('should invoke callback if external gpio input rcvd data has error', function (done) {
 
       let spl = {id:400, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(400);
       assert.strictEqual( typeof device, 'object' );
@@ -445,12 +446,12 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'input', pin:[11, 13], type:'external' , id:device.id }, callback );
-      c.emitter.emit(eventName, {error:'invalid data', event:true, id:device.id, input:true, pin:11, state:true});
+      m2mTest.testEmitter.emit(eventName, {error:'invalid data', event:true, id:device.id, input:true, pin:11, state:true});
     });
     it('should set multiple external gpio outputs if data rcvd is valid', function (done) {
 
  			let spl = {id:350, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
   
       const device = new m2m.Device(350);
       assert.strictEqual( typeof device, 'object' );
@@ -466,14 +467,14 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'output', pin:[33, 35], type:'external' , id:device.id }, callback );
-      c.emitter.emit(eventName, {event:false, src:'device', dst:'client', id:device.id, output:true, pin:33, state:true});
+      m2mTest.testEmitter.emit(eventName, {event:false, src:'device', dst:'client', id:device.id, output:true, pin:33, state:true});
     });
   });
   describe('should set external gpio inputs w/ invalid mode', function () {
     it('should throw an error', function (done) {
 
       let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
   
 
       const device = new m2m.Device(100);
@@ -513,7 +514,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.setGpio('input', callback );
-				c.emitter.emit(eventName, {id:device.id, input:true, pin:13, state:true});
+				m2mTest.testEmitter.emit(eventName, {id:device.id, input:true, pin:13, state:true});
 			}
       catch(e){
         assert.strictEqual( e.message, 'invalid arguments');
@@ -535,7 +536,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.setGpio({mode:'channel', pin:[11, 13], type:'external' , id:device.id }, callback );
-        c.emitter.emit(eventName, {id:device.id, input:true, pin:13, state:true});
+        m2mTest.testEmitter.emit(eventName, {id:device.id, input:true, pin:13, state:true});
 			}
       catch(e){
         assert.strictEqual( e.message, 'invalid arguments');
@@ -547,7 +548,7 @@ describe('\nCreating a device object ...', function () {
     it('should throw an error', function (done) {
 
 			let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
   
       const device = new m2m.Device(100);
       assert.strictEqual( typeof device, 'object' );
@@ -560,7 +561,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.setGpio({mode:'input', pin:['11', '13'], type:'external' , id:device.id }, callback );
-				c.emitter.emit(eventName, {id:device.id, input:true, pin:13, state:true});
+				m2mTest.testEmitter.emit(eventName, {id:device.id, input:true, pin:13, state:true});
 			}
       catch(e){
         assert.strictEqual( e.message, 'pin element must be an integer');
@@ -572,7 +573,7 @@ describe('\nCreating a device object ...', function () {
     it('should start connecting ...', function (done) {
 
       let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(200);
       assert.strictEqual( typeof device, 'object' );
@@ -586,7 +587,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.getApi('random', callback );
-        c.emitter.emit(eventName, {event:false, id:device.id, name:'random', result:'201' });
+        m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, name:'random', result:'201' });
 			}
       catch(e){
         assert.strictEqual(e,null);
@@ -598,7 +599,7 @@ describe('\nCreating a device object ...', function () {
     it('should start connecting ...', function (done) {
 
  			let spl = {id:100, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(100);
       assert.strictEqual( typeof device, 'object' );
@@ -612,7 +613,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.getApi({name:'random'}, callback );
-        c.emitter.emit(eventName, {event:false, id:device.id, name:'random', result:'passed'});
+        m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, name:'random', result:'passed'});
 			}
       catch(e){
         throw 'invalid test';
@@ -633,7 +634,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.getApi({name:33}, callback );
-        c.emitter.emit(eventName, {event:false, id:device.id, name:33, result:'passed'});
+        m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, name:33, result:'passed'});
   		}
       catch(e){
         assert.strictEqual( e.message, 'name property parameter must be a string');
@@ -663,7 +664,7 @@ describe('\nCreating a device object ...', function () {
     it('should start connecting ...', function (done) {
 
       let spl = {id:150, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(150);
       assert.strictEqual( typeof device, 'object' );
@@ -681,7 +682,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.setData(callback);
-        c.emitter.emit( eventName, {event:true, id:device.id, name:eventName, result:'passed', initValue:'109' });
+        m2mTest.testEmitter.emit( eventName, {event:true, id:device.id, name:eventName, result:'passed', initValue:'109' });
   		}
       catch(e){
         throw 'invalid test';
@@ -693,7 +694,7 @@ describe('\nCreating a device object ...', function () {
     it('should start connecting ...', function (done) {
 
       let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
   
       const device = new m2m.Device(200);
       assert.strictEqual( typeof device, 'object' );
@@ -711,7 +712,7 @@ describe('\nCreating a device object ...', function () {
 
       try{
       	device.setData(channelName, callback);
-        c.emitter.emit(eventName, {event:true, id:device.id, name:channelName, initValue:'55', result:'109' });
+        m2mTest.testEmitter.emit(eventName, {event:true, id:device.id, name:channelName, initValue:'55', result:'109' });
   		}
       catch(e){
         throw 'invalid test';
@@ -744,7 +745,7 @@ describe('\nCreating a device object ...', function () {
     it('should return w/ error connecting ...', function (done) {
 
       let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(300);
       assert.strictEqual( typeof device, 'object' );
@@ -766,14 +767,14 @@ describe('\nCreating a device object ...', function () {
         throw 'invalid test';
       } 
 
-      c.emitter.emit( eventName, {event:true, id:device.id, name:'test', error:'error-test', result:'passed' });          
+      m2mTest.testEmitter.emit( eventName, {event:true, id:device.id, name:'test', error:'error-test', result:'passed' });          
     });
   });
   describe('Using setData() w/ valid non-event args object', function () {
     it('should start connecting ...', function (done) {
 
       let spl = {id:300, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(300);
       assert.strictEqual( typeof device, 'object' );
@@ -797,14 +798,14 @@ describe('\nCreating a device object ...', function () {
       catch(e){
         throw 'invalid test';
       }
-      c.emitter.emit(eventName, {event:false, src:'browser', dst:'device', id:device.id, name:'test-random1', initValue:'109', result:'245' }); 
+      m2mTest.testEmitter.emit(eventName, {event:false, src:'browser', dst:'device', id:device.id, name:'test-random1', initValue:'109', result:'245' }); 
     });
   });
   describe('Using setData() w/ valid event-based args object', function () {
     it('should start connecting ...', function (done) {
 
       let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(200);
       assert.strictEqual( typeof device, 'object' );
@@ -829,7 +830,7 @@ describe('\nCreating a device object ...', function () {
         throw 'invalid test';
       }
 
-      c.emitter.emit(eventName, {event:true, src:'browser', dst:'device', id:device.id, name:'test-random', initValue:'109', result:'245' }); 
+      m2mTest.testEmitter.emit(eventName, {event:true, src:'browser', dst:'device', id:device.id, name:'test-random', initValue:'109', result:'245' }); 
     });
   });
   describe('Using setGpio() in Raspberry Pi to create an input w/ invalid pin', function () {
@@ -841,7 +842,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:231, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(231);
       assert.strictEqual( typeof device, 'object' );
@@ -867,7 +868,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:233, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(233);
       assert.strictEqual( typeof device, 'object' );
@@ -891,7 +892,7 @@ describe('\nCreating a device object ...', function () {
         throw 'invalid test'; 
       }
 
-      c.emitter.emit(eventName, {event:false, id:device.id, input:'state', pin:15, state:false});
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, input:'state', pin:15, state:false});
 
     });
   });
@@ -904,7 +905,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:233, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(233);
       assert.strictEqual( typeof device, 'object' );
@@ -927,7 +928,7 @@ describe('\nCreating a device object ...', function () {
         throw 'invalid test'; 
       }
 
-      c.emitter.emit(eventName, {event:false, id:device.id, input:'state', pin:41, state:false});
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, input:'state', pin:41, state:false});
 
     });
   });
@@ -941,7 +942,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:250, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(250);
       assert.strictEqual( typeof device, 'object' );
@@ -957,7 +958,7 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'input', pin:[11, 13], id:device.id }, callback );
-      c.emitter.emit(eventName, {event:false, id:device.id, input:true, pin:11, state:true });
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, input:true, pin:11, state:true });
     });
   });
   describe('Using setGpio() in Raspberry Pi to create an event-based input w/ valid rcvd data', function () {
@@ -969,7 +970,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:350, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(350);
       assert.strictEqual( typeof device, 'object' );
@@ -986,7 +987,7 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'input', pin:[11, 13], id:device.id }, callback );
-      c.emitter.emit(eventName, {event:true, id:device.id, input:'state', pin:13, state:true , initValue:true});
+      m2mTest.testEmitter.emit(eventName, {event:true, id:device.id, input:'state', pin:13, state:true , initValue:true});
     });
   });
   describe('Using setGpio() in Raspberry Pi to create an event-based input w/ error in rcvd data', function () {
@@ -998,7 +999,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:450, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(450);
       assert.strictEqual( typeof device, 'object' );
@@ -1014,7 +1015,7 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'input', pin:[11, 13], id:device.id }, callback );
-      c.emitter.emit(eventName, {error:'invalid test', event:true, id:device.id, input:'state', pin:11, state:true});
+      m2mTest.testEmitter.emit(eventName, {error:'invalid test', event:true, id:device.id, input:'state', pin:11, state:true});
     });
   });
 	describe('Using setGpio() in Raspberry Pi to create an output w/ error in rcvd data', function () {
@@ -1026,7 +1027,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:400, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(400);
       assert.strictEqual( typeof device, 'object' );
@@ -1042,7 +1043,7 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'output', pin:[33, 35], id:device.id }, callback );
-      c.emitter.emit(eventName, {error:'invalid test', event:false, id:device.id, output:'state', pin:35, state:true});
+      m2mTest.testEmitter.emit(eventName, {error:'invalid test', event:false, id:device.id, output:'state', pin:35, state:true});
     });
   });
   describe('Using setGpio() in Raspberry Pi to create an output w/ invalid pin 43', function () {
@@ -1054,7 +1055,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:232, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(232);
       assert.strictEqual( typeof device, 'object' );
@@ -1082,7 +1083,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:234, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(234);
       assert.strictEqual( typeof device, 'object' );
@@ -1105,7 +1106,7 @@ describe('\nCreating a device object ...', function () {
         throw 'invalid test'; 
       }
 
-      c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:41, state:false});
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, output:'state', pin:41, state:false});
 
     });
   });
@@ -1118,7 +1119,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:230, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(230);
       assert.strictEqual( typeof device, 'object' );
@@ -1133,7 +1134,7 @@ describe('\nCreating a device object ...', function () {
       }
 
       device.setGpio({mode:'output', pin:[33, 35], id:device.id}, callback );
-      c.emitter.emit(eventName, {event:false, id:device.id, output:'state', pin:35, state:false});
+      m2mTest.testEmitter.emit(eventName, {event:false, id:device.id, output:'state', pin:35, state:false});
     });
   });
   describe('Using setGpio() in Raspberry Pi to create an output w/ valid rcvd "on" data', function () {
@@ -1145,7 +1146,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:235, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(235);
       assert.strictEqual( typeof device, 'object' );
@@ -1161,7 +1162,7 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'output', pin:[33, 35], id:device.id}, callback );
-      c.emitter.emit(eventName, {event:false, on:true, state:true, id:device.id, output:'on', pin:33});
+      m2mTest.testEmitter.emit(eventName, {event:false, on:true, state:true, id:device.id, output:'on', pin:33});
     });
   });
   describe('Using setGpio() in Raspberry Pi to create an output w/ valid rcvd "off" data', function () {
@@ -1173,7 +1174,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:240, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(240);
       assert.strictEqual( typeof device, 'object' );
@@ -1189,7 +1190,7 @@ describe('\nCreating a device object ...', function () {
         }
       }
       device.setGpio({mode:'output', pin:33}, callback );
-      c.emitter.emit(eventName, {event:false, off:true, state:false, id:device.id, output:'off', pin:33});
+      m2mTest.testEmitter.emit(eventName, {event:false, off:true, state:false, id:device.id, output:'off', pin:33});
     });
   });
 	describe('Using setGpio() in non-raspberry pi sytem', function () {
@@ -1201,7 +1202,7 @@ describe('\nCreating a device object ...', function () {
       }
     
       let spl = {id:255, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-			c.setTestOption(true, spl);
+			m2mTest.enable(spl);
 
       const device = new m2m.Device(255);
       assert.strictEqual( typeof device, 'object' );
@@ -1238,6 +1239,68 @@ describe('\nCreating a device object ...', function () {
         done();
       }
      
+    });
+  });
+  describe('Invoking internal removeDataEvent() method using exit data', function () {
+    it('should return true if exit data is valid ...', function (done) {
+
+      const device = require('../lib/client.js');
+
+      let rxd = {appId:'acb234', exit:true, stopEvent:true};
+      let arrayData = [{appId:'acb234', watchTimeout:{}}, {appId:'acb678', watchTimeout:{}}];
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.removeDataEvent, 'function'); 
+
+        device.removeDataEvent(rxd, arrayData, function(result){
+          if(result){
+            done();
+          }
+        });
+      }, 110);
+         
+    });
+  });
+  describe('Invoking internal removeDataEvent() method using channel data', function () {
+    it('should return true if channel data is valid ...', function (done) {
+
+      const device = require('../lib/client.js');
+
+      let rxd = {id:'acb678', appId:'acb678', unwatch:true, name:'channel-data', src:'client', dst:'device'};
+      let arrayData = [{id:'acb678', appId:'acb678', name:'channel-data', watchTimeout:{}}, {id:'wrt543', appId:'wrt543', name:'channel-data', watchTimeout:{}}];
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.removeDataEvent, 'function'); 
+
+        device.removeDataEvent(rxd, arrayData, function(result){
+          assert.strictEqual( result, true); 
+          if(result){
+            done();
+          }
+        });
+      }, 120);
+         
+    });
+  });
+  describe('Invoking internal removeDataEvent() method using gpio pin data', function () {
+    it('should return true if gpio pin data is valid ...', function (done) {
+
+      const device = require('../lib/client.js');
+
+      let rxd = {id:'asd678', appId:'asd678', unwatch:true, pin:33, src:'client', dst:'device'};
+      let arrayData = [{id:'asd678', appId:'asd678', pin:33, watchTimeout:{}}, {id:'wrt543', appId:'wrt543', name:'channel-data', watchTimeout:{}}];
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.removeDataEvent, 'function'); 
+
+        device.removeDataEvent(rxd, arrayData, function(result){
+          assert.strictEqual( result, true); 
+          if(result){
+            done();
+          }
+        });
+      }, 130);
+         
     });
   });
 });

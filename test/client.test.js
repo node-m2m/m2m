@@ -1,17 +1,11 @@
 const fs = require('fs');
-const m2m = require('m2m');
+const m2m = require('../lib/m2m.js');
 const sinon = require('sinon');
 const assert = require('assert');
-const c = require('../lib/client.js');
+const { m2mTest } = require('../lib/client.js');
 
 let id1 = null;
 let id2 = null;
-
-fs.mkdir('node_modules/m2m/lib/sec', {recursive:true}, function (err){
-	if(err) throw err;
-	fs.writeFileSync('node_modules/m2m/mon', 'test');
-});
-
 
 before(() => {
   sinon.stub(console, 'log'); 
@@ -24,7 +18,7 @@ describe('\nStarting m2m ...', function () {
   describe('requiring m2m module', function () {
     it('should return an object with 4 methods', function () {
 
-      c.setTestOption(true);
+      m2mTest.enable();
 
       assert.strictEqual( m2m instanceof Object, true);
       assert.strictEqual( typeof m2m, 'object');
@@ -868,7 +862,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( err.message, 'fail');
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
     });
     it('should execute output .gpio().on() callback if gpio output state is true or ON', function (done) {
       const client = new m2m.Client();
@@ -885,7 +879,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
     });
     it('should execute output .gpio().off() callback if gpio output state is false or OFF', function (done) {
       const client = new m2m.Client();
@@ -902,7 +896,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, false);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
     });
     it('should execute output .gpio().state() callback if a valid data with error is returned', function (done) {
       const client = new m2m.Client();
@@ -919,7 +913,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( err.message, 'fail');
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
     });
     it('should execute output .gpio().state() callback if a valid data is rcvd', function (done) {
       const client = new m2m.Client();
@@ -936,7 +930,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
     });
     it('should execute output gpio().getState() callback and return the passed error argument', function (done) {
       const client = new m2m.Client();
@@ -953,7 +947,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( err.message, 'fail');
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
 
     });
     it('execute output gpio().getState() callback for valid data', function (done) {
@@ -971,7 +965,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
     });
 
     it('process input.gpio().state() if argument is valid', function (done) {
@@ -994,7 +988,7 @@ describe('\nCreating a client object ...', function () {
       catch(e){
         throw new Error('invalid test');
       }
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, input:'state', state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, input:'state', state:true });
 
     });
     it('should execute input .gpio().state() callback if a valid data with error is returned', function (done) {
@@ -1012,7 +1006,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( err.message, 'fail');
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, input:true, error:'fail' });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, input:true, error:'fail' });
     });
     it('execute input .gpio().state() callback for valid data', function (done) {
       const client = new m2m.Client();
@@ -1029,7 +1023,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, input:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, input:true, state:true });
     });
     it('execute input gpio().getState() callback and return an error argument for invalid data', function (done) {
       const client = new m2m.Client();
@@ -1046,7 +1040,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( err.message, 'test-fail');
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, error:'test-fail' });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, error:'test-fail' });
     });
     it('execute input gpio().getState() callback if returned data is valid', function (done) {
       const client = new m2m.Client();
@@ -1063,7 +1057,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:true });
     });
 
     it('execute input gpio().watch() callback for valid returned data', function (done) {
@@ -1081,7 +1075,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, false);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
     });
 
     it('execute input gpio().unwatch() callback and return the result argument as true for valid watch pin', function (done) {
@@ -1099,7 +1093,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, input:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, input:true, state:true });
     });
     it('execute input gpio().unwatch() callback and return the error argument as "invalid pin" for invalid watch pin', function (done) {
       const client = new m2m.Client();
@@ -1116,7 +1110,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, null);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, error:'invalid input', input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, error:'invalid input', input:true, state:false });
     });
   });
   describe('Test a local device object property - device.in()', function () {
@@ -1149,7 +1143,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:true });
     });
     it('execute in().watch() callback if gpio input pin is valid pin', function (done) {
       const client = new m2m.Client();
@@ -1166,7 +1160,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, false);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
     });
     it('execute in().watch(i) callback if gpio input watch interval is provided', function (done) {
       const client = new m2m.Client();
@@ -1183,7 +1177,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, false);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
     });
     it('execute in().watch(i) callback if gpio input watch argument is an object w/ property interval', function (done) {
       const client = new m2m.Client();
@@ -1200,7 +1194,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, false);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
     });
     it('execute in().watch(i) callback if gpio input watch argument is an object w/ property poll', function (done) {
       const client = new m2m.Client();
@@ -1217,7 +1211,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, false);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
     });
     it('execute in().watch(i) callback w/ error if argument{string) is invalid', function (done) {
       const client = new m2m.Client();
@@ -1236,7 +1230,7 @@ describe('\nCreating a client object ...', function () {
 				assert.strictEqual(e.message, 'invalid arguments');
 				done();
       }
-      c.emitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin,  _pid:_pid, input:true, state:false });
 
     });
     it('execute in().unwatch() callback and return the result argument as true if watch pin is valid', function (done) {
@@ -1254,7 +1248,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, true);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, input:true, state:false });
     });
     it('execute in().unwatch() callback and return the error argument as "invalid pin" for invalid watch pin', function (done) {
       const client = new m2m.Client();
@@ -1271,7 +1265,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, null);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, error:'invalid input', input:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, unwatch:true, _pid:_pid, error:'invalid input', input:true, state:false });
     });
   });
   describe('Test a local device object property - device.out()', function () {
@@ -1349,7 +1343,7 @@ describe('\nCreating a client object ...', function () {
         done();
       });
       
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, output:true, error:'fail' });
     });
     it('execute out().on() callback if a gpio output is true or ON', function (done) {
       const client = new m2m.Client();
@@ -1367,7 +1361,7 @@ describe('\nCreating a client object ...', function () {
         done();
       });
       
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
     });
     it('execute out().off() callback if a gpio output is false or OFF', function (done) {
       const client = new m2m.Client();
@@ -1384,7 +1378,7 @@ describe('\nCreating a client object ...', function () {
         assert.strictEqual( result, false);
         done();
       });
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
     });
     it('execute out().on(t) callback if a delay time is provided and a gpio output is true or ON', function (done) {
       const client = new m2m.Client();
@@ -1402,7 +1396,7 @@ describe('\nCreating a client object ...', function () {
         done();
       });
       
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:true });
     });
     it('execute out().off(t) callback if a delay time is provided and gpio output is false or OFF', function (done) {
       const client = new m2m.Client();
@@ -1420,7 +1414,7 @@ describe('\nCreating a client object ...', function () {
         done();
       });
       
-      c.emitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
+      m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid,  output:true, state:false });
     });
   });
   describe('Connecting to remote server', function () {
@@ -1512,8 +1506,8 @@ describe('\nCreating a client object ...', function () {
   describe('create a device object w/ setupInfo() w/o an error', function () {
     it('should return w/o an error object', function (done) {
 
-      let spl = {id:'12ab8c92', appId:'12ab8c92', _pid:'r-a', c:true, app:true, src:'client', reg:true};
-      c.setTestOption(true, spl);
+      let spl = {id:'12ab8c92', appId:'12ab8c92', _pid:'r-a', m2mTest:true, app:true, src:'client', reg:true};
+      m2mTest.enable(spl);
 
       const client = new m2m.Client();
 
@@ -1528,7 +1522,7 @@ describe('\nCreating a client object ...', function () {
     		});
   
       	try{
-		    	c.emitter.emit(device.id + 'setupData', {id:device.id, _pid:'setupData', setupData:true});
+		    	m2mTest.testEmitter.emit(device.id + 'setupData', {id:device.id, _pid:'setupData', setupData:true});
 				}
 				catch(e){
 					throw 'invalid test';
@@ -1555,7 +1549,7 @@ describe('\nCreating a client object ...', function () {
     		});
   
       	try{
-		    	c.emitter.emit(device.id + 'setupData', {id:device.id, error:'invalid devices', _pid:'setupData', setupData:true, devices:[100, 200]});
+		    	m2mTest.testEmitter.emit(device.id + 'setupData', {id:device.id, error:'invalid devices', _pid:'setupData', setupData:true, devices:[100, 200]});
 				}
 				catch(e){
 					throw 'invalid test';
@@ -1583,4 +1577,85 @@ describe('\nCreating a client object ...', function () {
     	});
   	});
  	});
+  describe('create a client object invoking .getDevices() method', function () {
+    it('should return the available devices', function (done) {
+      let id = '12ab8c';
+      let spl = {id:id, appId:id, _pid:'r-a', app:true, src:'client', reg:true};
+      m2mTest.enable(spl);
+
+      const client = new m2m.Client();
+
+      client.connect(function(err, result){
+        client.getDevices(function(err, devices){
+    	    if(err) return console.error('getDevices err:', err);
+    	    console.log('devices', devices);
+          assert.strictEqual(Array.isArray(devices), true);
+          done();
+        });
+
+        let eventName = id + 'getDevices';
+        m2mTest.testEmitter.emit(eventName, {_pid:'getDevices', id:id, devices:[100, 200]});
+    	});
+   	});
+ 	});
+  describe('create a client object invoking internal .getRegisteredDevices() method', function () { //Array.isArray([1, 2, 3])
+    it('should return the available devices', function (done) {
+
+      const { client } = require('../lib/client.js');
+      const c1 = new m2m.Client();
+
+      c1.connect(function(err, result){
+        setTimeout(function(){
+		    client.getRegisteredDevices(function(devices){
+    	    console.log('devices', devices);
+          assert.strictEqual(Array.isArray(devices), true);
+          done();
+        });
+        }, 100);
+    	});
+  	});
+ 	});
+  describe('create a client object invoking internal .setGetDeviceIdListener() method w/ valid data', function () {
+    it('should accept the data internally if data is an integer or array', function () {
+      const { client } = require('../lib/client.js');
+      const c1 = new m2m.Client();
+
+      c1.connect(function(err, result){
+        assert.strictEqual( err, null );
+        let eventName = 'getDeviceId';
+        m2mTest.testEmitter.emit(eventName, [100, 200]);
+        m2mTest.testEmitter.emit(eventName, 200);
+    	});
+   	});
+ 	});
+  describe('create a client object invoking internal .getRemoteDevices() method w/ valid array data', function () {
+    it('should return a valid id internally if array data is valid', function (done) {
+      const { client } = require('../lib/client.js');
+      const c1 = new m2m.Client();
+
+      let count = 0;
+      let rxd = {devices:[{id:100}, {id:200}, {id:300}]};
+      c1.connect(function(err, result){
+		    client.getRemoteDevices(rxd, function(id){
+    	    console.log('id', id);
+          assert.strictEqual(typeof id, 'number');
+          setTimeout(function(){
+            if(count === 0){
+              done();count++;
+            }
+          }, 100);
+        });
+    	});
+   	});
+ 	});
 });
+
+
+
+
+
+
+
+
+
+
