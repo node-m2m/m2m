@@ -35,7 +35,7 @@ To use this module, users must create an account and register their devices with
 
 ## Supported Devices
 
-* Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+ (generally all 40-pin models)
+* Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
 * Linux Computer
 * Windows PC
 * Mac Computer
