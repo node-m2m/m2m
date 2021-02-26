@@ -8,7 +8,6 @@ const sinon = require('sinon');
 const assert = require('assert');
 const { m2mTest } = require('../lib/client.js');
 
-
 describe('\nCreating a device object ...', function () {
   describe('create a device object using a single argument device id of type integer', function () {
     it('should return an object with a property id of type integer', function () {

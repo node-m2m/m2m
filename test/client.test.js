@@ -1,11 +1,8 @@
 const fs = require('fs');
-const m2m = require('../lib/m2m.js');
+const m2m = require('m2m');
 const sinon = require('sinon');
 const assert = require('assert');
 const { m2mTest } = require('../lib/client.js');
-
-let id1 = null;
-let id2 = null;
 
 before(() => {
   sinon.stub(console, 'log'); 
