@@ -1,14 +1,41 @@
 /* Note: Some sections of this test module requires a raspberry pi as test device. */
-
 const os = require('os');
-
 const fs = require('fs');
 const m2m = require('m2m');
 const sinon = require('sinon');
 const assert = require('assert');
 const { m2mTest } = require('../lib/client.js');
 
-describe('\nCreating a device object ...', function () {
+let dl = 100;
+let deviceTotal = 0;
+let devicePassed = 0;
+let deviceFailed = 0;
+
+describe('\nset test stats ...', function() {
+before(function() {
+  // runs once before the first test in this block
+});
+
+after(function() {
+  // runs once after the last test in this block
+});
+
+beforeEach(function() {
+  // runs before each test in this block
+  deviceTotal++;
+});
+
+afterEach(function() {
+  // runs after each test in this block
+  if (this.currentTest.state === 'passed') {
+    devicePassed++;
+  }
+  if (this.currentTest.state === 'failed') {
+    deviceFailed++;
+  }
+});
+
+describe('\nDevice object test ...', function () {
   describe('create a device object using a single argument device id of type integer', function () {
     it('should return an object with a property id of type integer', function () {
       const device = new m2m.Device(100);
@@ -40,27 +67,31 @@ describe('\nCreating a device object ...', function () {
 
     });
   });
-  it('should throw an error if device id provided is too large', function (done) {
-    try{
-      const device = new m2m.Device(9999999999999999);
-      device.connect(function(){});
-      device.setChannel('test-channel', function(){});
-    }
-    catch(e){
-      assert.strictEqual( e.message, 'server/device id should not exceed 8 digits');
-      done();
-    }
+  describe('create a device object using a single argument w/ large device id', function () {
+    it('should throw an error if device id provided is too large', function (done) {
+      try{
+        const device = new m2m.Device(9999999999999999);
+        device.connect(function(){});
+        device.setChannel('test-channel', function(){});
+      }
+      catch(e){
+        assert.strictEqual( e.message, 'server/device id should not exceed 8 digits');
+        done();
+      }
+    });
   });
-  it('should throw an error if device argument is invalid', function (done) {
-    try{
-      const device = new m2m.Server(function(){});
-      device.connect(function(){});
-      device.setChannel('test-channel', function(){});
-    }
-    catch(e){
-      assert.strictEqual( e.message, 'invalid arguments');
-      done();
-    }
+  describe('create a device object w/ invalid arguments', function () {
+    it('should throw an error if device argument is invalid', function (done) {
+      try{
+        const device = new m2m.Server(function(){});
+        device.connect(function(){});
+        device.setChannel('test-channel', function(){});
+      }
+      catch(e){
+        assert.strictEqual( e.message, 'invalid arguments');
+        done();
+      }
+    });
   });
   describe('create a device object and attempt to start connecting ...', function () {
 		it('start connecting if 1st argument is a string w/ a callback', function (done) {
@@ -1244,6 +1275,8 @@ describe('\nCreating a device object ...', function () {
     it('should return true if exit data is valid ...', function (done) {
 
       const device = require('../lib/client.js');
+      // device => {m2mUtil, client, device, sec, websocket} // valid for method w/ exports
+      // not valid for device return {method:method} 
 
       let rxd = {appId:'acb234', exit:true, stopEvent:true};
       let arrayData = [{appId:'acb234', watchTimeout:{}}, {appId:'acb678', watchTimeout:{}}];
@@ -1256,7 +1289,7 @@ describe('\nCreating a device object ...', function () {
             done();
           }
         });
-      }, 110);
+      }, dl);
          
     });
   });
@@ -1277,7 +1310,7 @@ describe('\nCreating a device object ...', function () {
             done();
           }
         });
-      }, 120);
+      }, dl);
          
     });
   });
@@ -1296,11 +1329,261 @@ describe('\nCreating a device object ...', function () {
           assert.strictEqual( result, true); 
           if(result){
             done();
+            //exports.deviceTotal = deviceTotal;
+            //const {clientTotal, clientPassed} = require('./client.test.js');
+            //m2mTest.logEvent('m2m-test:passed', 'clientTotal:' + clientTotal, 'deviceTotal:' + deviceTotal);
+            //console.log('passed')
+            
           }
         });
-      }, 130);
+      }, dl);
          
     });
   });
+  describe('Invoking internal iterateDataEvent() method using channel data', function () {
+    it('should process the channel data ...', function (done) {
+
+      const device = require('../lib/client.js');
+
+      // note: data in arraydata => .src & .dst is required for emitter.emit('emit-send', rxd);
+      let arrayData = [{id:'wrt543', appId:'wrt543', src:'client', dst:'device', event:true, name:'channel-data', initValue:'55', value:'25'}, {id:'asd678', appId:'asd678', event:false, input:true, unwatch:true, pin:33, state:false, src:'client', dst:'device'}];
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.iterateDataEvent, 'function'); 
+
+        device.iterateDataEvent(arrayData, function(data){
+          assert.strictEqual( data.id, 'wrt543');
+          assert.strictEqual( data.event, true); 
+          assert.strictEqual( data.name, 'channel-data');
+          assert.strictEqual( data.value, '25');
+          done(); 
+        });
+      }, dl);
+    });
+  });
+  describe('Invoking internal iterateDataEvent() method using gpio output data', function () {
+    it('should process the gpio output data ...', function (done) {
+
+      const device = require('../lib/client.js');
+
+      // note: data in arraydata => .src & .dst is required for emitter.emit('emit-send', rxd);
+      let arrayData = [{id:'wrt543', appId:'wrt543', src:'client', dst:'device', event:false, name:'channel-data', value:'25'}, {id:'asd678', appId:'asd678', event:true, output:true, initValue:true, pin:33, state:false, src:'client', dst:'device'}];
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.iterateDataEvent, 'function'); 
+
+        // iterateDataEvent(arrayData, cb) // function(rxd){
+        device.iterateDataEvent(arrayData, function(data){
+          assert.strictEqual( data.id, 'asd678');
+          assert.strictEqual( data.event, true); 
+          assert.strictEqual( data.output, true);
+          assert.strictEqual( data.pin, 33);
+          assert.strictEqual( data.state, false);
+          done(); 
+        });
+      }, dl);
+    });
+  });
+  describe('Invoking internal iterateDataEvent() method using gpio input data', function () {
+    it('should process the gpio input data ...', function (done) {
+
+      const device = require('../lib/client.js');
+      // device => {m2mUtil, client, device, sec, websocket} // valid for method w/ exports
+      // not valid for device return {method:method} 
+
+      // note: data in arraydata => .src & .dst is required for emitter.emit('emit-send', rxd);
+      let arrayData = [{id:'wrt543', appId:'wrt543', src:'client', dst:'device', event:false, name:'channel-data', value:'25'}, {id:'asd678', appId:'asd678', event:true, input:true, initValue:false, pin:11, state:true, src:'client', dst:'device'}];
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.iterateDataEvent, 'function'); 
+
+        // iterateDataEvent(arrayData, cb) // function(rxd){
+        device.iterateDataEvent(arrayData, function(data){
+          assert.strictEqual( data.id, 'asd678');
+          assert.strictEqual( data.event, true); 
+          assert.strictEqual( data.input, true);
+          assert.strictEqual( data.pin, 11);
+          assert.strictEqual( data.state, true);
+          done(); 
+         
+        });
+      }, dl);
+    });
+  });
+  describe('Invoking internal exit object method properties', function () {
+    it('should process the exit object method properties ...', function (done) {
+
+      const { device } = require('../lib/client.js'); // return objects
+      /*let exit = {
+        gpioExitProces: gpioExitProces,
+        deviceExitProcess: deviceExitProcess,
+        deviceExitProcessFromClient: deviceExitProcessFromClient,
+      }*/
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.exit, 'object'); 
+        assert.strictEqual(typeof device.exit.gpioExitProcess, 'function');
+        assert.strictEqual(typeof device.exit.deviceExitProcess, 'function');
+        assert.strictEqual(typeof device.exit.deviceExitProcessFromClient, 'function');
+      
+        device.exit.gpioExitProcess();
+        device.exit.deviceExitProcess();
+        device.exit.deviceExitProcessFromClient({appId:'app234'}); // (rxd)
+        done();
+
+      }, dl);
+    });
+  });
+  describe('Invoking internal input object method properties', function () {
+    it('should process the input object method properties ...', function (done) {
+
+      const { device } = require('../lib/client.js'); // return objects
+      /*let input = {
+          getGpioInputSetup: getGpioInputSetup,
+          GetGpioInputState: GetGpioInputState,
+          deviceWatchGpioInputState: deviceWatchGpioInputState,
+        };
+      */
+      let rxd = {id:100, src:'client', input:true, dst:'device', pin:13, state:true};
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.input, 'object'); 
+        assert.strictEqual(typeof device.input.getGpioInputSetup, 'function');
+        assert.strictEqual(typeof device.input.GetGpioInputState, 'function');
+        assert.strictEqual(typeof device.input.deviceWatchGpioInputState, 'function');
+
+        device.input.getGpioInputSetup();
+        device.input.GetGpioInputState(rxd); // rxd
+        device.input.deviceWatchGpioInputState(rxd); //rxd
+        done();
+
+      }, dl);
+    });
+  });
+  describe('Invoking internal output object method properties', function () {
+    it('should process the output object method properties ...', function (done) {
+
+      const { device } = require('../lib/client.js'); // return objects
+      /*let output = {
+        GetGpioOutputState: GetGpioOutputState,
+        getGpioOutputSetup: getGpioOutputSetup,
+        deviceWatchGpioOutputState: deviceWatchGpioOutputState,
+      };
+      */
+      let rxd = {id:100, src:'client', output:true, dst:'device', pin:33, state:false};
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.output, 'object'); 
+        assert.strictEqual(typeof device.output.GetGpioOutputState, 'function');
+        assert.strictEqual(typeof device.output.getGpioOutputSetup, 'function');
+        assert.strictEqual(typeof device.output.deviceWatchGpioOutputState, 'function');
+
+        device.output.getGpioOutputSetup();
+        device.output.GetGpioOutputState(rxd); // rxd
+        device.output.deviceWatchGpioOutputState(rxd); //rxd
+        done();
+
+      }, dl);
+    });
+  });
+  describe('Invoking internal channel object method properties', function () {
+    it('should process the channel object method properties ...', function (done) {
+
+      const { device } = require('../lib/client.js'); // return objects
+      /*let channel = {
+        deviceEnableEventWatch: deviceEnableEventWatch,
+        getChannelDataEvent: getChannelDataEvent,
+        deviceWatchChannelData: deviceWatchChannelData,
+        deviceSuspendEventWatch: deviceSuspendEventWatch,
+      };
+      */
+      let rxd = {id:100, src:'client', channel:true, dst:'device', name:'test-channel', value:'test'};
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.channel, 'object'); 
+        assert.strictEqual(typeof device.channel.deviceEnableEventWatch, 'function');
+        assert.strictEqual(typeof device.channel.getChannelDataEvent, 'function');
+        assert.strictEqual(typeof device.channel.deviceWatchChannelData, 'function');
+        assert.strictEqual(typeof device.channel.deviceSuspendEventWatch, 'function'); //deviceSuspendEventWatch
+
+        device.channel.deviceEnableEventWatch(rxd);
+        device.channel.getChannelDataEvent(rxd);
+        device.channel.deviceWatchChannelData(rxd);
+        device.channel.deviceSuspendEventWatch(rxd);
+        done();
+
+      }, dl);
+    });
+  });
+  describe('Invoking internal resources object method properties', function () {
+    it('should process the resources object method properties ...', function (done) {
+
+      const os = require('os');
+      const { device } = require('../lib/client.js'); // return objects
+      /*let resources = {
+        setApi: setApi,
+        setData: setData,
+        setGpio: setGpio,
+      };
+      */
+      let args = {id:100, src:'client', channel:true, dst:'device', name:'test-channel', value:'test'};
+
+      let cb = (err, data) => {
+          if(err){
+            return console.log('===> err', err);
+          }  
+          console.log('===> data', data);
+      };  
+      /*device.getApi('/getData', function(err, data){
+        if(err) return console.error('/getData error:', err.message); 
+        data.send(getData);
+        console.log('data.result', data.result); 
+      });
+      // http post api simulation
+      device.postApi('/findData', function(err, data){
+        if(err) return console.error('/findData error:', err.message); 
+        setTimeout(() => {
+          console.log('data.body', data.body);
+          data.response({postApi: 'ok'});
+          console.log('data.result', data.result); // {postApi:'ok'}
+        }, 8000);
+      });*/
+
+      setTimeout(function(){
+        assert.strictEqual(typeof device.resources, 'object'); 
+        assert.strictEqual(typeof device.resources.setApi, 'function');
+        assert.strictEqual(typeof device.resources.setData, 'function');
+        assert.strictEqual(typeof device.resources.setGpio, 'function');
+
+        device.resources.setApi('/myapi', cb); // setApi('api', cb)
+        device.resources.setApi(args, cb); // setApi(args, cb)
+
+        device.resources.setData(args, cb); // setData(args, cb)
+
+        try{
+          device.resources.setGpio(args, cb); // setGpio(args, cb)
+        }
+        catch(e){
+          if(os.arch() !== 'arm'){ 
+            console.log(e.message, 'Sorry, gpio control is not available on your device');
+          }
+        }
+
+        let eventName = 'set-device-resources';
+        m2mTest.testEmitter.emit( eventName, { args });
+
+        devicePassed++;
+        
+        exports.deviceTotal = deviceTotal;
+        exports.devicePassed = devicePassed;
+        exports.deviceFailed = deviceFailed;
+        done();
+
+      }, dl + 50);
+    });
+  });
+
+});
+
 });
 

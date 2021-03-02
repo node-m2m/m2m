@@ -4,14 +4,41 @@ const sinon = require('sinon');
 const assert = require('assert');
 const { m2mTest } = require('../lib/client.js');
 
-before(() => {
+let dl = 100;
+let clientTotal = 0;
+let clientPassed = 0;
+let clientFailed = 0;
+
+
+describe('\nset test stats ...', function() {
+before(function() {
+  // runs once before the first test in this block
   sinon.stub(console, 'log'); 
   sinon.stub(console, 'info'); 
   sinon.stub(console, 'warn');
   sinon.stub(console, 'error'); 
 });
 
-describe('\nStarting m2m ...', function () {
+after(function() {
+  // runs once after the last test in this block
+});
+
+beforeEach(function() {
+  // runs before each test in this block
+  clientTotal++;
+});
+
+afterEach(function() {
+  // runs after each test in this block
+  if (this.currentTest.state === 'passed') {
+    clientPassed++;
+  }
+  if (this.currentTest.state === 'failed') {
+    clientFailed++;
+  }
+});
+
+describe('\nQuick m2m object test ...', function () {
   describe('requiring m2m module', function () {
     it('should return an object with 4 methods', function () {
 
@@ -23,16 +50,17 @@ describe('\nStarting m2m ...', function () {
       assert.strictEqual( typeof m2m.Device, 'function');
       assert.strictEqual( typeof m2m.Client, 'function');
       assert.strictEqual( typeof m2m.connect, 'function');
+      
 
       setTimeout(() => {
         process.exit();
-      }, 8000);
+      }, 10000);
 
     });
   });
 });
 
-describe('\nCreating a client object ...', function () {
+describe('\nClient object test ...', function () {
   describe('create a client object w/o an argument', function () {
     it('should return an object with a property id of type string', function () {
       const client = new m2m.Client();
@@ -42,6 +70,7 @@ describe('\nCreating a client object ...', function () {
       assert.strictEqual( client.client, true );
       assert.strictEqual( typeof client.id, 'string' );
       assert.strictEqual( client.id.length, 8 );
+      
 
     });
   });
@@ -55,6 +84,7 @@ describe('\nCreating a client object ...', function () {
       assert.strictEqual( typeof device, 'object' );
       assert.strictEqual( Number.isInteger(device.id), true );
       assert.strictEqual( device.id, 100 );
+      
 
     });
     it('create a device object if the argument provided is an array w/ a single element', function (done) {
@@ -81,6 +111,7 @@ describe('\nCreating a client object ...', function () {
       assert.strictEqual( Array.isArray(device), true );
       assert.strictEqual( device instanceof Array, true );
       assert.strictEqual( arg.length, device.length );
+      
 
     });
     it('should throw an error if argument is not an array', function (done) {
@@ -1424,7 +1455,8 @@ describe('\nCreating a client object ...', function () {
       	client.accessDevice(100, 200);
       }
 			catch(e){
-        assert.strictEqual( e.message, 'access id more than 1 must be contained in an array' ); 
+        assert.strictEqual( e.message, 'access id more than 1 must be contained in an array' );
+        
       }
     });
     // no test coverage improvement
@@ -1608,7 +1640,7 @@ describe('\nCreating a client object ...', function () {
           assert.strictEqual(Array.isArray(devices), true);
           done();
         });
-        }, 100);
+        }, dl);
     	});
   	});
  	});
@@ -1622,6 +1654,7 @@ describe('\nCreating a client object ...', function () {
         let eventName = 'getDeviceId';
         m2mTest.testEmitter.emit(eventName, [100, 200]);
         m2mTest.testEmitter.emit(eventName, 200);
+        
     	});
    	});
  	});
@@ -1638,17 +1671,19 @@ describe('\nCreating a client object ...', function () {
           assert.strictEqual(typeof id, 'number');
           setTimeout(function(){
             if(count === 0){
-              done();count++;
+              done();count++;clientPassed++;
+              exports.clientTotal = clientTotal;
+              exports.clientPassed = clientPassed;
+              exports.clientFailed = clientFailed;
             }
-          }, 100);
+          }, dl + 25);
         });
     	});
    	});
  	});
 });
 
-
-
+});
 
 
 
