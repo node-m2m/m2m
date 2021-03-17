@@ -1,6 +1,6 @@
 {
   "name": "m2m",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "m2m is a client module for machine-to-machine communication system framework node-m2m.",
   "dependencies": {
     "ws": "^7.3.1",
@@ -47,6 +47,7 @@
     "aws",
     "faas",
     "telematics",
+    "industry 4.0",
     "telemetry",
     "SCADA",
     "remote control",
