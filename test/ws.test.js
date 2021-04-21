@@ -63,61 +63,6 @@ describe('\nset test stats ...', function() {
 
       });
     });
-    describe('Invoke internal websocket.wsReconnectAttempt() method', function () {
-      it('should process the websocket.wsReconnectAttempt() method w/ valid parameters', function (done) {
-
-        const { websocket } = require('../lib/client.js');
-        //console.log('websocket', websocket);
-
-        let e = 1006; // (e === 1006 || e === 1003)
-        let args = {server:'https://www.node-m2m.com'};
-        //let m2m = { id:100, _pid:'d-c', d:true, device:true, src:'device', reg:true };
-        let m2m = {
-          options: {
-            userSettings: {
-              name: 'Master App1',
-              location: 'Boston, MA',
-              description: 'Test App1'
-            },
-            restartable: true,
-            m2mConfig: { code: 'test'},
-            processFilename: 'client.js',
-            nodemonConfig: true,
-            startScript: 'nodemon client.js'
-          },
-          c: true,
-          app: true,
-          id: '73931f27',
-          _pid: 'a-c',
-          appId: '73931f27',
-          src: 'client',
-          appIds: [ 'c4e55f0a', 'd70fe91b', '2824e3cc', '73931f27' ],
-          reg: true,
-          restartable: true,
-          _sid: 'm2m',
-          tid: 1614449632258,
-          systemInfo: {
-            type: 'x64',
-            mem: { total: '16781 MB', free: '1327 MB' },
-            m2mv: 'v1.4.0',
-            os: 'linux'
-          }
-        };
-
-        let cb = function (err, result){
-          if(result === 'success'){
-            done();
-          }
-        };
-       
-        // wsReconnectAttempt(e, args, m2m, cb); 
-        setTimeout(function(){
-          assert.strictEqual( typeof websocket.wsReconnectAttempt, 'function' );
-          websocket.wsReconnectAttempt(e, args, m2m, cb);
-        }, dl); 
-
-      });
-    });
     describe('Invoke internal websocket.refreshConnection() method w/ "test" parameter', function () {
       it('should throw a "test" error ', function (done) {
 
