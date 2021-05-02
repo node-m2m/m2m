@@ -1,8 +1,5 @@
 # m2m
 
-[![Version npm](https://img.shields.io/npm/v/m2m.svg?logo=npm)](https://www.npmjs.com/package/m2m)
-![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
-
 m2m is a client module for machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
 
 The module's API is a FaaS (Function as a Service) also called "serverless" making it easy for everyone to develop applications in telematics, data acquisition, process automation, network gateways, workflow orchestration and many others.
@@ -373,11 +370,11 @@ client.connect(function(err, result){
       console.log('device1 input 13 state', state);
 
       if(state){
-        // turn OFF device2 output 33
+        // turn OFF device2 output 35
         device2.output(35).off();
       }
       else{
-        // 'turn ON device2 output 33'
+        // 'turn ON device2 output 35'
         device2.output(35).on();
       }
     });
