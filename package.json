@@ -1,12 +1,13 @@
 {
   "name": "m2m",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "m2m is a client module for machine-to-machine communication system framework node-m2m.",
   "dependencies": {
-    "ws": "^7.3.1",
-    "inquirer": "^7.1.0",
     "colors": "^1.4.0",
-    "nodemon": "^2.0.4"
+    "inquirer": "^7.1.0",
+    "nodemon": "^2.0.4",
+    "publish": "^0.6.0",
+    "ws": "^7.3.1"
   },
   "devDependencies": {
     "mocha": "^8.0.1",
@@ -18,7 +19,7 @@
     "node": ">= 8.0.0"
   },
   "main": "index.js",
-  "scripts":{
+  "scripts": {
     "test": "nyc --reporter=html --reporter=text mocha --throw-deprecation test/*.test.js"
   },
   "homepage": "https://github.com/Node-M2M/m2m",
@@ -56,4 +57,3 @@
     "industrial control system"
   ]
 }
-
