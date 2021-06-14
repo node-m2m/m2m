@@ -690,7 +690,7 @@ describe('\nset test stats ...', function() {
 
       });
     });
-    describe('Invoke internal websocket.initRxData() method w/ valid rxd.code=110', function () {
+    /*describe('Invoke internal websocket.initRxData() method w/ valid rxd.code=110', function () {
       it('should invoke callback w/ error object', function (done) {
 
         const { websocket } = require('../lib/client.js');
@@ -743,8 +743,6 @@ describe('\nset test stats ...', function() {
         }, dl + 50); 
 
       });
-    });
-
+    });*/
   });
-
 });

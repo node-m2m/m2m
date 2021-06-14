@@ -376,7 +376,7 @@ describe('\nset test stats ...', function() {
           throw e;
         }
       });
-      it('should throw an error if payload argument is not an alpha numeric/has an invalid characters', function (done) {
+      /*it('should throw an error if payload argument is not an alpha numeric/has an invalid characters', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
 
@@ -393,7 +393,7 @@ describe('\nset test stats ...', function() {
         catch(e){
           throw e;
         }
-      });
+      });*/
       it('should throw an error if a callback is not function', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
