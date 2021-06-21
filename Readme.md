@@ -38,7 +38,6 @@ To use this module, users must create an account and register their devices with
     * [Server GET and POST method Setup](#server-get-and-post-method)
     * [Client GET and POST request](#client-get-and-post-request)
 7. [Device Orchestration](#device-orchestration)
-    * [Using A Workflow](#using-a-workflow)
     * [Remote Machine Monitoring](remote-machine-monitoring)
 8. [Using the Browser Interface to Access Clients and Devices](#using-the-browser-interface-to-access-clients-and-devices)
    * [Remote Code Editing](#remote-application-code-editing)
@@ -106,7 +105,7 @@ const m2m = require('m2m');
 let device = new m2m.Device(100);
 
 device.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
 
@@ -157,7 +156,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
 
@@ -221,7 +220,7 @@ device.connect('https://www.node-m2m.com', function(err, result){
 
 // implicitly connecting to default node-m2m server
 device.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   device.setData('sensor-temperature', function(err, data){
@@ -243,7 +242,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let device = client.accessDevice(110);
@@ -265,7 +264,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let device = client.accessDevice(110);
@@ -303,7 +302,7 @@ const fs = require('fs');
 let server = new m2m.Device(500);
 
 server.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   // 'echo-server' channel data resource
@@ -359,7 +358,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let server = client.accessDevice(500);
@@ -416,7 +415,7 @@ const m2m = require('m2m');
 let device = new m2m.Device(120);
 
 device.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
 
@@ -438,7 +437,7 @@ const m2m = require('m2m');
 let device = new m2m.Device(130);
 
 device.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
 
@@ -461,7 +460,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let device1 = client.accessDevice(120);
@@ -540,7 +539,7 @@ const led = setOutput(33);
 const server = new m2m.Device(200);
 
 server.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   // set 'sw1-state' resource
@@ -580,7 +579,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let device = client.accessDevice(200);
@@ -624,7 +623,7 @@ const m2m = require('m2m');
 const server = new m2m.Server(300);
 
 server.connect((err, result) => {
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let myData = {name:'Jim', age:34};
@@ -646,7 +645,6 @@ server.connect((err, result) => {
   });
 });
 ```
-
 ### Client GET and POST request
 ```js
 const m2m = require('m2m');
@@ -654,7 +652,7 @@ const m2m = require('m2m');
 const client = new m2m.Client();
 
 client.connect((err, result) => {
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let server = client.accessServer(300);
@@ -724,7 +722,7 @@ watchInput(() => {
 
 // m2m device application
 device.connect((err, result) => {
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   device.setData('machine-status', function(err, data){
@@ -743,14 +741,14 @@ device.connect((err, result) => {
 });
 ```
 #### Client application to monitor the remote machines
-In this example, the client will iterate over the remote machines once and start watching each machine's sensor and actuactor status. If one the sensors and actuator's state changes, the status will be pushed to the client.     
+In this example, the client will iterate over the remote machines once and start watching each machine's sensor and actuactor status. If one of the sensors and actuator's state changes, the status will be pushed to the client.     
 ```js
 const { Client } = require('m2m');
 
 const client = new Client();
 
 client.connect((err, result) => {
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   client.accessDevice([100, 200, 300], function(err, devices){
@@ -795,10 +793,12 @@ From the example above, the filename of the application is *device.js*. Replace 
 
 
 ### Application Auto Restart
-
 Using the browser interface, you may need to restart your application after a module update, code edit/update, or by sending a remote restart command.
 
-Node-m2m uses **nodemon** to restart your application.
+Node-m2m uses **nodemon** to restart your application. 
+```js
+$ npm install nodemon
+```
 
 You can add the following *nodemonConfig* and *scripts* properties in your project's npm package.json as *auto-restart configuration*.
 ```js
@@ -823,6 +823,10 @@ $ npm start
 For other custom nodemon configuration, please read the nodemon documentation.
 
 ## Code Edit and Auto Restart Automatic Configuration
+Install nodemon. 
+```js
+$ npm install nodemon
+```
 To configure your package.json for code editing and auto-restart without manual editing of package.json, start your node process with *-config* flag.
 
 *m2m* will attempt to configure your package.json by adding/creating the *m2mConfig*, *nodemonConfig*, and *scripts* properties to your existing project's package.json. If your m2m project does not have an existing package.json, it will create a new one.  
@@ -856,7 +860,7 @@ const m2m = require('m2m');
 const client = new m2m.Client({name:'Main client', location:'Boston, MA', description:'Test client app'});
 
 client.connect((err, result) => {
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
   ...
 });
@@ -895,7 +899,7 @@ const m2m = require('m2m');
 const client = new m2m.Client();
 
 client.connect((err, result) => {
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
   let device = client.accessDevice(300);
