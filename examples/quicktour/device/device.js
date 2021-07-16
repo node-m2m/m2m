@@ -5,7 +5,7 @@ const m2m = require('m2m');
 let device = new m2m.Device(100);
 
 device.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
 

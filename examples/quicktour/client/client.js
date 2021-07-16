@@ -3,7 +3,7 @@ const m2m = require('m2m');
 let client = new m2m.Client();
 
 client.connect(function(err, result){
-  if(err) return console.error('connect error:', err);
+  if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
 
