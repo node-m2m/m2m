@@ -80,15 +80,13 @@ $ npm install array-gpio
 ![]()
 ## Quick Tour
 
-We will create a server (*remote device*) that will generate random numbers as its sole service.
+We will create a server (*remote device*) that generates random numbers as its sole service.
 
-And a client application (*remote client*) that will access the random numbers.
+And a client application (*remote client*) that will access the random numbers using a pull and push method.
 
-The client will access the random numbers using a pull and push method.
+Using a *pull-method*, the client will capture the random numbers as a one time function call.
 
-Using a *pull-method*, the client will capture the random numbers using a one time function call.
-
-Using a *push-method*, the client will watch the random numbers every 5 seconds for any changes. If the value changes, the remote device will send the new value to the remote client.   
+Using a *push-method*, the client will watch the value of the random numbers every 5 seconds. If the value changes, the remote device will send or *push* the new value to our remote client.   
 
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
 [](quicktour.svg)
@@ -114,7 +112,7 @@ device.connect(function(err, result){
 
   console.log('result:', result);
 
-  // set 'random-number' channel as resource  
+  // set 'random-number' as channel data resource  
   device.setData('random-number', function(err, data){
     if(err) return console.error('setData random-number error:', err.message);
 
@@ -142,14 +140,14 @@ However, after 15 minutes of running your application, your application becomes 
 
 Restart your application using `$ node device.js` or with the *-r* flag as shown below.
 
-At anytime, you can re-authenticate with full credentials using the *-r* flag as shown below.
+At anytime, you can re-authenticate with full credentials using an *-r* flag.
 ```js
 $ node device.js -r
 ```
 ### Remote Client Setup
 Similar with the remote device setup, create a client project directory and install m2m.
 #### Accessing resources from your remote device
-To access resources from your remote device, create an object using the client's *accessDevice* method as shown in the code below. The object created becomes an *alias* of the remote device you are trying to access as indicated by the *device id* argument.
+To access resources from your remote device, create an object using the client's *accessDevice* method as shown in the code below. The object created becomes an *alias* of the remote device you are trying to access as indicated by its *device id* argument.
 
 In this case, the *device id* is *100*.
 The *alias* object provides various methods to access channel data, GPIO object and HTTP API resources from your remote devices.
@@ -679,16 +677,9 @@ client.connect(function(err, result){
     console.log(state);
   });
 
-  // watch input pin 13 using the default 5 secs poll interval
+  // watch input pin 13, default scan interval is 100 ms
   device.gpio({mode:'in', pin:13}).watch(function(err, state){
     if(err) return console.error('watch input pin 13 error:', err.message);
-
-    console.log(state);
-  });
-
-  // watch input pin 15 using a 25 secs poll interval
-  device.gpio({mode:'in', pin:15}).watch(25000, function(err, state){
-    if(err) return console.error('watch input pin 15 error:', err.message);
 
     console.log(state);
   });
@@ -705,19 +696,13 @@ client.connect(function(err, result){
     console.log(state);
   });
 
-  // watch input pin 15 using the default 5 secs poll interval
+  // watch input pin 15, default scan interval is 100 ms
   device.input(15).watch(function(err, state){
     if(err) return console.error('watch input pin 15 error:', err.message);
 
     console.log(state);
   });
 
-  // watch input pin 19 using a 25 secs poll interval
-  device.input(19).watch(25000, function(err, state){
-    if(err) return console.error('watch input pin 19 error:', err.message);
-
-    console.log(state);
-  });
 });
 ```
 
@@ -837,7 +822,7 @@ client.connect(function(err, result){
     console.log(state);
   });
 
-  // watch input pin 13 using the default 5 secs poll interval
+  // watch input pin 13
   device1.input(13).watch(function(err, state){
     if(err) return console.error('watch pin 13 error:', err.message);
 
@@ -859,7 +844,7 @@ client.connect(function(err, result){
     console.log(state);
   });
 
-  // watch input pin 11 using the default 5 secs poll interval
+  // watch input pin 11
   device1.input(11).watch(function(err, state){
     if(err) return console.error('watch pin 11 error:', err.message);
 
@@ -877,9 +862,9 @@ client.connect(function(err, result){
 ```
 ### Using Channel Data for Raspberry Pi GPIO Control
 
-If the standard API for setting GPIO resources does not meet your requirements, you can use the channel data API to set GPIO input/output resources from your remote devices.
+If the standard API for setting GPIO resources does not meet your requirements, you can use the channel data API to set GPIO input/output resources.
 
-In this example, we will use again the *array-gpio* module as low level GPIO peripheral access library but you are always free to use any other npm modules you prefer.  
+In this example, we will use *array-gpio* module as low level GPIO peripheral access library to watch an input object and control (on/off) an output object.  
 
 #### Device/Server setup
 ```js
