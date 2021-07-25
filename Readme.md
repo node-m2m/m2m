@@ -91,7 +91,7 @@ Using a *push-method*, the client will watch the value of the random numbers eve
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
 [](quicktour.svg)
 
-Before you start, create an account and register your remote device with node-m2m server.
+Before you start, create an account and [register](https://www.node-m2m.com/m2m/account/create) your remote device.
 
 ### Remote Device Setup
 
