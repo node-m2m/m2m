@@ -80,18 +80,18 @@ $ npm install array-gpio
 ![]()
 ## Quick Tour
 
-We will create a server (*remote device*) that generates random numbers as its sole service.
+![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
+[](quicktour.svg)
 
-And a client application (*remote client*) that will access the random numbers using a pull and push method.
+In this quick tour, we will create a simple server application that generates random numbers as its sole service from the *remote device*.
+
+And a client application that will access the random numbers using a *pull* and *push* method from the *remote client* computer.
 
 Using a *pull-method*, the client will capture the random numbers as a one time function call.
 
 Using a *push-method*, the client will watch the value of the random numbers every 5 seconds. If the value changes, the remote device will send or *push* the new value to our remote client.   
 
-![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
-[](quicktour.svg)
-
-Before you start, create an account and [register](https://www.node-m2m.com/m2m/account/create) your remote device.
+Before you start, [create an account](https://www.node-m2m.com/m2m/account/create) and register your remote device.
 
 ### Remote Device Setup
 
@@ -136,7 +136,7 @@ The first time you run your application, it will ask for your full credentials.
 ```
 The next time you run your application, it will start automatically using a saved user token.
 
-However, after 15 minutes of running your application, your application becomes immutable. Any changes to your application code will require you to re-authenticate for security reason.
+However, if your application is running for more than 15 minutes, it becomes immutable. Any changes to your application code will require you to re-authenticate for security reason.
 
 Restart your application using `$ node device.js` or with the *-r* flag as shown below.
 
@@ -163,7 +163,7 @@ client.connect(function(err, result){
 
   console.log('result:', result);
 
-  // create a remote device object from client accessDevice method
+  // create a device alias object from client accessDevice method
   let device = client.accessDevice(100);
 
   // capture 'random-number' data using a one-time function call
