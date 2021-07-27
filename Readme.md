@@ -212,13 +212,13 @@ device.connect(function(err, result){
     if(err) return console.error('setData my-channel error:', err.message);
 
     /*
-     * Provide a data source of your channel data.
+     * Provide a data source for your channel data.
      * Your data source can be of type string, number or object.
      *
      * It could be any value from a sensor device, data from an inventory or database,
-     * metrics, machine status or any performance data from any applications  
+     * metrics, machine status or any performance data from any application  
      *
-     * Below is a pseudocode DataSource() method that will return the value of your data source.
+     * Below is a pseudocode DataSource() function that returns the value of any data source.
      */
     let ds = DataSource();
     data.send(ds);
@@ -239,7 +239,7 @@ client.connect(function(err, result){
    *  Capture channel data using a device alias
    */
 
-  // Create an alias (device object) of the remote device you want to access
+  // Access the remote device you want to access by creating an alias object
   let device = client.accessDevice(deviceId);
 
   device.getData('my-channel', function(err, data){
