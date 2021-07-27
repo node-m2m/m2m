@@ -15,7 +15,7 @@ It can run alongside with other applications from your remote devices or endpoin
 
 You can set multiple *channel data* or *HTTP API* resources on your device servers. If your remote endpoint is a Raspberry Pi, you can set *GPIO resources* directly from the API.
 
-Access to clients and devices is restricted to authenticated and authorized users only.
+Clients and devices are accessible only to authenticated and authorized users.
 
 All communications between clients and devices are fully encrypted using TLS.
 
@@ -147,9 +147,8 @@ $ node device.js -r
 ### Remote Client Setup
 Similar with the remote device setup, create a client project directory and install m2m.
 #### Accessing resources from your remote device
-To access resources from your remote device, create an object using the client's *accessDevice* method as shown in the code below. The object created becomes an *alias* of the remote device you are trying to access as indicated by its *device id* argument.
+To access resources from your remote device, create an *alias* object using the client's *accessDevice* method as shown in the code below. The object created *`device`* becomes an *alias* of the remote device you are trying to access as indicated by its *`device id`* argument. In this case, the *device id* is *100*.
 
-In this case, the *device id* is *100*.
 The *alias* object provides various methods to access channel data, GPIO object and HTTP API resources from your remote devices.
 
 Save the code below as client.js within your client project directory.
@@ -163,18 +162,16 @@ client.connect(function(err, result){
 
   console.log('result:', result);
 
-  // create a device alias object from client accessDevice method
+  // access the remote device using an alias object
   let device = client.accessDevice(100);
 
-  // capture 'random-number' data using a one-time function call
+  // capture 'random-number' data using a pull method
   device.getData('random-number', function(err, data){
     if(err) return console.error('getData random-number error:', err.message);
     console.log('random data', data); // 97
   });
 
   // capture 'random-number' data using a push method
-  // the remote device will scan/poll the data every 5 secs (default)
-  // if the value changes, it will push/send the data to the client
   device.watch('random-number', function(err, data){
     if(err) return console.error('watch random-number error:', err.message);
     console.log('watch random data', data); // 81, 68, 115 ...
@@ -209,13 +206,18 @@ device.connect(function(err, result){
 
   /*
    * Set a name for your channel data. You can use any name you want.
-   * In the example below, we'll use the name 'my-channel-data'.
+   * In the example below, we will use 'my-channel' the name of the channel data.
    */
-  device.setData('my-channel-data', function(err, data){
-    if(err) return console.error('setData my-channel-data error:', err.message);
+  device.setData('my-channel', function(err, data){
+    if(err) return console.error('setData my-channel error:', err.message);
 
     /*
-     * Implement the source of your channel data. Your data source can be of type string, number or object.
+     * Provide a data source of your channel data.
+     * Your data source can be of type string, number or object.
+     *
+     * It could be any value from a sensor device, data from an inventory or database,
+     * metrics, machine status or any performance data from any applications  
+     *
      * Below is a pseudocode DataSource() method that will return the value of your data source.
      */
     let ds = DataSource();
@@ -240,23 +242,22 @@ client.connect(function(err, result){
   // Create an alias (device object) of the remote device you want to access
   let device = client.accessDevice(deviceId);
 
-  device.getData('my-channel-data', function(err, data){
-    if(err) return console.error('channel-data error:', err.message);
+  device.getData('my-channel', function(err, data){
+    if(err) return console.error('my-channel error:', err.message);
 
-    // data is the value of 'my-channel-data' data source
+    // data is the value of 'my-channel' data source
     console.log(data);
   });
-
 
   /**
    *  Capture channel data directly from the client object
    */
 
   // Provide the deviceId of the remote device you want to access
-  client.getData(deviceId, 'my-channel-data', function(err, data){
-    if(err) return console.error('channel-data error:', err.message);
+  client.getData(deviceId, 'my-channel', function(err, data){
+    if(err) return console.error('my-channel error:', err.message);
 
-    // data is the value of 'my-channel-data' data source
+    // data is the value of 'my-channel' data source
     console.log(data);
   });
 });
@@ -282,32 +283,32 @@ client.connect(function(err, result){
   let rd = client.accessDevice(deviceId);
 
   // watch using a default poll interval of 5 secs
-  rd.watch('my-channel-data', function(err, data){
-    if(err) return console.error('channel-data error:', err.message);
+  rd.watch('my-channel', function(err, data){
+    if(err) return console.error('my-channel error:', err.message);
 
-    // data is the value of 'my-channel-data' data source
+    // data is the value of 'my-channel' data source
     console.log(data);
   });
 
   // watch using a 1 minute poll interval
-  rd.watch('my-channel-data', 60000, function(err, data){
-    if(err) return console.error('channel-data error:', err.message);
+  rd.watch('my-channel', 60000, function(err, data){
+    if(err) return console.error('my-channel error:', err.message);
     console.log(data);
   });
 
   // unwatch channel data at a later time
   setTimeout(()=>{
-    rd.unwatch('my-channel-data');
+    rd.unwatch('my-channel');
   }, 5*60000);
 
   // watch again using the default poll interval
   setTimeout(()=>{
-    rd.watch('my-channel-data');
+    rd.watch('my-channel');
   }, 10*60000);
 
   // watch again using a 1 min poll interval
   setTimeout(()=>{
-    rd.watch('my-channel-data', 60000);
+    rd.watch('my-channel', 60000);
   }, 15*60000);
 
 
@@ -319,32 +320,32 @@ client.connect(function(err, result){
   // as 1st argument of watch method
 
   // watch using a default poll interval of 5 secs
-  client.watch(deviceId, 'my-channel-data', function(err, data){
+  client.watch(deviceId, 'my-channel', function(err, data){
     if(err) return console.error('channel-data error:', err.message);
 
-    // data is the value of 'my-channel-data' data source
-    console.log('my-channel-data', data);
+    // data is the value of 'my-channel' data source
+    console.log('my-channel', data);
   });
 
   // watch using 30000 ms or 30 secs poll interval
-  client.watch(deviceId, 'my-channel-data', 30000, function(err, data){
+  client.watch(deviceId, 'my-channel', 30000, function(err, data){
     if(err) return console.error('channel-data error:', err.message);
     console.log(data);
   });
 
   // unwatch channel data at a later time
   setTimeout(()=>{
-    client.unwatch(deviceId, 'my-channel-data');
+    client.unwatch(deviceId, 'my-channel');
   }, 5*60000);
 
   // watch again at a later time using the default poll interval
   setTimeout(()=>{
-    client.watch(deviceId, 'my-channel-data');
+    client.watch(deviceId, 'my-channel');
   }, 10*60000);
 
   // watch again at a later time using 30 secs poll interval
   setTimeout(()=>{
-    client.watch(deviceId, 'my-channel-data', 30000);
+    client.watch(deviceId, 'my-channel', 30000);
   }, 15*60000);
 
 });
