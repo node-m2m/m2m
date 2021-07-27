@@ -165,13 +165,13 @@ client.connect(function(err, result){
   // access the remote device using an alias object
   let device = client.accessDevice(100);
 
-  // To capture 'random-number' data using a pull method, use the .getData method
+  // capture 'random-number' data using a pull method
   device.getData('random-number', function(err, data){
     if(err) return console.error('getData random-number error:', err.message);
     console.log('random data', data); // 97
   });
 
-  // To capture 'random-number' data using a push method, use the .watch method
+  // capture 'random-number' data using a push method
   device.watch('random-number', function(err, data){
     if(err) return console.error('watch random-number error:', err.message);
     console.log('watch random data', data); // 81, 68, 115 ...
