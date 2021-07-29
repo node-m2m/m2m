@@ -3,17 +3,17 @@
 [![Version npm](https://img.shields.io/npm/v/m2m.svg?logo=npm)](https://www.npmjs.com/package/m2m)
 ![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
 
-m2m is a simple lightweight library for developing client/server applications using the machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
+m2m is a lightweight communication library for developing client-server applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-It uses a FaaS (Function as a Service) API also called *serverless* making it easy for everyone to develop applications in telematics, data acquisition, process automation, network gateways, workflow orchestration and many others.
+It uses a FaaS (Function as a Service) API also called *serverless* which enables anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a whole lot more.
 
 You can deploy multiple public device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning a public server. Your device servers will be accessible through its user-assigned *device id* from client applications.
 
-You can set multiple *Channel Data* or *HTTP API* resources on your device as well as *GPIO resources* for Raspberry Pi directly from the API.
+You can set multiple *Channel Data* or *HTTP API* resources on any remote computer and *GPIO* resources for Raspberry Pi.
 
 Access to clients and devices is restricted to authenticated and authorized users only. All communications between clients and devices are fully encrypted using TLS.
 
-To use this module, users must create an account and register their devices with [node-m2m](https://www.node-m2m.com/m2m/account/create).
+To use this library, users must <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">create an account</a> and register their devices with node-m2m .
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
@@ -23,20 +23,20 @@ To use this module, users must create an account and register their devices with
 3. [Installation](#installation)
 4. [Quick Tour](#quick-tour)
 5. [Channel Data Resources](#channel-data-resources)
-   * [Set Channel Data Resources on your Device](#Set-Channel-Data-Resources-on-your-Device)
+   * [Set Channel Data Resources on Your Device](#Set-Channel-Data-Resources-on-your-Device)
    * [Capture Channel Data from Client Device](#Capture-Channel-Data-from-Client)
    * [Watch/Monitor Channel Data from Client Device](#Watch-Channel-Data-from-Client)
    * [Sending Data to Remote Device](#Sending-Data-to-Remote-Device)
    * [Example - Using MCP 9808 Temperature Sensor](#using-mcp-9808-temperature-sensor)
 6. [GPIO Resources for Raspberry Pi](#gpio-resources-for-raspberry-pi)  
-   * [Set GPIO Input Resources on your Device](#Set-GPIO-Input-Resources-on-your-Device)
-   * [Set GPIO Output Resources on your Device](#Set-GPIO-Output-Resources-on-your-Device)
+   * [Set GPIO Input Resources on Your Device](#Set-GPIO-Input-Resources-on-Your-Raspberry-Pi-Device)
+   * [Set GPIO Output Resources on Your Device](#Set-GPIO-Output-Resources-on-Your-Raspberry-Pi-Device)
    * [Capture/Watch GPIO Input Resources from Client](#Capture-and-Watch-GPIO-Input-Resources-from-Client)
    * [Control (On/Off) GPIO Output Resources from Client](#Control-GPIO-Output-Resources-from-Client)
    * [Using Channel Data API for GPIO Input/Output Resources](#Using-Channel-Data-API-for-GPIO-Resources)
    * [Example - GPIO Input Monitoring and Output Control](#GPIO-Input-Monitoring-and-Output-Control)
 7. [HTTP API Resources](#http-api)
-    * [Set HTTP GET and POST Resources on your Device](#Device-GET-and-POST-method-setup)
+    * [Set HTTP GET and POST Resources on Your Device](#Device-GET-and-POST-method-setup)
     * [HTTP GET and POST Request from Client](#Client-GET-and-POST-request)
 8. [Device Orchestration](#device-orchestration)
     * [Remote Machine Monitoring](#remote-machine-monitoring)
@@ -188,7 +188,7 @@ watch random data 115
 ```
 ## Channel Data Resources
 
-### Set Channel Data Resources on your Device
+### Set Channel Data Resources on Your Device
 
 ```js
 const { Device } = require('m2m');
@@ -345,7 +345,7 @@ client.connect(function(err, result){
 
 Instead of capturing or receiving data from remote devices, we can send data to device channel resources for updates and data migration, as control signal, or for whatever purposes you may need it in your application.  
 
-#### Set Channel Data on your Device
+#### Set Channel Data on Your Device
 ```js
 const m2m = require('m2m');
 const fs = require('fs');
@@ -575,13 +575,15 @@ client.connect(function(err, result){
 ```
 
 ## GPIO Resources for Raspberry Pi
-Install array-gpio on your remote device
+
+### Set GPIO Input Resources on Your Raspberry Pi Device
+
+Install array-gpio on your Raspberry Pi device
 ```js
 $ npm install array-gpio
 ```
-### Set GPIO Input Resources on your Device
 
-GPIO input objects are *read-only*. Clients can read/capture and watch its current state in real-time but they *cannot set/change* its state.
+GPIO input object resources are *read-only*. Clients can read/capture and watch its current state in real-time but they *cannot set/change* its state.
 
 ```js
 const { Device }  = require('m2m');
@@ -612,9 +614,36 @@ device.connect(function(err, result){
   });
 });
 ```
-### Set GPIO Output Resources on your Device
 
-GPIO output objects are both *readable* and *writable*. Clients can read/capture and control (on/off) its current state in real-time. At present, you *cannot watch* the state of GPIO output objects.
+#### Set Simulated GPIO Input Resources on Non-Raspberry Device
+
+You can set GPIO input objects in simulation on Windows or Linux computers for trial. It behaves similarly as if you are using a Raspberry Pi but only in simulation. Set the GPIO input object  resources as usual with a callback and add a `type` property with a value of *sim* or *simulation* from the object argument.  
+
+```js
+const { Device }  = require('m2m');
+
+let device = new Device(deviceId);
+
+device.connect(function(err, result){
+  ...
+
+  device.setGpio({mode:'input', pin:[15, 19], type:'sim'}, function(err, gpio){
+    if(err) return console.error('setGpio input error:', err.message);
+
+    console.log('input pin', gpio.pin, 'state', gpio.state);
+
+  });
+});
+```
+
+### Set GPIO Output Resources on Your Raspberry Pi Device
+
+Install array-gpio on your Raspberry Pi device
+```js
+$ npm install array-gpio
+```
+
+GPIO output object resources are both *readable* and *writable*. Clients can read/capture and control (on/off) its current state in real-time. At present, you *cannot watch* the state of GPIO output objects.
 ```js
 const { Device }  = require('m2m');
 
@@ -644,6 +673,27 @@ device.connect(function(err, result){
   });
 });
 ```
+#### Set Simulated GPIO Output Resources on Non-Raspberry Device
+
+Similar with input objects, you can set GPIO output objects in simulation for Windows or Linux computers for trial. Set the GPIO output objects as usual with a callback and add a `type` property with a value of *sim* or *simulation* from the object argument.   
+
+```js
+const { Device }  = require('m2m');
+
+let device = new Device(deviceId);
+
+device.connect(function(err, result){
+  ...
+
+  device.setGpio({mode:'output', pin:[33, 35], type:'sim'}, function(err, gpio){
+    if(err) return console.error('setGpio output error:', err.message);
+
+    console.log('output pin', gpio.pin, 'state', gpio.state);
+
+  });
+});
+```
+
 ### Capture and Watch GPIO Input Resources from Client
 
 There are two ways we can capture and watch GPIO input resources from remote devices.
@@ -696,7 +746,6 @@ client.connect(function(err, result){
 
     console.log(state);
   });
-
 });
 ```
 
