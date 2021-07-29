@@ -3,17 +3,17 @@
 [![Version npm](https://img.shields.io/npm/v/m2m.svg?logo=npm)](https://www.npmjs.com/package/m2m)
 ![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
 
-m2m is a client module for machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
+m2m is a simple lightweight library for developing client/server applications using the machine-to-machine communication framework  [node-m2m](https://www.node-m2m.com).
 
-The module's API is a FaaS (Function as a Service) also called "serverless" making it easy for everyone to develop applications in telematics, data acquisition, process automation, network gateways, workflow orchestration and many others.
+It uses a FaaS (Function as a Service) API also called *serverless* making it easy for everyone to develop applications in telematics, data acquisition, process automation, network gateways, workflow orchestration and many others.
 
 You can deploy multiple public device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning a public server. Your device servers will be accessible through its user-assigned *device id* from client applications.
 
 You can set multiple *Channel Data* or *HTTP API* resources on your device as well as *GPIO resources* for Raspberry Pi directly from the API.
 
-Clients and devices are accessible only to authenticated and authorized users. All communications between clients and devices are fully encrypted using TLS.
+Access to clients and devices is restricted to authenticated and authorized users only. All communications between clients and devices are fully encrypted using TLS.
 
-To use this module, users must create an account and register their devices with [node-m2m](https://www.node-m2m.com).
+To use this module, users must create an account and register their devices with [node-m2m](https://www.node-m2m.com/m2m/account/create).
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
