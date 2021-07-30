@@ -23,31 +23,31 @@ To use this library, users must <a href="https://www.node-m2m.com/m2m/account/cr
 3. [Installation](#installation)
 4. [Quick Tour](#quick-tour)
 5. [Channel Data Resources](#channel-data-resources)
-   * [Set Channel Data Resources on Your Device](#Set-Channel-Data-Resources-on-your-Device)
-   * [Capture Channel Data from Client Device](#Capture-Channel-Data-from-Client)
-   * [Watch/Monitor Channel Data from Client Device](#Watch-Channel-Data-from-Client)
-   * [Sending Data to Remote Device](#Sending-Data-to-Remote-Device)
+   * [Set Channel Data Resources on Your Device](#set-channel-data-resources-on-your-device)
+   * [Capture Channel Data from Client Device](#capture-channel-data-from-client)
+   * [Watch/Monitor Channel Data from Client Device](#watch-channel-data-from-client)
+   * [Sending Data to Remote Device](#sending-data-to-remote-device)
    * [Example - Using MCP 9808 Temperature Sensor](#using-mcp-9808-temperature-sensor)
 6. [GPIO Resources for Raspberry Pi](#gpio-resources-for-raspberry-pi)  
-   * [Set GPIO Input Resources on Your Device](#Set-GPIO-Input-Resources-on-Your-Raspberry-Pi-Device)
-   * [Set GPIO Output Resources on Your Device](#Set-GPIO-Output-Resources-on-Your-Raspberry-Pi-Device)
-   * [Capture/Watch GPIO Input Resources from Client](#Capture-and-Watch-GPIO-Input-Resources-from-Client)
-   * [Control (On/Off) GPIO Output Resources from Client](#Control-GPIO-Output-Resources-from-Client)
-   * [Using Channel Data API for GPIO Input/Output Resources](#Using-Channel-Data-API-for-GPIO-Resources)
-   * [Example - GPIO Input Monitoring and Output Control](#GPIO-Input-Monitoring-and-Output-Control)
+   * [Set GPIO Input Resources on Your Device](#set-gpio-input-resources-on-your-raspberry-pi-device)
+   * [Set GPIO Output Resources on Your Device](#set-gpio-output-resources-on-your-raspberry-pi-device)
+   * [Capture/Watch GPIO Input Resources from Client](#capture-and-watch-gpio-input-resources-from-client)
+   * [Control (On/Off) GPIO Output Resources from Client](#control-gpio-output-resources-from-client)
+   * [Using Channel Data API for GPIO Input/Output Resources](#using-channel-data-api-for-gpio-resources)
+   * [Example - GPIO Input Monitoring and Output Control](#gpio-input-monitoring-and-output-control)
 7. [HTTP API Resources](#http-api)
-    * [Set HTTP GET and POST Resources on Your Device](#Device-GET-and-POST-method-setup)
-    * [HTTP GET and POST Request from Client](#Client-GET-and-POST-request)
+    * [Set HTTP GET and POST Resources on Your Device](#device-get-and-post-method-setup)
+    * [HTTP GET and POST Request from Client](#client-get-and-post-request)
 8. [Device Orchestration](#device-orchestration)
     * [Remote Machine Monitoring](#remote-machine-monitoring)
-9. [Using the Browser Interface](#Using-the-Browser-Interface)
+9. [Using the Browser Interface](#using-the-browser-interface)
    * [Remote Code Editing](#remote-application-code-editing)
    * [Application Process Auto Restart](#application-auto-restart)
    * [Configure your Application for Remote Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
    * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
 10. [Get all available remote devices](#server-query-to-get-all-available-remote-devices-per-user)
-11. [Get the available resources from a specific device](#Client-request-to-get-the-available-resources-from-a-specific-device)
-12. [Connecting to other server](#Connecting-to-other-m2m-server)
+11. [Get the available resources from a specific device](#client-request-to-get-the-available-resources-from-a-specific-device)
+12. [Connecting to other server](#connecting-to-other-m2m-server)
 
 ## Supported Platform
 
@@ -82,7 +82,7 @@ In this quick tour, we will create a simple server application that generates ra
 
 And a client application that will access the random numbers using a *pull* and *push* method from the *remote client* computer.
 
-Using a *pull-method*, the client will capture the random numbers as a one time function call.
+Using a *pull-method*, the client will capture the random numbers as one time function call.
 
 Using a *push-method*, the client will watch the value of the random numbers every 5 seconds. If the value changes, the remote device will send or *push* the new value to our remote client.   
 
@@ -401,7 +401,7 @@ server.connect(function(err, result){
   });
 });
 ```
-#### Send Channel data from Client
+#### Send Channel Data from Client
 ```js
 const fs = require('fs');
 const m2m = require('m2m');
@@ -617,7 +617,7 @@ device.connect(function(err, result){
 
 #### Set Simulated GPIO Input Resources on Non-Raspberry Device
 
-You can set GPIO input objects in simulation on Windows or Linux computers for trial. It behaves similarly as if you are using a Raspberry Pi but only in simulation. Set the GPIO input object  resources as usual with a callback and add a `type` property with a value of *sim* or *simulation* from the object argument.  
+You can set GPIO input objects in simulation on Windows or Linux computers for trial. It behaves similarly as if you are using a Raspberry Pi but only in simulation. Set the GPIO input object  resources as usual with a callback and add a *type* property with a value of `sim` or `simulation` from the object argument.  
 
 ```js
 const { Device }  = require('m2m');
@@ -675,7 +675,7 @@ device.connect(function(err, result){
 ```
 #### Set Simulated GPIO Output Resources on Non-Raspberry Device
 
-Similar with input objects, you can set GPIO output objects in simulation for Windows or Linux computers for trial. Set the GPIO output objects as usual with a callback and add a `type` property with a value of *sim* or *simulation* from the object argument.   
+Similar with input objects, you can set GPIO output objects in simulation for Windows or Linux computers for trial. Set the GPIO output objects as usual with a callback and add a *type* property with a value of `sim` or `simulation` from the object argument.    
 
 ```js
 const { Device }  = require('m2m');
