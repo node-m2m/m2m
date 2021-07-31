@@ -5,7 +5,7 @@
 
 m2m is a lightweight communication library for developing client-server applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-It uses a FaaS (Function as a Service) API also called *serverless* which enables anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a whole lot more.
+It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a whole lot more.
 
 You can deploy multiple public device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning a public server. Your device servers will be accessible through its user-assigned *device id* from client applications.
 
@@ -14,6 +14,8 @@ You can set multiple *Channel Data* or *HTTP API* resources on any remote comput
 Access to clients and devices is restricted to authenticated and authorized users only. All communications between clients and devices are fully encrypted using TLS.
 
 To use this library, users must <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">create an account</a> and register their devices with node-m2m .
+
+Start your first m2m application using the [quick tour](#quick-tour) guide. 
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
@@ -86,7 +88,7 @@ Using a *pull-method*, the client will capture the random numbers as one time fu
 
 Using a *push-method*, the client will watch the value of the random numbers every 5 seconds. If the value changes, the remote device will send or *push* the new value to our remote client.   
 
-Before you start, [create an account](https://www.node-m2m.com/m2m/account/create) and register your remote device.
+Before you start, [create an account](https://www.node-m2m.com/m2m/account/create) and register your remote device. You also need a [node.js](https://nodejs.org/en/) installation on your client and device computers. 
 
 ### Remote Device Setup
 
@@ -583,7 +585,7 @@ Install array-gpio on your Raspberry Pi device
 $ npm install array-gpio
 ```
 
-GPIO input object resources are *read-only*. Clients can read/capture and watch its current state in real-time but they *cannot set/change* its state.
+GPIO input object resources are *read-only*. Clients can read/capture and watch its current state in real-time but they *cannot set or change it*.
 
 ```js
 const { Device }  = require('m2m');
