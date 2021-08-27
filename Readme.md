@@ -5,11 +5,11 @@
 
 m2m is a lightweight communication library for developing client-server applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a whole lot more.
+It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a lot more.
 
 You can deploy multiple public device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning a public server. Your device servers will be accessible through its user-assigned *device id* from client applications.
 
-You can set multiple *Channel Data* or *HTTP API* resources on any remote computer and *GPIO* resources for Raspberry Pi.
+You can set multiple *Channel Data* or *HTTP API* resources from your device servers as well as *GPIO* resources from Raspberry Pi devices.
 
 Access to clients and devices is restricted to authenticated and authorized users only. All communications between clients and devices are fully encrypted using TLS.
 
@@ -202,7 +202,7 @@ device.connect(function(err, result){
 
   /*
    * Set a name for your channel data. You can use any name you want.
-   * In the example below, we will use 'my-channel' the name of the channel data.
+   * In the example below, 'my-channel' is the name of channel data.
    */
   device.setData('my-channel', function(err, data){
     if(err) return console.error('setData my-channel error:', err.message);
@@ -211,10 +211,10 @@ device.connect(function(err, result){
      * Provide a data source for your channel data.
      * Your data source can be of type string, number or object.
      *
-     * It could be any value from a sensor device, data from an inventory or database,
-     * metrics, machine status or any performance data from any application  
+     * It could be a value from a sensor device, database, inventory,
+     * metrics, machine status or any performance data from a business application  
      *
-     * Below is a pseudocode DataSource() function that returns the value of any data source.
+     * Below is a pseudocode DataSource() function that returns the value of a data source.
      */
     let ds = DataSource();
     data.send(ds);
@@ -358,14 +358,12 @@ server.connect(function(err, result){
   if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
-  // 'echo-server' channel data resource
   server.setData('echo-server', function(err, data){
     if(err) return console.error('echo-server error:', err.message);
     // send back the payload to client
     data.send(data.payload);
   });
 
-  // 'send-file' channel data resource
   server.setData('send-file', function(err, data){
     if(err) return console.error('send-file error:', err.message);
 
@@ -379,7 +377,6 @@ server.connect(function(err, result){
     });
   });
 
-  // 'send-data' channel data resource
   server.setData('send-data', function(err, data){
     if(err) return console.error('send-data error:', err.message);
 
@@ -395,7 +392,6 @@ server.connect(function(err, result){
     }
   });
 
-  // 'number' channel data resource
   server.setData('number', function(err, data){
     if(err) return console.error('number error:', err.message);
 
@@ -1006,7 +1002,7 @@ client.connect(function(err, result){
 ```js
 const m2m = require('m2m');
 
-const server = new m2m.Server(300);
+const server = new m2m.Server(deviceId);
 
 server.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
@@ -1041,7 +1037,7 @@ client.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
-  let server = client.accessServer(300);
+  let server = client.accessServer(deviceId);
 
   // GET method request
   server.get('data/current', (err, data) => {    
