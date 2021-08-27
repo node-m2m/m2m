@@ -12,10 +12,11 @@ let clientFailed = 0;
 describe('\nset test stats ...', function() {
   before(function() {
     // runs once before the first test in this block
+    // comment below to show console output
     sinon.stub(console, 'log'); 
     sinon.stub(console, 'info'); 
     sinon.stub(console, 'warn');
-    sinon.stub(console, 'error'); 
+    sinon.stub(console, 'error');
 
     let spl = {id:'12ab8c92', appId:'12ab8c92', _pid:'r-a', m2mTest:true, app:true, src:'client', reg:true};
     m2mTest.enable(spl);
@@ -264,22 +265,6 @@ describe('\nset test stats ...', function() {
       });
     });
     describe('test local device object method - get()', function () {
-      /*it('should throw an error if a callback argument is not provided', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(300);
-        assert.strictEqual( typeof device, 'object' );
-
-        try{
-          device.get('test1');
-        }
-        catch(e){
-          assert.strictEqual( e.message, 'callback argument is required');
-          done();
-        }
-        
-      });*/
       it('should throw an error if channel argument is not a string', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -376,24 +361,6 @@ describe('\nset test stats ...', function() {
           throw e;
         }
       });
-      /*it('should throw an error if payload argument is not an alpha numeric/has an invalid characters', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(110);
-        assert.strictEqual( typeof device, 'object' );
-
-        try{
-          device.sendData('test-invalid-payload', '&invalid', function(err, data){
-            assert.strictEqual( err.message, 'invalid payload/body');
-            assert.strictEqual( data, null);
-            done();
-          });
-        }
-        catch(e){
-          throw e;
-        }
-      });*/
       it('should throw an error if a callback is not function', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -912,26 +879,6 @@ describe('\nset test stats ...', function() {
           done();
         });
       });
-      // duplicate test
-      /*it('should execute the method if callback has an error data (using an external test emitter)', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(330);
-        assert.strictEqual( typeof device, 'object' );
-
-        // don't use pin 11 and 13 
-        let pin = 15; _pid = 'gpio-input';
-        let eventName = device.id + _pid + pin + true + true;
-
-        device.gpio({mode:'in', pin:16}).watch(function(err, state){ 
-          //console.log('err, data );
-          assert.strictEqual( err.message, 'invalid input data');
-          assert.strictEqual( state, null);
-          done();
-        });
-        m2mTest.testEmitter.emit(eventName, { id:device.id, pin:pin, _pid:_pid, input:true, state:true, error:'invalid input data' });
-      });*/
       it('should execute the method if callback has a valid data (using an internal test)', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );

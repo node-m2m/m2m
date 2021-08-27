@@ -103,7 +103,7 @@ describe('\nset test stats ...', function() {
     });
     describe('create a device object and attempt to start connecting ...', function () {
 		  it('start connecting if 1st argument is a string w/ a callback', function (done) {
-		    const device = new m2m.Device(100);
+		    const device = new m2m.Device(1000); // failing for 100
 		    assert.strictEqual( typeof device, 'object' );
 		    let callback = function(err, result){
           assert.strictEqual( result, 'success' );
@@ -112,10 +112,10 @@ describe('\nset test stats ...', function() {
 		    device.connect('https://www.node-m2m.com', callback);
 		  });
 		  it('start connecting if 1st argument is an object and a callback is provided', function (done) {
-		    const device = new m2m.Device(100);
+		    const device = new m2m.Device(2000); // failing for 200
 		    assert.strictEqual( typeof device, 'object' );
 		    let callback = function(err, result){
-          assert.strictEqual( result, 'success' ); 
+          assert.strictEqual( result, 'success'); 
 				  done();
 		    }
 		    device.connect({server:'https://www.node-m2m.com'}, callback);

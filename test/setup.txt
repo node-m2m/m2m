@@ -1,0 +1,10 @@
+
+1. Install devDependencies w/ npm i --save-dev or --only=dev
+
+~/Desktop/test/node_modules/m2m$ npm i --save-dev or npm i --only=dev
+
+2. Ensure m2m is not installed on node_modules/m2m/node_modules folder
+
+3. Run ~/Desktop/test/node_modules/m2m$ npm test
+
+4. Verify result on ~/Desktop/test/node_modules/m2m/m2m_log/test_result.txt 
