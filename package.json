@@ -1,6 +1,6 @@
 {
   "name": "m2m",
-  "version": "1.6.5",
+  "version": "1.6.8",
   "description": "m2m is a client module for machine-to-machine communication system framework node-m2m.",
   "dependencies": {
     "colors": "^1.4.0",
