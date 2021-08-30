@@ -60,7 +60,8 @@ describe('\nset test stats ...', function() {
   });
 
   describe('Prepare test summary result ...', function () {
-    it('should log test summary result in /m2m_log/test_result.txt', function () {
+    //it('should log test summary result in /m2m_log/test_result.txt', function () {
+    it('should log test summary result in /m2mConfig/test_result.txt', function () {
 
       setTimeout(function(){
         logTestResult();
