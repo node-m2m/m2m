@@ -142,8 +142,8 @@ $ node device.js -r
 ```
 ### Remote Client Setup
 #### 1. Create a client project directory and install m2m.
-#### Accessing resources from your remote device
-To access resources from your remote device, create an *alias* object using the client's *accessDevice* method as shown in the code below. The object created `device` becomes an *alias* of the remote device you are trying to access as indicated by its device id argument. In this case, the device id is `100`.
+
+To access resources from your remote device, create an *alias* object using the client's *accessDevice* method as shown in the code below. The `device` object created becomes an *alias* of the remote device you are trying to access as indicated by its device id argument. In this case, the device id is `100`.
 
 The *alias* object provides various methods to access channel data, GPIO object and HTTP API resources from your remote devices.
 
