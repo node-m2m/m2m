@@ -11,7 +11,7 @@ You can deploy multiple public device servers on the fly from anywhere without t
 
 You can set multiple *Channel Data* or *HTTP API* resources from your device servers as well as *GPIO* resources from Raspberry Pi devices.
 
-Access to clients and devices is restricted to authenticated and authorized users only. All communications between clients and devices are fully encrypted using TLS.
+Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
 To use this library, users must <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">create an account</a> and register their devices with node-m2m .
 
@@ -90,13 +90,13 @@ Using a *push-method*, the client will watch the value of the random numbers eve
 
 Before you start, [create an account](https://www.node-m2m.com/m2m/account/create) and register your remote device. You also need a [node.js](https://nodejs.org/en/) installation on your client and device computers. 
 
-### Remote Device Setup
+## Remote Device Setup
 
-Create a device project directory and install m2m.
+### 1. Create a device project directory and install m2m.
 ```js
 $ npm install m2m
 ```
-Create the file below as device.js within your device project directory.
+### 2. Create the file below as device.js within your device project directory.
 ```js
 const m2m = require('m2m');
 
@@ -118,8 +118,7 @@ device.connect(function(err, result){
   });
 });
 ```
-
-Start your device application.
+### 3. Start your device application.
 ```js
 $ node device.js
 ```
@@ -141,14 +140,14 @@ At anytime, you can re-authenticate with full credentials using an *-r* flag.
 ```js
 $ node device.js -r
 ```
-### Remote Client Setup
-Similar with the remote device setup, create a client project directory and install m2m.
+## Remote Client Setup
+### 1. Similar with the remote device setup, create a client project directory and install m2m.
 #### Accessing resources from your remote device
 To access resources from your remote device, create an *alias* object using the client's *accessDevice* method as shown in the code below. The object created `device` becomes an *alias* of the remote device you are trying to access as indicated by its device id argument. In this case, the device id is `100`.
 
 The *alias* object provides various methods to access channel data, GPIO object and HTTP API resources from your remote devices.
 
-Save the code below as client.js within your client project directory.
+### 2. Save the code below as client.js within your client project directory.
 ```js
 const m2m = require('m2m');
 
@@ -175,7 +174,7 @@ client.connect(function(err, result){
   });
 });
 ```
-Start your application.
+### 3. Start your application.
 ```js
 $ node client.js
 ```
