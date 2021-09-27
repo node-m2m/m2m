@@ -294,7 +294,7 @@ The led actuator from remote device should toggle on and off as you press the co
 
 In this quick tour, the client will attempt to send and capture data from a C/C++ application through inter-process communication (ipc) using *tcp* with the remote device.
 
-The client will send a *json* data { type:"random", value:"" } and should received a random value from the remote device e.g. { type:"random", value: 26 };
+The client will send a *json* data { type:"random", value:"" } and should receive a random value from the remote device e.g. { type:"random", value: 26 };
 
 We will use nlohmann-json (https://github.com/nlohmann/json) library for C/C++ application *json* data interchange.
 
