@@ -296,7 +296,7 @@ In this quick tour, the client will attempt to send and capture data from a C/C+
 
 The client will send a *json* data { type:"random", value:"" } and should receive a random value from the remote device e.g. { type:"random", value: 26 };
 
-We will use nlohmann-json (https://github.com/nlohmann/json) library for the *json* data interchange with C/C++ application.
+We will use the nlohmann-json (https://github.com/nlohmann/json) library for *json* data interchange with C/C++ application.
 
 ### Remote Device Setup
 
