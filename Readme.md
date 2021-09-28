@@ -296,7 +296,7 @@ In this quick tour, the client will attempt to send and capture data from a C/C+
 
 The client will send a *json* data { type:"random", value:"" } and should receive a random value from the remote device e.g. { type:"random", value: 26 };
 
-We will use nlohmann-json (https://github.com/nlohmann/json) library for C/C++ application *json* data interchange.
+We will use nlohmann-json (https://github.com/nlohmann/json) library for the *json* data interchange with C/C++ application.
 
 ### Remote Device Setup
 
@@ -396,9 +396,9 @@ $ node device.js
 ```js
 $ git clone https://github.com/EdAlegrid/m2mQuicktour3.git
 ```
-**2. Install nlohmann-json library for *json* data interchange with C/C++ application.**  
+**2. Install nlohmann-json library for *json* data interchange.**  
 ```js
-sudo apt-get install nlohmann-json3-dev
+$ sudo apt-get install nlohmann-json3-dev
 ```
 
 **2. Compile the *main.cpp* source file as shown below from *m2mQuicktour3* directory.**
