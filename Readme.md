@@ -391,12 +391,12 @@ function TcpClient(ip, port, payload, cb){
 $ node device.js
 ```
 
-### Remote C/C++ Application Setup
+### C/C++ Application Setup on Remote Device
 **1. Download the *m2mQuicktour3* example project.**
 ```js
 $ git clone https://github.com/EdAlegrid/m2mQuicktour3.git
 ```
-**2. Install nlohmann-json library for *json* data interchange.**  
+**2. Install nlohmann-json library.**  
 ```js
 $ sudo apt-get install nlohmann-json3-dev
 ```
@@ -492,7 +492,6 @@ const { Client } = require('m2m');
 let client = new Client();
 
 client.connect((err, result) => {
-//client.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
