@@ -100,7 +100,7 @@ Before you start, [create an account](https://www.node-m2m.com/m2m/account/creat
 $ npm install m2m
 ```
 
-##### 2. Save the code below as device.js within your device project directory.`
+##### 2. Save the code below as device.js within your device project directory.
 
 ```js
 const m2m = require('m2m');
@@ -147,14 +147,15 @@ At anytime, you can re-authenticate with full credentials using an *-r* flag.
 $ node device.js -r
 ```
 
-### Remote Client Setup
-**1. Create a client project directory and install m2m.**
+#### Remote Client Setup
+
+##### 1. Create a client project directory and install m2m.
 
 To access resources from your remote device, create an *alias* object using the client's *accessDevice* method as shown in the code below. The object created `device` becomes an *alias* of the remote device you are trying to access as indicated by its device id argument. In this case, the device id is `100`.
 
 The *alias* object provides various methods to access channel data, GPIO object and HTTP API resources from your remote devices.
 
-**2. Save the code below as client.js within your client project directory.**
+##### 2. Save the code below as client.js within your client project directory.
 ```js
 const m2m = require('m2m');
 
@@ -181,7 +182,7 @@ client.connect(function(err, result){
   });
 });
 ```
-**3. Start your application.**
+##### 3. Start your application.
 ```js
 $ node client.js
 ```
