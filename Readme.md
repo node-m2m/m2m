@@ -24,25 +24,25 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
 2. [Node.js version requirement](#nodejs-version-requirement)
 3. [Installation](#installation)
 4. [Quick Tour](#quick-tour)
-   1. [Capturing and Watching Data from Remote Device](#capturing-and-watching-data-from-remote-device)
+   1. [Capturing and Watching Data](#capturing-and-watching-data)
    2. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](#capturing-data-from-remote-application-through-IPC)
 5. [Channel Data Resources](#channel-data-resources)
    * [Set Channel Data Resources on Your Device](#set-channel-data-resources-on-your-device)
-   * [Capture Channel Data from Client Device](#capture-channel-data-from-client)
-   * [Watch/Monitor Channel Data from Client Device](#watch-channel-data-from-client)
-   * [Sending Data to Remote Device](#sending-data-to-remote-device)
+   * [Capture Channel Data from Device](#capture-channel-data-from-device)
+   * [Watch Channel Data from Device](#watch-channel-data-from-device)
+   * [Sending Data to Device](#sending-data-to-device)
    * [Example - Using MCP 9808 Temperature Sensor](#using-mcp-9808-temperature-sensor)
 6. [GPIO Resources for Raspberry Pi](#gpio-resources-for-raspberry-pi)  
-   * [Set GPIO Input Resources on Your Device](#set-gpio-input-resources-on-your-raspberry-pi-device)
-   * [Set GPIO Output Resources on Your Device](#set-gpio-output-resources-on-your-raspberry-pi-device)
-   * [Capture/Watch GPIO Input Resources from Client](#capture-and-watch-gpio-input-resources-from-client)
-   * [Control (On/Off) GPIO Output Resources from Client](#control-gpio-output-resources-from-client)
+   * [Set GPIO Input Resources on Your Device](#set-gpio-input-resources-on-your-device)
+   * [Set GPIO Output Resources on Your Device](#set-gpio-output-resources-on-your-device)
+   * [Capture/Watch GPIO Input Resources from Device](#capture-and-watch-gpio-input-resources-from-device)
+   * [Control (On/Off) GPIO Output Resources from Device](#control-gpio-output-resources-from-device)
    * [Using Channel Data API for GPIO Input/Output Resources](#using-channel-data-api-for-gpio-resources)
    * [Example - GPIO Input Monitoring and Output Control](#gpio-input-monitoring-and-output-control)
 7. [HTTP API Resources](#http-api)
     * [Set HTTP GET and POST Resources on Your Device](#device-get-and-post-method-setup)
-    * [HTTP GET and POST Request from Client](#client-get-and-post-request)
+    * [Client HTTP GET and POST Request](#client-get-and-post-request)
 8. [Device Orchestration](#device-orchestration)
     * [Remote Machine Monitoring](#remote-machine-monitoring)
 9. [Using the Browser Interface](#using-the-browser-interface)
@@ -80,13 +80,11 @@ $ npm install array-gpio
 ![]()
 ## Quick Tour
 
-### Capturing and Watching Data from Remote Device
+### Capturing and Watching Data
 ![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
 [](quicktour.svg)
 
-In this quick tour, we will create a simple server application that generates random numbers as its sole service from the *remote device*.
-
-And a client application that will access the random numbers using a *pull* and *push* method from the *remote client* computer.
+In this quick tour, we will create a simple server application that generates random numbers as its sole service and a client application that will access the random numbers using a *pull* and *push* method.
 
 Using a *pull-method*, the client will capture the random numbers as one time function call.
 
@@ -94,15 +92,15 @@ Using a *push-method*, the client will watch the value of the random numbers eve
 
 Before you start, [create an account](https://www.node-m2m.com/m2m/account/create) and register your remote device. You also need a [node.js](https://nodejs.org/en/) installation on your client and device computers.
 
-### Remote Device Setup
+#### Remote Device Setup
 
-**1. Create a device project directory and install m2m.**
+##### 1. Create a device project directory and install m2m.
 
 ```js
 $ npm install m2m
 ```
 
-**2. Save the code below as device.js within your device project directory.**
+##### 2. Save the code below as device.js within your device project directory.`
 
 ```js
 const m2m = require('m2m');
@@ -125,7 +123,7 @@ device.connect(function(err, result){
   });
 });
 ```
-**3. Start your device application.**
+##### 3. Start your device application.
 
 ```js
 $ node device.js
@@ -207,13 +205,13 @@ The client will attempt to turn **on** and **off** the remote device's actuator 
 
 The client will also show an on/off response times providing some insight on the responsiveness of the remote control system.     
 
-### Remote Device Setup
+#### Remote Device Setup
 
-**1. Create a device project directory and install m2m and array-gpio.**
+##### 1. Create a device project directory and install m2m and array-gpio.
 ```js
 $ npm install m2m array-gpio
 ```
-**2. Save the code below as device.js in your device project directory.**
+##### 2. Save the code below as device.js in your device project directory.
 
 ```js
 const { Device } = require('m2m');
@@ -228,18 +226,17 @@ device.connect((err, result) => {
 });
 ```
 
-**3. Start your device application.**
+##### 3. Start your device application.
 ```js
 $ node device.js
 ```
+#### Remote Client Setup
 
-### Remote Client Setup
-**1. Create a client project directory and install m2m and array-gpio.**
+##### 1. Create a client project directory and install m2m and array-gpio.
 ```js
 $ npm install m2m array-gpio
 ```
-
-**2. Save the code below as client.js in your client project directory.**
+##### 2. Save the code below as client.js in your client project directory.
 
 ```js
 const { Client } = require('m2m');
@@ -282,7 +279,7 @@ client.connect((err, result) => {
   });
 });
 ```
-**3. Start your application.**
+##### 3. Start your application.
 ```js
 $ node client.js
 ```
@@ -298,13 +295,13 @@ The client will send a *json* data { type:"random", value:"" } and should receiv
 
 We will use the nlohmann-json (https://github.com/nlohmann/json) library for *json* data interchange with C/C++ application.
 
-### Remote Device Setup
+#### Remote Device Setup
 
-**1. Create a device project directory and install m2m.**
+##### 1. Create a device project directory and install m2m.
 ```js
 $ npm install m2m
 ```
-**2. Save the code below as device.js in your device project directory.**
+##### 2. Save the code below as device.js in your device project directory.
 ```js
 'use strict';
 
@@ -386,22 +383,18 @@ function TcpClient(ip, port, payload, cb){
   });
 };
 ```
-**3. Start your device application.**
+##### 3. Start your device application.
 ```js
 $ node device.js
 ```
 
-### C/C++ Application Setup on Remote Device
-**1. Download the *m2mQuicktour3* example project.**
+#### Remote C/C++ Application Setup on Remote Device
+
+##### 1. Download the *m2mQuicktour3* example project.
 ```js
 $ git clone https://github.com/EdAlegrid/m2mQuicktour3.git
 ```
-**2. Install nlohmann-json library.**  
-```js
-$ sudo apt-get install nlohmann-json3-dev
-```
-
-**2. Compile the *main.cpp* source file as shown below from *m2mQuicktour3* directory.**
+Check the *main.cpp* source file inside the *m2mQuicktour3* directory as shown below. 
 ```js
 /*
  * File:   main.ccp
@@ -463,14 +456,18 @@ int main()
   return 0;
 }
 ```
-
+##### 2. Install nlohmann-json library for *json* data interchange.  
+```js
+$ sudo apt-get install nlohmann-json3-dev
+```
+##### 3. Compile the *main.cpp* source file inside of the *m2mQuicktour3* directory.
 ```js
 $ cd m2mQuicktour3
 ```
 ```js
 $ g++ -Wall -g -o bin/main main.cpp -pthread
 ```
-**3. Run the main application.**
+##### 3. Run the main application.
 ```js
 $ ./bin/main
 ```
@@ -481,17 +478,18 @@ Once the C/C++ Application is up and running, you should see a server output as 
 Server listening on: 127.0.0.1:5300
 ```
 ### Remote Client Setup
-**1. Create a client project directory and install m2m.**
+##### 1. Create a client project directory and install m2m.
 ```js
 $ npm install m2m
 ```
-**2. Save the code below as client.js in your client project directory.**
+##### 2. Save the code below as client.js in your client project directory.
 ```js
 const { Client } = require('m2m');
 
 let client = new Client();
 
 client.connect((err, result) => {
+//client.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
@@ -513,7 +511,7 @@ client.connect((err, result) => {
   });
 });
 ```
-**3. Run your client application.**
+##### 3. Run your client application.
 ```js
 $ node client.js -s
 ```
@@ -553,7 +551,7 @@ device.connect(function(err, result){
   });
 });
 ```
-### Capture Channel Data from Client
+### Capture Channel Data from Device
 ```js
 const { Client } = require('m2m');
 
@@ -590,7 +588,7 @@ client.connect(function(err, result){
 });
 ```
 
-### Watch Channel Data from Client
+### Watch Channel Data from Device
 ```js
 const { Client } = require('m2m');
 
@@ -674,11 +672,11 @@ client.connect(function(err, result){
 
 });
 ```
-### Sending Data to Remote Device
+### Sending Data to Device
 
 Instead of capturing or receiving data from remote devices, we can send data to device channel resources for updates and data migration, as control signal, or for whatever purposes you may need it in your application.  
 
-#### Set Channel Data on Your Device example
+#### Set Channel Data on Your Device
 ```js
 const m2m = require('m2m');
 const fs = require('fs');
@@ -730,7 +728,7 @@ server.connect(function(err, result){
   });
 });
 ```
-#### Send Channel Data from Client example
+#### Send Channel Data to Device
 ```js
 const fs = require('fs');
 const m2m = require('m2m');
@@ -905,7 +903,7 @@ client.connect(function(err, result){
 
 ## GPIO Resources for Raspberry Pi
 
-### Set GPIO Input Resources on Your Raspberry Pi Device
+### Set GPIO Input Resources on Your Device
 
 Install array-gpio on your Raspberry Pi device
 ```js
@@ -965,7 +963,7 @@ device.connect(function(err, result){
 });
 ```
 
-### Set GPIO Output Resources on Your Raspberry Pi Device
+### Set GPIO Output Resources on Your Device
 
 Install array-gpio on your Raspberry Pi device
 ```js
@@ -1023,7 +1021,7 @@ device.connect(function(err, result){
 });
 ```
 
-### Capture and Watch GPIO Input Resources from Client
+### Capture and Watch GPIO Input Resources from Device
 
 There are two ways we can capture and watch GPIO input resources from remote devices.
 
@@ -1078,7 +1076,7 @@ client.connect(function(err, result){
 });
 ```
 
-### Control GPIO Output Resources from Client
+### Control GPIO Output Resources from Device
 
 Similar with GPIO input access, there are two ways we can set or control (on/off) the GPIO output state from remote devices.
 
