@@ -478,7 +478,8 @@ Once the C/C++ Application is up and running, you should see a server output as 
 
 Server listening on: 127.0.0.1:5300
 ```
-### Remote Client Setup
+#### Remote Client Setup
+
 ##### 1. Create a client project directory and install m2m.
 ```js
 $ npm install m2m
