@@ -389,7 +389,7 @@ function TcpClient(ip, port, payload, cb){
 $ node device.js
 ```
 
-#### Remote C/C++ Application Setup on Remote Device
+#### C/C++ Application Setup on Remote Device
 
 ##### 1. Download the *m2mQuicktour3* example project.
 ```js
