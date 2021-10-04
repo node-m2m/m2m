@@ -7,9 +7,9 @@ m2m is a lightweight communication library for developing client-server applicat
 
 It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a lot more.
 
-You can deploy multiple public device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning a public server. Your device servers will be accessible through its user-assigned *device id* from client applications.
+You can deploy multiple device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-prem server. Your device servers will be accessible through its user-assigned *device id* from client applications.
 
-You can set multiple *Channel Data* or *HTTP API* resources from your device servers as well as *GPIO* resources from Raspberry Pi devices.
+You can set multiple *Channel Data* or *HTTP API* resources on your device servers as well as *GPIO* resources on Raspberry Pi devices.
 
 Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
@@ -31,7 +31,7 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
    * [Set Channel Data Resources on Your Device](#set-channel-data-resources-on-your-device)
    * [Capture Channel Data from Device](#capture-channel-data-from-device)
    * [Watch Channel Data from Device](#watch-channel-data-from-device)
-   * [Sending Data to Device](#sending-data-to-device)
+   * [Send Data to Device](#sending-data-to-device)
    * [Example - Using MCP 9808 Temperature Sensor](#using-mcp-9808-temperature-sensor)
 6. [GPIO Resources for Raspberry Pi](#gpio-resources-for-raspberry-pi)  
    * [Set GPIO Input Resources on Your Device](#set-gpio-input-resources-on-your-device)
@@ -46,9 +46,9 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
 8. [Device Orchestration](#device-orchestration)
     * [Remote Machine Monitoring](#remote-machine-monitoring)
 9. [Using the Browser Interface](#using-the-browser-interface)
-   * [Remote Code Editing](#remote-application-code-editing)
-   * [Application Process Auto Restart](#application-auto-restart)
-   * [Configure your Application for Remote Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
+   * [Enable Application Code Editing](#remote-application-code-editing)
+   * [Enable Application Auto Restart](#application-auto-restart)
+   * [Automatic Configuration for Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
    * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
 10. [Get all available remote devices](#server-query-to-get-all-available-remote-devices-per-user)
 11. [Get the available resources from a specific device](#client-request-to-get-the-available-resources-from-a-specific-device)
