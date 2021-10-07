@@ -7,13 +7,13 @@ m2m is a lightweight communication library for developing client-server applicat
 
 It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a lot more.
 
-You can deploy multiple device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-prem server. Your device servers will be accessible through its user-assigned *device id* from client applications.
+You can deploy multiple device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premises server. Your device servers will be accessible through its user-assigned *device id* from client applications.
 
 You can set multiple *Channel Data* or *HTTP API* resources on your device servers as well as *GPIO* resources on Raspberry Pi devices.
 
 Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
-To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m .
+To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
 Start your first m2m application using the [quick tour](#quick-tour) guide.
 
@@ -94,7 +94,7 @@ Before you start, [create an account](https://www.node-m2m.com/m2m/account/creat
 
 #### Remote Device Setup
 
-##### 1. Create a device project directory and install m2m.
+##### 1. Create a device project directory and install m2m inside the directory.
 
 ```js
 $ npm install m2m
@@ -149,7 +149,11 @@ $ node device.js -r
 
 #### Remote Client Setup
 
-##### 1. Create a client project directory and install m2m.
+##### 1. Create a client project directory and install m2m inside the directory.
+
+```js
+$ npm install m2m
+```
 
 To access resources from your remote device, create an *alias* object using the client's *accessDevice* method as shown in the code below. The object created `device` becomes an *alias* of the remote device you are trying to access as indicated by its device id argument. In this case, the device id is `100`.
 
@@ -208,7 +212,7 @@ The client will also show an on/off response times providing some insight on the
 
 #### Remote Device Setup
 
-##### 1. Create a device project directory and install m2m and array-gpio.
+##### 1. Create a device project directory and install m2m and array-gpio inside the directory.
 ```js
 $ npm install m2m array-gpio
 ```
@@ -259,7 +263,7 @@ client.connect((err, result) => {
     if(state){
       t1 = new Date();
       console.log('turning ON remote actuator');
-      device.output(33).on(function(err, data){
+      device.output(33).on((err, data) => {
         if(err) return console.error('led-control on error:', err.message);
         let t2 = new Date();
         console.log('ON confirmation', data, 'response time', t2 - t1, 'ms');
@@ -271,7 +275,7 @@ client.connect((err, result) => {
     if(state){
       t1 = new Date();
       console.log('turning OFF remote actuator');
-      device.output(33).off(function(err, data){
+      device.output(33).off((err, data) => {
         if(err) return console.error('led-control off error:', err.message);
         let t2 = new Date();
         console.log('OFF confirmation', data, 'response time', t2 - t1, 'ms');
@@ -298,7 +302,7 @@ We will use the nlohmann-json (https://github.com/nlohmann/json) library for *js
 
 #### Remote Device Setup
 
-##### 1. Create a device project directory and install m2m.
+##### 1. Create a device project directory and install m2m inside the directory.
 ```js
 $ npm install m2m
 ```
@@ -307,9 +311,9 @@ $ npm install m2m
 'use strict';
 
 const net = require('net');
-const m2m = require('m2m');
+const { Device } = require('m2m');
 
-const device = new m2m.Device(300);
+const device = new Device(300);
 
 device.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
