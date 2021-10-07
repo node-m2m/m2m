@@ -7,9 +7,9 @@ m2m is a lightweight communication library for developing client-server applicat
 
 It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a lot more.
 
-You can deploy multiple device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premises server. Your device servers will be accessible through its user-assigned *device id* from client applications.
+You can deploy multiple device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. Your device servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
 
-You can set multiple *Channel Data* or *HTTP API* resources on your device servers as well as *GPIO* resources on Raspberry Pi devices.
+You can set multiple *Channel Data* or *HTTP API* resources on your device servers as well as *GPIO* resources on Raspberry Pi devices to be consumed by clients.
 
 Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
