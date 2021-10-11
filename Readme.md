@@ -1337,28 +1337,30 @@ client.connect(function(err, result){
 ```js
 const m2m = require('m2m');
 
-const server = new m2m.Server(deviceId);
+const server = new m2m.Device(deviceId);
 
 server.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
-  let myData = {name:'Jim', age:34};
-
   // set a GET method resource
-  server.get('data/current', (err, data) => {
+  server.get(path, (err, data) => {
     if(err) return console.error('data/current error:', err.message);
-    // send current data
-    data.send(myData);
+
+    // set logic for the current path
+    // send a response
+    data.send(response);
   });
 
   // set a POST method resource
-  server.post('data/update', (err, data) => {
+  server.post(path, (err, data) => {
     if(err) return console.error('data/update error:', err.message);
 
-    myData = data.payload;
-    // send a 'success' response
-    data.send('success');
+    // set logic for the current path
+    // body property is the payload from client
+    data.body;
+    // send a response
+    data.send(response);
   });
 });
 ```
@@ -1375,22 +1377,77 @@ client.connect((err, result) => {
   let server = client.accessServer(deviceId);
 
   // GET method request
-  server.get('data/current', (err, data) => {    
-    if(err) return console.error('data/current error:', err.message);
+  server.get(path, (err, data) => {    
+    if(err) return console.error('path error:', err.message);
 
-    console.log('data/current', data); // {name:'Jim', age:34}
+    console.log('response', data); 
   });
 
-  // POST method request
+  // POST method request 
+  server.post(path, body, (err, data) => {   
+    if(err) return console.error('path error:', err.message);
+
+    console.log('response', data);
+  });
+
+});
+```
+
+### Example
+#### Device setup
+```js
+const m2m = require('m2m');
+
+const server = new m2m.Device(1020);
+
+server.connect((err, result) => {
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  let myData = {name:'Jim', age:34};
+
+  server.get('current/data', (err, data) => {
+    if(err) return console.error('current/data error:', err.message);
+    // send current data as response
+    data.send(myData);
+  });
+
+  server.post('data/update', (err, data) => {
+    if(err) return console.error('data/update error:', err.message);
+
+    myData = data.body;
+    // send a 'success' response
+    data.send('success');
+  });
+});
+```
+#### Client request
+```js
+const m2m = require('m2m');
+
+const client = new m2m.Client();
+
+client.connect((err, result) => {
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  let server = client.accessServer(1020);
+
+  server.get('current/data', (err, data) => {    
+    if(err) return console.error('current/data error:', err.message);
+
+    console.log('current/data', data); // {name:'Jim', age:34}
+  });
+
+  // send {name:'ed', age:35} as http post body
   server.post('data/update', {name:'ed', age:35} , (err, data) => {   
     if(err) return console.error('data/update error:', err.message);
 
     console.log('data/update', data); // 'success'
   });
 
-  // get data after update
-  server.get('data/current'); // data/current {name:'ed', age:35}
-  // using the 'data/current' initial callback for the result
+  // request after update for path 'current/data'
+  server.get('current/data'); // {name:'ed', age:35}
 
 });
 ```
