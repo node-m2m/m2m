@@ -109,13 +109,13 @@ const m2m = require('m2m');
 // this id must must be registered with node-m2m
 let device = new m2m.Device(100);
 
-device.connect(function(err, result){
+device.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
 
   // set 'random-number' as channel data resource  
-  device.setData('random-number', function(err, data){
+  device.setData('random-number', (err, data) => {
     if(err) return console.error('setData random-number error:', err.message);
 
     let rn = Math.floor(Math.random() * 100);
@@ -165,7 +165,7 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect(function(err, result){
+client.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
 
   console.log('result:', result);
@@ -174,13 +174,13 @@ client.connect(function(err, result){
   let device = client.accessDevice(100);
 
   // capture 'random-number' data using a pull method
-  device.getData('random-number', function(err, data){
+  device.getData('random-number', (err, data) => {
     if(err) return console.error('getData random-number error:', err.message);
     console.log('random data', data); // 97
   });
 
   // capture 'random-number' data using a push method
-  device.watch('random-number', function(err, data){
+  device.watch('random-number', (err, data) => {
     if(err) return console.error('watch random-number error:', err.message);
     console.log('watch random data', data); // 81, 68, 115 ...
   });
@@ -259,7 +259,7 @@ client.connect((err, result) => {
   let t1 = null;
   let device = client.accessDevice(200);
 
-  sw1.watch(1, (state)=> {
+  sw1.watch(1, (state) => {
     if(state){
       t1 = new Date();
       console.log('turning ON remote actuator');
@@ -271,7 +271,7 @@ client.connect((err, result) => {
     }
   });
 
-  sw2.watch(1, (state)=> {
+  sw2.watch(1, (state) => {
     if(state){
       t1 = new Date();
       console.log('turning OFF remote actuator');
@@ -495,7 +495,6 @@ const { Client } = require('m2m');
 let client = new Client();
 
 client.connect((err, result) => {
-//client.connect((err, result) => {
   if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
