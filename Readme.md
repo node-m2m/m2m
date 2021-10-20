@@ -531,15 +531,14 @@ const { Device } = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect(function(err, result){
+device.connect((err, result) => {
   ...
 
   /*
    * Set a name for your channel data. You can use any name you want.
-   * In the example below, 'my-channel' is the name of channel data.
    */
-  device.setData('my-channel', function(err, data){
-    if(err) return console.error('setData my-channel error:', err.message);
+  device.setData(channel, (err, data) => {
+    if(err) return console.error('setData channel error:', err.message);
 
     /*
      * Provide a data source for your channel data.
@@ -562,7 +561,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect(function(err, result){
+client.connect((err, result) => {
   ...
 
   /**
@@ -572,10 +571,10 @@ client.connect(function(err, result){
   // Access the remote device you want to access by creating an alias object
   let device = client.accessDevice(deviceId);
 
-  device.getData('my-channel', function(err, data){
-    if(err) return console.error('my-channel error:', err.message);
+  device.getData(channel, (err, data) => {
+    if(err) return console.error('getData channel error:', err.message);
 
-    // data is the value of 'my-channel' data source
+    // data is the value of 'channel' data source
     console.log(data);
   });
 
@@ -584,10 +583,10 @@ client.connect(function(err, result){
    */
 
   // Provide the deviceId of the remote device you want to access
-  client.getData(deviceId, 'my-channel', function(err, data){
-    if(err) return console.error('my-channel error:', err.message);
+  client.getData(deviceId, channel, (err, data) => {
+    if(err) return console.error('getData channel error:', err.message);
 
-    // data is the value of 'my-channel' data source
+    // data is the value of 'channel' data source
     console.log(data);
   });
 });
@@ -599,7 +598,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect(function(err, result){
+client.connect((err, result) => {
   ...
 
  /**
@@ -610,32 +609,32 @@ client.connect(function(err, result){
   let device = client.accessDevice(deviceId);
 
   // watch using a default poll interval of 5 secs
-  device.watch('my-channel', function(err, data){
-    if(err) return console.error('my-channel error:', err.message);
+  device.watch(channel, (err, data) => {
+    if(err) return console.error('watch channel error:', err.message);
 
-    // data is the value of 'my-channel' data source
+    // data is the value of 'channel' data source
     console.log(data);
   });
 
   // watch using a 1 minute poll interval
-  device.watch('my-channel', 60000, function(err, data){
-    if(err) return console.error('my-channel error:', err.message);
+  device.watch(channel, 60000, (err, data) => {
+    if(err) return console.error('watch channel error:', err.message);
     console.log(data);
   });
 
   // unwatch channel data at a later time
-  setTimeout(()=>{
-    device.unwatch('my-channel');
+  setTimeout(() => {
+    device.unwatch(channel);
   }, 5*60000);
 
   // watch again using the default poll interval
-  setTimeout(()=>{
-    device.watch('my-channel');
+  setTimeout(() => {
+    device.watch(channel);
   }, 10*60000);
 
   // watch again using a 1 min poll interval
-  setTimeout(()=>{
-    device.watch('my-channel', 60000);
+  setTimeout(() => {
+    device.watch(channel, 60000);
   }, 15*60000);
 
 
@@ -647,32 +646,32 @@ client.connect(function(err, result){
   // as 1st argument of watch method
 
   // watch using a default poll interval of 5 secs
-  client.watch(deviceId, 'my-channel', function(err, data){
-    if(err) return console.error('channel-data error:', err.message);
+  client.watch(deviceId, channel, (err, data) => {
+    if(err) return console.error('watch channel error:', err.message);
 
-    // data is the value of 'my-channel' data source
-    console.log('my-channel', data);
+    // data is the value of 'channel' data source
+    console.log(data);
   });
 
   // watch using 30000 ms or 30 secs poll interval
-  client.watch(deviceId, 'my-channel', 30000, function(err, data){
-    if(err) return console.error('channel-data error:', err.message);
+  client.watch(deviceId, channel, 30000, (err, data) => {
+    if(err) return console.error('watch channel error:', err.message);
     console.log(data);
   });
 
   // unwatch channel data at a later time
-  setTimeout(()=>{
-    client.unwatch(deviceId, 'my-channel');
+  setTimeout(() => {
+    client.unwatch(deviceId, channel);
   }, 5*60000);
 
   // watch again at a later time using the default poll interval
-  setTimeout(()=>{
-    client.watch(deviceId, 'my-channel');
+  setTimeout(() => {
+    client.watch(deviceId, channel);
   }, 10*60000);
 
   // watch again at a later time using 30 secs poll interval
-  setTimeout(()=>{
-    client.watch(deviceId, 'my-channel', 30000);
+  setTimeout(() => {
+    client.watch(deviceId, channel, 30000);
   }, 15*60000);
 
 });
@@ -970,17 +969,17 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect(function(err, result){
+device.connect((err, result) => {
   ...
 
-  // Set a GPIO input resource using pin 11
-  device.setGpio({mode:'input', pin:11});
+  // Set a GPIO input resource using a single pin - pin1
+  device.setGpio({mode:'input', pin:pin1});
 
-  // Set GPIO input resources using pin 11, 13, 15 and 19
-  device.setGpio({mode:'input', pin:[11, 13, 15, 19]});
+  // Set GPIO input resources using multiple pins - pin1, pin2, pin3 and pin4
+  device.setGpio({mode:'input', pin:[pin1, pin2, pin3, pin4]});
 
   // Set GPIO input resources w/ a callback argument
-  device.setGpio({mode:'input', pin:[15, 19]}, function(err, gpio){
+  device.setGpio({mode:'input', pin:[pin1, pin2]}, (err, gpio) => {
     if(err) return console.error('setGpio input error:', err.message);
 
     /*
@@ -1004,10 +1003,10 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect(function(err, result){
+device.connect((err, result) => {
   ...
 
-  device.setGpio({mode:'input', pin:[15, 19], type:'sim'}, function(err, gpio){
+  device.setGpio({mode:'input', pin:[15, 19], type:'sim'}, (err, gpio) => {
     if(err) return console.error('setGpio input error:', err.message);
 
     console.log('input pin', gpio.pin, 'state', gpio.state);
@@ -1029,17 +1028,16 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect(function(err, result){
+device.connect((err, result) => {
   ...
 
-  // Set a GPIO output resource using pin 33
-  device.setGpio({mode:'output', pin:33});
+  // Set a GPIO output resource using a single pin - pin1
+  device.setGpio({mode:'output', pin:pin1});
 
-  // Set GPIO output resources using pin 33, 35, 36 and 37
-  device.setGpio({mode:'output', pin:[33, 35, 36, 37]});
+  // Set GPIO output resources using multiple pins - pin1, pin2, pin3 and pin4  device.setGpio({mode:'output', pin:[pin1, pin2, pin3, pin4]});
 
   // Set GPIO output resources w/ a callback argument
-  device.setGpio({mode:'output', pin:[36, 37]}, function(err, gpio){
+  device.setGpio({mode:'output', pin:[pin1, pin2]}, (err, gpio) => {
     if(err) return console.error('setGpio input error:', err.message);
 
     /*
@@ -1062,10 +1060,10 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect(function(err, result){
+device.connect((err, result) => {
   ...
 
-  device.setGpio({mode:'output', pin:[33, 35], type:'sim'}, function(err, gpio){
+  device.setGpio({mode:'output', pin:[33, 35], type:'sim'}, (err, gpio) => {
     if(err) return console.error('setGpio output error:', err.message);
 
     console.log('output pin', gpio.pin, 'state', gpio.state);
@@ -1084,7 +1082,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect(function(err, result){
+client.connect((err, result) => {
   ...
 
   let device = client.accessDevice(deviceId);
@@ -1093,17 +1091,17 @@ client.connect(function(err, result){
    *  Using .gpio() method
    */
 
-  // get current state of input pin 11
-  device.gpio({mode:'in', pin:11}).getState(function(err, state){
-    if(err) return console.error('getState input pin 11 error:', err.message);
+  // get current state of input pin1
+  device.gpio({mode:'in', pin:pin1}).getState((err, state) => {
+    if(err) return console.error('getState input pin1 error:', err.message);
 
-    // returns the state of pin 11
+    // returns the state of pin1
     console.log(state);
   });
 
-  // watch input pin 13, default scan interval is 100 ms
-  device.gpio({mode:'in', pin:13}).watch(function(err, state){
-    if(err) return console.error('watch input pin 13 error:', err.message);
+  // watch input pin1, default scan interval is 100 ms
+  device.gpio({mode:'in', pin:pin1}).watch((err, state) => {
+    if(err) return console.error('watch input pin1 error:', err.message);
 
     console.log(state);
   });
@@ -1112,17 +1110,17 @@ client.connect(function(err, result){
    *  Using .input()/output() method
    */
 
-  // get current state of input pin 13
-  device.input(13).getState(function(err, state){
-    if(err) return console.error('getState input pin 13 error:', err.message);
+  // get current state of input pin1
+  device.input(pin1).getState((err, state) => {
+    if(err) return console.error('getState input pin1 error:', err.message);
 
-    // returns the state of pin 13
+    // returns the state of pin1
     console.log(state);
   });
 
-  // watch input pin 15, default scan interval is 100 ms
-  device.input(15).watch(function(err, state){
-    if(err) return console.error('watch input pin 15 error:', err.message);
+  // watch input pin1, default scan interval is 100 ms
+  device.input(pin1).watch((err, state) => {
+    if(err) return console.error('watch input pin1 error:', err.message);
 
     console.log(state);
   });
@@ -1138,7 +1136,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect(function(err, result){
+client.connect((err, result) => {
   ...
 
   let device = client.accessDevice(deviceId);
@@ -1149,13 +1147,26 @@ client.connect(function(err, result){
 
   // Applies both for on/off methods
 
-  // turn ON output pin 33
-  device.gpio({mode:'out', pin:33}).on();
+  // turn ON output pin1 w/o callback
+  device.gpio({mode:'out', pin:pin1}).on();
 
-  // turn OFF output pin 33 w/ a callback for state confirmation and
+  // turn OFF output pin1 w/o callback
+  device.gpio({mode:'out', pin:pin1}).off();
+
+  // turn ON output pin1 w/ a callback for state confirmation and
   // for additional data processing/filtering with a custom logic
-  device.gpio({mode:'out', pin:33}).off(function(err, state){
-    if(err) return console.error('turn OFF output pin 33 error:', err.message);
+  device.gpio({mode:'out', pin:pin1}).on((err, state) => {
+    if(err) return console.error('turn ON output pin1 error:', err.message);
+
+    console.log(state);
+
+    // add custom logic here
+  });
+
+  // turn OFF output pin1 w/ a callback for state confirmation and
+  // for additional data processing/filtering with a custom logic
+  device.gpio({mode:'out', pin:pin1}).off((err, state) => {
+    if(err) return console.error('turn OFF output pin1 error:', err.message);
 
     console.log(state);
 
@@ -1168,13 +1179,26 @@ client.connect(function(err, result){
 
   // Applies both for on/off methods
 
-  // turn OFF output pin 35
-  device.output(35).off();
+  // turn ON output pin1 w/o callback
+  device.output(pin1).on();
 
-  // turn ON output pin 35 w/ a callback for state confirmation and
+  // turn OFF output pin1 w/o callback
+  device.output(pin1).off();
+
+  // turn ON output pin1 w/ a callback for state confirmation and
   // for additional data processing/filtering with a custom logic
-  device.output(35).on(function(err, state){
-    if(err) return console.error('turn ON output pin 35 error:', err.message);
+  device.output(pin1).on((err, state) => {
+    if(err) return console.error('turn ON output pin1 error:', err.message);
+
+    console.log(state);
+
+    // add custom logic here
+  });  
+
+  // turn OFF output pin1 w/ a callback for state confirmation and
+  // for additional data processing/filtering with a custom logic
+  device.output(pin1).off((err, state) => {
+    if(err) return console.error('turn OFF output pin1 error:', err.message);
 
     console.log(state);
 
