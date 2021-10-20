@@ -676,6 +676,131 @@ client.connect((err, result) => {
 
 });
 ```
+### Using MCP 9808 Temperature Sensor
+
+![](https://raw.githubusercontent.com/EdoLabs/src2/master/example1.svg?sanitize=true)
+[](example1.svg)
+#### Remote Device Setup in Tokyo
+
+Using a built-in MCP9808 i2c library from array-gpio
+```js
+$ npm install array-gpio
+```
+```js
+const m2m = require('m2m');
+const i2c = require('./node_modules/m2m/examples/i2c/9808.js');
+
+let device = new m2m.Device(110);
+
+device.connect(function(err, result){
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  device.setData('sensor-temperature', function(err, data){
+    if(err) return console.error('set sensor-temperature error:', err.message);
+
+    // temperature data
+    let td =  i2c.getTemp();
+    data.send(td);
+  });
+});
+```
+Using *i2c-bus* npm module to setup MCP 9808 temperature sensor
+```js
+$ npm install i2c-bus
+```
+[Configure I2C on Raspberry Pi.](https://github.com/fivdi/i2c-bus/blob/HEAD/doc/raspberry-pi-i2c.md)
+\
+\
+After configuration, setup your device using the following code.
+```js
+const m2m = require('m2m');
+const i2c = require('i2c-bus');
+
+const MCP9808_ADDR = 0x18;
+const TEMP_REG = 0x05;
+
+const toCelsius = rawData => {
+  rawData = (rawData >> 8) + ((rawData & 0xff) << 8);
+  let celsius = (rawData & 0x0fff) / 16;
+  if (rawData & 0x1000) {
+    celsius -= 256;
+  }
+  return celsius;
+};
+
+const i2c1 = i2c.openSync(1);
+const rawData = i2c1.readWordSync(MCP9808_ADDR, TEMP_REG);
+
+let device = new m2m.Device(110);
+
+device.connect(function(err, result){
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  device.setData('sensor-temperature', function(err, data){
+    if(err) return console.error('set sensor-temperature error:', err.message);
+
+    // temperature data
+    let td =  toCelsius(rawData);
+    data.send(td);
+  });
+});
+```
+#### Client application in Boston
+```js
+$ npm install m2m
+```
+```js
+const m2m = require('m2m');
+
+let client = new m2m.Client();
+
+client.connect(function(err, result){
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  let device = client.accessDevice(110);
+
+  device.watch('sensor-temperature', function(err, data){
+    if(err) return console.error('sensor-temperature error:', err.message);
+    console.log('sensor temperature data', data); // 23.51, 23.49, 23.11
+  });
+});
+```
+#### Client application in London
+```js
+$ npm install m2m
+```
+
+```js
+const m2m = require('m2m');
+
+let client = new m2m.Client();
+
+client.connect(function(err, result){
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  let device = client.accessDevice(110);
+
+  // scan/poll the data every 15 secs instead of the default 5 secs
+  device.watch('sensor-temperature', 15000, function(err, data){
+    if(err) return console.error('sensor-temperature error:', err.message);
+    console.log('sensor temperature data', data); // 23.51, 23.49, 23.11
+  });
+
+  // unwatch temperature data after 5 minutes
+  setTimeout(function(){
+    device.unwatch('sensor-temperature');
+  }, 5*60000);
+
+  // watch temperature data again using the default poll interval
+  setTimeout(function(){
+    device.watch('sensor-temperature');
+  }, 10*60000);
+});
+```
 ### Sending Data to Device
 
 Instead of capturing or receiving data from remote devices, we can send data to device channel resources for updates and data migration, as control signal, or for whatever purposes you may need it in your application.  
@@ -824,132 +949,6 @@ client.connect(function(err, result){
   let num = 1.2456;
 
   server.sendData('number', num);
-});
-```
-
-### Using MCP 9808 Temperature Sensor
-
-![](https://raw.githubusercontent.com/EdoLabs/src2/master/example1.svg?sanitize=true)
-[](example1.svg)
-#### Remote Device Setup in Tokyo
-
-Using a built-in MCP9808 i2c library from array-gpio
-```js
-$ npm install array-gpio
-```
-```js
-const m2m = require('m2m');
-const i2c = require('./node_modules/m2m/examples/i2c/9808.js');
-
-let device = new m2m.Device(110);
-
-device.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
-  console.log('result:', result);
-
-  device.setData('sensor-temperature', function(err, data){
-    if(err) return console.error('set sensor-temperature error:', err.message);
-
-    // temperature data
-    let td =  i2c.getTemp();
-    data.send(td);
-  });
-});
-```
-Using *i2c-bus* npm module to setup MCP 9808 temperature sensor
-```js
-$ npm install i2c-bus
-```
-[Configure I2C on Raspberry Pi.](https://github.com/fivdi/i2c-bus/blob/HEAD/doc/raspberry-pi-i2c.md)
-\
-\
-After configuration, setup your device using the following code.
-```js
-const m2m = require('m2m');
-const i2c = require('i2c-bus');
-
-const MCP9808_ADDR = 0x18;
-const TEMP_REG = 0x05;
-
-const toCelsius = rawData => {
-  rawData = (rawData >> 8) + ((rawData & 0xff) << 8);
-  let celsius = (rawData & 0x0fff) / 16;
-  if (rawData & 0x1000) {
-    celsius -= 256;
-  }
-  return celsius;
-};
-
-const i2c1 = i2c.openSync(1);
-const rawData = i2c1.readWordSync(MCP9808_ADDR, TEMP_REG);
-
-let device = new m2m.Device(110);
-
-device.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
-  console.log('result:', result);
-
-  device.setData('sensor-temperature', function(err, data){
-    if(err) return console.error('set sensor-temperature error:', err.message);
-
-    // temperature data
-    let td =  toCelsius(rawData);
-    data.send(td);
-  });
-});
-```
-#### Client application in Boston
-```js
-$ npm install m2m
-```
-```js
-const m2m = require('m2m');
-
-let client = new m2m.Client();
-
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
-  console.log('result:', result);
-
-  let device = client.accessDevice(110);
-
-  device.watch('sensor-temperature', function(err, data){
-    if(err) return console.error('sensor-temperature error:', err.message);
-    console.log('sensor temperature data', data); // 23.51, 23.49, 23.11
-  });
-});
-```
-#### Client application in London
-```js
-$ npm install m2m
-```
-
-```js
-const m2m = require('m2m');
-
-let client = new m2m.Client();
-
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
-  console.log('result:', result);
-
-  let device = client.accessDevice(110);
-
-  // scan/poll the data every 15 secs instead of the default 5 secs
-  device.watch('sensor-temperature', 15000, function(err, data){
-    if(err) return console.error('sensor-temperature error:', err.message);
-    console.log('sensor temperature data', data); // 23.51, 23.49, 23.11
-  });
-
-  // unwatch temperature data after 5 minutes
-  setTimeout(function(){
-    device.unwatch('sensor-temperature');
-  }, 5*60000);
-
-  // watch temperature data again using the default poll interval
-  setTimeout(function(){
-    device.watch('sensor-temperature');
-  }, 10*60000);
 });
 ```
 
