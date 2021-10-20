@@ -681,12 +681,60 @@ client.connect(function(err, result){
 
 Instead of capturing or receiving data from remote devices, we can send data to device channel resources for updates and data migration, as control signal, or for whatever purposes you may need it in your application.  
 
-#### Set Channel Data on Your Device
+### Set Channel Data on Your Device
+```js
+const m2m = require('m2m');
+
+let server = new m2m.Device(deviceId);
+
+server.connect(function(err, result){
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  server.setData(channel, function(err, data){
+    if(err) return console.error('channel error:', err.message);
+
+    // set logic for the current path
+
+    // the data.payload property is the payload from client
+    // you can use it for whatever purposes in your application logic
+    data.payload;
+    // send a response
+    data.send(response);
+  });
+
+});  
+```
+### Send Channel Data to Device
+```js
+const m2m = require('m2m');
+
+let client = new m2m.Client();
+
+client.connect(function(err, result){
+  if(err) return console.error('connect error:', err.message);
+  console.log('result:', result);
+
+  let server = client.accessDevice(deviceId);
+
+  // the payload can be a string, number or object
+  let payload = 'hello server';
+
+  server.sendData(channel, payload , function(err, data){
+    if(err) return console.error('channel error:', err.message);
+
+    console.log('response', data); 
+  });
+});
+```
+
+### Example
+#### Device setup
 ```js
 const m2m = require('m2m');
 const fs = require('fs');
 
-let server = new m2m.Device(deviceId);
+let server = new m2m.Device(200);
 
 server.connect(function(err, result){
   if(err) return console.error('connect error:', err.message);
@@ -733,10 +781,10 @@ server.connect(function(err, result){
   });
 });
 ```
-#### Send Channel Data to Device
+#### Client setup
 ```js
-const fs = require('fs');
 const m2m = require('m2m');
+const fs = require('fs');
 
 let client = new m2m.Client();
 
@@ -744,7 +792,7 @@ client.connect(function(err, result){
   if(err) return console.error('connect error:', err.message);
   console.log('result:', result);
 
-  let server = client.accessDevice(deviceId);
+  let server = client.accessDevice(200);
 
   // sending a simple string payload data to 'echo-server' channel
   let payload = 'hello server';
@@ -1344,7 +1392,7 @@ server.connect((err, result) => {
 
   // set a GET method resource
   server.get(path, (err, data) => {
-    if(err) return console.error('data/current error:', err.message);
+    if(err) return console.error('path error:', err.message);
 
     // set logic for the current path
     // send a response
@@ -1353,10 +1401,12 @@ server.connect((err, result) => {
 
   // set a POST method resource
   server.post(path, (err, data) => {
-    if(err) return console.error('data/update error:', err.message);
+    if(err) return console.error('path error:', err.message);
 
     // set logic for the current path
-    // body property is the payload from client
+
+    // the data.body property is the payload from client
+    // you can use it for whatever purposes in your application logic
     data.body;
     // send a response
     data.send(response);
