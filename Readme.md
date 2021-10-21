@@ -243,7 +243,7 @@ $ npm install m2m array-gpio
 
 ```js
 const { Client } = require('m2m');
-const { setInput, watchInput } = require('array-gpio');
+const { setInput } = require('array-gpio');
 
 let sw1 = setInput(11); // ON switch
 let sw2 = setInput(13); // OFF switch
