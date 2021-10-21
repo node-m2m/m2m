@@ -138,11 +138,9 @@ The first time you run your application, it will ask for your full credentials.
 ```
 The next time you run your application, it will start automatically using a saved user token.
 
-However, if your application is running for more than 15 minutes, it becomes immutable. Any changes to your application code will require you to re-authenticate for security reason.
+However, after a grace period of 15 minutes, it will ask again for your credentials  to restart your application for security reason.
 
-Restart your application using `$ node device.js` or with the *-r* flag as shown below.
-
-At anytime, you can re-authenticate with full credentials using an *-r* flag.
+Also at anytime, you can re-authenticate with an *-r* flag with full credentials if you're having difficulty or issues restarting your application as shown below.
 ```js
 $ node device.js -r
 ```
