@@ -88,7 +88,7 @@ In this quick tour, we will create a simple server application that generates ra
 
 Using a *pull-method*, the client will capture the random numbers as one time function call.
 
-Using a *push-method*, the client will watch the value of the random numbers every 5 seconds. If the value changes, the remote device will send or *push* the new value to our remote client.   
+Using a *push-method*, the client will watch the value of the random numbers. The remote device will check the random value every 5 seconds. If the value changes, it will send or *push* the new value to the client.   
 
 Before you start, [create an account](https://www.node-m2m.com/m2m/account/create) and register your remote device. You also need a [node.js](https://nodejs.org/en/) installation on your client and device computers.
 
