@@ -9,7 +9,7 @@ It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing any
 
 You can deploy multiple private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. Your device servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
 
-You can set multiple *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources on your device servers for clients consumption.
+You can set multiple *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources on your remote device for client consumption.
 
 Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
