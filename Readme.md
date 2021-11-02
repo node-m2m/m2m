@@ -53,6 +53,7 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
 10. [Get all available remote devices](#server-query-to-get-all-available-remote-devices-per-user)
 11. [Get the available resources from a specific device](#client-request-to-get-the-available-resources-from-a-specific-device)
 12. [Connecting to other server](#connecting-to-other-m2m-server)
+13. [api](https://github.com/EdAlegrid/m2m-api)
 
 ## Supported Platform
 
@@ -1650,5 +1651,5 @@ client.connect((result) => {
   // application logic
 });
 ```
-## api
-[api](https://github.com/EdAlegrid/m2m-api)
+
+
