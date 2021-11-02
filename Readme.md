@@ -161,7 +161,7 @@ client.connect((result) => {
 
 **Method 2**
 
-Instead of creating an alias, you can just access the remote device from the client object by providing its device id everytime. 
+Instead of creating an alias, you can just provide the *device id* through the various methods from the client object to access channel data, GPIO object and HTTP API resources from your remote devices. 
 
 ```js
 const m2m = require('m2m');
