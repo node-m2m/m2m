@@ -40,11 +40,11 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
 * Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
 * Linux
 * Windows
-* Mac OS
+* Mac
 
 ## Node.js version requirement
 
-* Node.js versions: 10.x, 11.x, 12.x, 14.x. Ideally the latest 14.x LTS version.
+* Node.js versions: 10.x, 11.x, 12.x, 14.x, 16.x. Ideally the latest LTS version.
 
 ## Installation
 ```js
@@ -53,7 +53,7 @@ $ npm install m2m
 
 ![]()
 ###  Raspberry Pi peripheral access (GPIO, I2C, SPI and PWM). <a name="rpi-peripheral-access"></a>
-For projects requiring raspberry pi peripheral access such as GPIO, I2C, SPI and PWM, you will need to install *array-gpio* as a separate module.
+For projects requiring raspberry pi peripheral access such as GPIO, I2C, SPI and PWM, you will need to install *array-gpio* module.
 ```js
 $ npm install array-gpio
 ```
@@ -93,7 +93,7 @@ let device = new m2m.Device(100);
 device.connect((result) => {
   console.log('result', result);
 
-  // set 'random-number' as channel data resource  
+  // set a channel data resourse named 'random-number'  
   device.setData('random-number', (data) => {
     let rn = Math.floor(Math.random() * 100);
     data.send(rn);
@@ -115,7 +115,7 @@ The first time you run your application, it will ask for your full credentials.
 ```
 The next time you run your application, it will start automatically using a saved user token.
 
-However, after a grace period of 15 minutes, you need to provide your security code to restart your application.
+However, after a grace period of 15 minutes, you need to provide your *security code* to restart your application.
 
 Also at anytime, you can re-authenticate with an *-r* flag with full credentials if you're having difficulty or issues restarting your application as shown below.
 ```js
@@ -130,11 +130,12 @@ $ node device.js -r
 $ npm install m2m
 ```
 
+##### 2. Save the code below as client.js within your client project directory.
+
+**Method 1**
+
 To access resources from your remote device, create an *alias* object using the client's *accessDevice* method as shown in the code below. The object created `device` becomes an *alias* of the remote device you are trying to access as indicated by its device id argument. In this case, the device id is `100`.
 
-The *alias* object provides various methods to access channel data, GPIO object and HTTP API resources from your remote devices.
-
-##### 2. Save the code below as client.js within your client project directory.
 ```js
 const m2m = require('m2m');
 
@@ -157,6 +158,31 @@ client.connect((result) => {
   });
 });
 ```
+
+**Method 2**
+
+Instead of creating an alias, you can just access the remote device from the client object by providing its device id everytime. 
+
+```js
+const m2m = require('m2m');
+
+let client = new m2m.Client();
+
+client.connect((result) => {
+  console.log('result', result);
+
+  // capture 'random-number' data using a pull method
+  client.getData(100, 'random-number', (data) => {
+    console.log('random data', data); // 97
+  });
+
+  // capture 'random-number' data using a push method
+  client.watch(100, 'random-number', (data) => {
+    console.log('watch random data', data); // 81, 68, 115 ...
+  });
+});
+```
+
 ##### 3. Start your application.
 ```js
 $ node client.js
