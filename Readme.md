@@ -27,25 +27,10 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
    1. [Capturing and Watching Data](#capturing-and-watching-data)
    2. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](#capturing-data-from-remote-application-through-IPC)
-5. [Channel Data Resources](#channel-data-resources)
-   * [Set Channel Data Resources on Your Device](#set-channel-data-resources-on-your-device)
-   * [Capture Channel Data from Device](#capture-channel-data-from-device)
-   * [Watch Channel Data from Device](#watch-channel-data-from-device)
-   * [Send Data to Device](#sending-data-to-device)
-   * [Example - Using MCP 9808 Temperature Sensor](#using-mcp-9808-temperature-sensor)
-6. [GPIO Resources for Raspberry Pi](#gpio-resources-for-raspberry-pi)  
-   * [Set GPIO Input Resources on Your Device](#set-gpio-input-resources-on-your-device)
-   * [Set GPIO Output Resources on Your Device](#set-gpio-output-resources-on-your-device)
-   * [Capture/Watch GPIO Input Resources from Device](#capture-and-watch-gpio-input-resources-from-device)
-   * [Control (On/Off) GPIO Output Resources from Device](#control-gpio-output-resources-from-device)
-   * [Using Channel Data API for GPIO Input/Output Resources](#using-channel-data-api-for-gpio-resources)
-   * [Example - GPIO Input Monitoring and Output Control](#gpio-input-monitoring-and-output-control)
-7. [HTTP API Resources](#http-api)
-    * [Set HTTP GET and POST Resources on Your Device](#device-get-and-post-method-setup)
-    * [Client HTTP GET and POST Request](#client-get-and-post-request)
-8. [Device Orchestration](#device-orchestration)
+5. [API](https://github.com/EdAlegrid/m2m-api)
+6. [Device Orchestration](#device-orchestration)
     * [Remote Machine Monitoring](#remote-machine-monitoring)
-9. [Using the Browser Interface](#using-the-browser-interface)
+7. [Using the Browser Interface](#using-the-browser-interface)
    * [Enable Application Code Editing](#remote-application-code-editing)
    * [Enable Application Auto Restart](#application-auto-restart)
    * [Automatic Configuration for Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
@@ -53,7 +38,6 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
 10. [Get all available remote devices](#server-query-to-get-all-available-remote-devices-per-user)
 11. [Get the available resources from a specific device](#client-request-to-get-the-available-resources-from-a-specific-device)
 12. [Connecting to other server](#connecting-to-other-m2m-server)
-13. [api](https://github.com/EdAlegrid/m2m-api)
 
 ## Supported Platform
 
@@ -1651,5 +1635,3 @@ client.connect((result) => {
   // application logic
 });
 ```
-
-
