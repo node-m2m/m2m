@@ -203,7 +203,7 @@ watch random data 115
 
 In this quick tour, we will install two push-button switches ( GPIO pin 11 and 13 ) on the remote client, and an led actuator ( GPIO pin 33 ) on the remote device.
 
-The client will attempt to turn **on** and **off** the remote device's actuator and receive a confirmation response of *true* to signify the actuator was indeed turned **on** and *false* when the actuator is turned **off**.
+The client will attempt to turn *on* and *off* the remote device's actuator and receive a confirmation response of *true* to signify the actuator was indeed turned **on** and *false* when the actuator is turned **off**.
 
 The client will also show an on/off response times providing some insight on the responsiveness of the remote control system.     
 
