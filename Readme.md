@@ -109,15 +109,11 @@ const m2m = require('m2m');
 // this id must must be registered with node-m2m
 let device = new m2m.Device(100);
 
-device.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
-
+device.connect((result) => {
   console.log('result:', result);
 
   // set 'random-number' as channel data resource  
-  device.setData('random-number', (err, data) => {
-    if(err) return console.error('setData random-number error:', err.message);
-
+  device.setData('random-number', (data) => {
     let rn = Math.floor(Math.random() * 100);
     data.send(rn);
   });
@@ -163,23 +159,19 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
-
+client.connect((result) => {
   console.log('result:', result);
 
   // access the remote device using an alias object
   let device = client.accessDevice(100);
 
   // capture 'random-number' data using a pull method
-  device.getData('random-number', (err, data) => {
-    if(err) return console.error('getData random-number error:', err.message);
+  device.getData('random-number', (data) => {
     console.log('random data', data); // 97
   });
 
   // capture 'random-number' data using a push method
-  device.watch('random-number', (err, data) => {
-    if(err) return console.error('watch random-number error:', err.message);
+  device.watch('random-number', (data) => {
     console.log('watch random data', data); // 81, 68, 115 ...
   });
 });
@@ -221,10 +213,8 @@ const { Device } = require('m2m');
 
 let device = new Device(200);
 
-device.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+device.connect((result) => {
   console.log('result:', result);
-
   device.setGpio({mode:'output', pin:33});
 });
 ```
@@ -250,8 +240,7 @@ let sw2 = setInput(13); // OFF switch
 
 let client = new Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+client.connect((result) => {
   console.log('result:', result);
 
   let t1 = null;
@@ -261,8 +250,7 @@ client.connect((err, result) => {
     if(state){
       t1 = new Date();
       console.log('turning ON remote actuator');
-      device.output(33).on((err, data) => {
-        if(err) return console.error('led-control on error:', err.message);
+      device.output(33).on((data) => {
         let t2 = new Date();
         console.log('ON confirmation', data, 'response time', t2 - t1, 'ms');
       });
@@ -273,8 +261,7 @@ client.connect((err, result) => {
     if(state){
       t1 = new Date();
       console.log('turning OFF remote actuator');
-      device.output(33).off((err, data) => {
-        if(err) return console.error('led-control off error:', err.message);
+      device.output(33).off((data) => {
         let t2 = new Date();
         console.log('OFF confirmation', data, 'response time', t2 - t1, 'ms');
       });
@@ -313,12 +300,10 @@ const { Device } = require('m2m');
 
 const device = new Device(300);
 
-device.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+device.connect((result) => {
   console.log('result:', result);
 
-  device.setData('ipc-channel', (err, data) => {
-    if(err) return console.error('tcp-ipc-channel error:', err.message);
+  device.setData('ipc-channel', (data) => {
 
     let pl = null;
 
@@ -492,8 +477,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+client.connect((result) => {
   console.log('result:', result);
 
   let device = client.accessDevice(300);
@@ -501,9 +485,7 @@ client.connect((err, result) => {
   // test payload
   let payload = {type:'random'};
 
-  device.sendData('ipc-channel', payload, (err, data) => {
-    if(err) return console.error('watch tcp-channel error:', err.message);
-
+  device.sendData('ipc-channel', payload, (data) => {
     try{
       let jd = JSON.parse(data);
       console.log('rcvd json data:', jd);
@@ -529,15 +511,13 @@ const { Device } = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect((err, result) => {
+device.connect((result) => {
   ...
 
   /*
    * Set a name for your channel data. You can use any name you want.
    */
-  device.setData(channel, (err, data) => {
-    if(err) return console.error('setData channel error:', err.message);
-
+  device.setData(channel, (data) => {
     /*
      * Provide a data source for your channel data.
      * Your data source can be of type string, number or object.
@@ -559,7 +539,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect((err, result) => {
+client.connect((result) => {
   ...
 
   /**
@@ -569,9 +549,7 @@ client.connect((err, result) => {
   // Access the remote device you want to access by creating an alias object
   let device = client.accessDevice(deviceId);
 
-  device.getData(channel, (err, data) => {
-    if(err) return console.error('getData channel error:', err.message);
-
+  device.getData(channel, (data) => {
     // data is the value of 'channel' data source
     console.log(data);
   });
@@ -581,9 +559,7 @@ client.connect((err, result) => {
    */
 
   // Provide the deviceId of the remote device you want to access
-  client.getData(deviceId, channel, (err, data) => {
-    if(err) return console.error('getData channel error:', err.message);
-
+  client.getData(deviceId, channel, (data) => {
     // data is the value of 'channel' data source
     console.log(data);
   });
@@ -596,7 +572,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect((err, result) => {
+client.connect((result) => {
   ...
 
  /**
@@ -607,16 +583,13 @@ client.connect((err, result) => {
   let device = client.accessDevice(deviceId);
 
   // watch using a default poll interval of 5 secs
-  device.watch(channel, (err, data) => {
-    if(err) return console.error('watch channel error:', err.message);
-
+  device.watch(channel, (data) => {
     // data is the value of 'channel' data source
     console.log(data);
   });
 
   // watch using a 1 minute poll interval
-  device.watch(channel, 60000, (err, data) => {
-    if(err) return console.error('watch channel error:', err.message);
+  device.watch(channel, 60000, (data) => {
     console.log(data);
   });
 
@@ -644,16 +617,13 @@ client.connect((err, result) => {
   // as 1st argument of watch method
 
   // watch using a default poll interval of 5 secs
-  client.watch(deviceId, channel, (err, data) => {
-    if(err) return console.error('watch channel error:', err.message);
-
+  client.watch(deviceId, channel, (data) => {
     // data is the value of 'channel' data source
     console.log(data);
   });
 
   // watch using 30000 ms or 30 secs poll interval
-  client.watch(deviceId, channel, 30000, (err, data) => {
-    if(err) return console.error('watch channel error:', err.message);
+  client.watch(deviceId, channel, 30000, (data) => {
     console.log(data);
   });
 
@@ -690,13 +660,10 @@ const i2c = require('./node_modules/m2m/examples/i2c/9808.js');
 
 let device = new m2m.Device(110);
 
-device.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+device.connect(function(result){
   console.log('result:', result);
 
-  device.setData('sensor-temperature', function(err, data){
-    if(err) return console.error('set sensor-temperature error:', err.message);
-
+  device.setData('sensor-temperature', function(data){
     // temperature data
     let td =  i2c.getTemp();
     data.send(td);
@@ -732,13 +699,10 @@ const rawData = i2c1.readWordSync(MCP9808_ADDR, TEMP_REG);
 
 let device = new m2m.Device(110);
 
-device.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+device.connect(function(result){
   console.log('result:', result);
 
-  device.setData('sensor-temperature', function(err, data){
-    if(err) return console.error('set sensor-temperature error:', err.message);
-
+  device.setData('sensor-temperature', function(data){
     // temperature data
     let td =  toCelsius(rawData);
     data.send(td);
@@ -754,14 +718,12 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+client.connect(function(result){
   console.log('result:', result);
 
   let device = client.accessDevice(110);
 
-  device.watch('sensor-temperature', function(err, data){
-    if(err) return console.error('sensor-temperature error:', err.message);
+  device.watch('sensor-temperature', function(data){
     console.log('sensor temperature data', data); // 23.51, 23.49, 23.11
   });
 });
@@ -776,15 +738,13 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+client.connect(function(result){
   console.log('result:', result);
 
   let device = client.accessDevice(110);
 
   // scan/poll the data every 15 secs instead of the default 5 secs
-  device.watch('sensor-temperature', 15000, function(err, data){
-    if(err) return console.error('sensor-temperature error:', err.message);
+  device.watch('sensor-temperature', 15000, function(data){
     console.log('sensor temperature data', data); // 23.51, 23.49, 23.11
   });
 
@@ -809,12 +769,10 @@ const m2m = require('m2m');
 
 let server = new m2m.Device(deviceId);
 
-server.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+server.connect(function(result){
   console.log('result:', result);
 
-  server.setData(channel, function(err, data){
-    if(err) return console.error('channel error:', err.message);
+  server.setData(channel, function(data){
 
     // set logic for the current path
 
@@ -833,8 +791,7 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+client.connect(function(result){
   console.log('result:', result);
 
   let server = client.accessDevice(deviceId);
@@ -842,8 +799,7 @@ client.connect(function(err, result){
   // the payload can be a string, number or object
   let payload = 'hello server';
 
-  server.sendData(channel, payload , function(err, data){
-    if(err) return console.error('channel error:', err.message);
+  server.sendData(channel, payload , function(data){
 
     console.log('response', data); 
   });
@@ -858,18 +814,15 @@ const fs = require('fs');
 
 let server = new m2m.Device(200);
 
-server.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+server.connect(function(result){
   console.log('result:', result);
 
-  server.setData('echo-server', function(err, data){
-    if(err) return console.error('echo-server error:', err.message);
+  server.setData('echo-server', function(data){
     // send back the payload to client
     data.send(data.payload);
   });
 
-  server.setData('send-file', function(err, data){
-    if(err) return console.error('send-file error:', err.message);
+  server.setData('send-file', function(data){
 
     let file = data.payload;
 
@@ -881,8 +834,7 @@ server.connect(function(err, result){
     });
   });
 
-  server.setData('send-data', function(err, data){
-    if(err) return console.error('send-data error:', err.message);
+  server.setData('send-data', function(data){
 
     console.log('data.payload', data.payload);
     // data.payload  [{name:'Ed'}, {name:'Jim', age:30}, {name:'Kim', age:42, address:'Seoul, South Korea'}];
@@ -896,9 +848,7 @@ server.connect(function(err, result){
     }
   });
 
-  server.setData('number', function(err, data){
-    if(err) return console.error('number error:', err.message);
-
+  server.setData('number', function(data){
     console.log('data.payload', data.payload); // 1.2456
   });
 });
@@ -910,8 +860,7 @@ const fs = require('fs');
 
 let client = new m2m.Client();
 
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+client.connect(function(result){
   console.log('result:', result);
 
   let server = client.accessDevice(200);
@@ -919,8 +868,7 @@ client.connect(function(err, result){
   // sending a simple string payload data to 'echo-server' channel
   let payload = 'hello server';
 
-  server.sendData('echo-server', payload , function(err, data){
-    if(err) return console.error('echo-server error:', err.message);
+  server.sendData('echo-server', payload , function(data){
 
     console.log('echo-server', data); // 'hello server'
   });
@@ -928,8 +876,7 @@ client.connect(function(err, result){
   // sending a text file
   let myfile = fs.readFileSync('myFile.txt', 'utf8');
 
-  server.sendData('send-file', myfile , function(err, data){
-    if(err) return console.error('send-file error:', err.message);
+  server.sendData('send-file', myfile , function(data){
 
     console.log('send-file', data); // {result: 'success'}
   });
@@ -937,8 +884,7 @@ client.connect(function(err, result){
   // sending a json data
   let mydata = [{name:'Ed'}, {name:'Jim', age:30}, {name:'Kim', age:42, address:'Seoul, South Korea'}];
 
-  server.sendData('send-data', mydata , function(err, data){
-    if(err) return console.error('send-data error:', err.message);
+  server.sendData('send-data', mydata , function(data){
 
     console.log('send-data', data); // {data: 'valid'}
   });
@@ -966,7 +912,7 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect((err, result) => {
+device.connect((result) => {
   ...
 
   // Set a GPIO input resource using a single pin - pin1
@@ -976,9 +922,7 @@ device.connect((err, result) => {
   device.setGpio({mode:'input', pin:[pin1, pin2, pin3, pin4]});
 
   // Set GPIO input resources w/ a callback argument
-  device.setGpio({mode:'input', pin:[pin1, pin2]}, (err, gpio) => {
-    if(err) return console.error('setGpio input error:', err.message);
-
+  device.setGpio({mode:'input', pin:[pin1, pin2]}, (gpio) => {
     /*
      * If there is no error, the callback will return a gpio object
      * with a pin and a state property that you can use for additional
@@ -1000,14 +944,11 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect((err, result) => {
+device.connect((result) => {
   ...
 
-  device.setGpio({mode:'input', pin:[15, 19], type:'sim'}, (err, gpio) => {
-    if(err) return console.error('setGpio input error:', err.message);
-
+  device.setGpio({mode:'input', pin:[15, 19], type:'sim'}, (gpio) => {
     console.log('input pin', gpio.pin, 'state', gpio.state);
-
   });
 });
 ```
@@ -1025,7 +966,7 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect((err, result) => {
+device.connect((result) => {
   ...
 
   // Set a GPIO output resource using a single pin - pin1
@@ -1034,9 +975,7 @@ device.connect((err, result) => {
   // Set GPIO output resources using multiple pins - pin1, pin2, pin3 and pin4  device.setGpio({mode:'output', pin:[pin1, pin2, pin3, pin4]});
 
   // Set GPIO output resources w/ a callback argument
-  device.setGpio({mode:'output', pin:[pin1, pin2]}, (err, gpio) => {
-    if(err) return console.error('setGpio input error:', err.message);
-
+  device.setGpio({mode:'output', pin:[pin1, pin2]}, (gpio) => {
     /*
      * If there is no error, the callback will return a gpio object
      * with a pin and a state property that you can use for additional
@@ -1057,14 +996,11 @@ const { Device }  = require('m2m');
 
 let device = new Device(deviceId);
 
-device.connect((err, result) => {
+device.connect((result) => {
   ...
 
-  device.setGpio({mode:'output', pin:[33, 35], type:'sim'}, (err, gpio) => {
-    if(err) return console.error('setGpio output error:', err.message);
-
+  device.setGpio({mode:'output', pin:[33, 35], type:'sim'}, (gpio) => {
     console.log('output pin', gpio.pin, 'state', gpio.state);
-
   });
 });
 ```
@@ -1079,7 +1015,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect((err, result) => {
+client.connect((result) => {
   ...
 
   let device = client.accessDevice(deviceId);
@@ -1089,17 +1025,13 @@ client.connect((err, result) => {
    */
 
   // get current state of input pin1
-  device.gpio({mode:'in', pin:pin1}).getState((err, state) => {
-    if(err) return console.error('getState input pin1 error:', err.message);
-
+  device.gpio({mode:'in', pin:pin1}).getState((state) => {
     // returns the state of pin1
     console.log(state);
   });
 
   // watch input pin1, default scan interval is 100 ms
-  device.gpio({mode:'in', pin:pin1}).watch((err, state) => {
-    if(err) return console.error('watch input pin1 error:', err.message);
-
+  device.gpio({mode:'in', pin:pin1}).watch((state) => {
     console.log(state);
   });
 
@@ -1108,17 +1040,13 @@ client.connect((err, result) => {
    */
 
   // get current state of input pin1
-  device.input(pin1).getState((err, state) => {
-    if(err) return console.error('getState input pin1 error:', err.message);
-
+  device.input(pin1).getState((state) => {
     // returns the state of pin1
     console.log(state);
   });
 
   // watch input pin1, default scan interval is 100 ms
-  device.input(pin1).watch((err, state) => {
-    if(err) return console.error('watch input pin1 error:', err.message);
-
+  device.input(pin1).watch((state) => {
     console.log(state);
   });
 });
@@ -1133,7 +1061,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect((err, result) => {
+client.connect((result) => {
   ...
 
   let device = client.accessDevice(deviceId);
@@ -1152,9 +1080,7 @@ client.connect((err, result) => {
 
   // turn ON output pin1 w/ a callback for state confirmation and
   // for additional data processing/filtering with a custom logic
-  device.gpio({mode:'out', pin:pin1}).on((err, state) => {
-    if(err) return console.error('turn ON output pin1 error:', err.message);
-
+  device.gpio({mode:'out', pin:pin1}).on((state) => {
     console.log(state);
 
     // add custom logic here
@@ -1162,9 +1088,7 @@ client.connect((err, result) => {
 
   // turn OFF output pin1 w/ a callback for state confirmation and
   // for additional data processing/filtering with a custom logic
-  device.gpio({mode:'out', pin:pin1}).off((err, state) => {
-    if(err) return console.error('turn OFF output pin1 error:', err.message);
-
+  device.gpio({mode:'out', pin:pin1}).off((state) => {
     console.log(state);
 
     // add custom logic here
@@ -1184,9 +1108,7 @@ client.connect((err, result) => {
 
   // turn ON output pin1 w/ a callback for state confirmation and
   // for additional data processing/filtering with a custom logic
-  device.output(pin1).on((err, state) => {
-    if(err) return console.error('turn ON output pin1 error:', err.message);
-
+  device.output(pin1).on((state) => {
     console.log(state);
 
     // add custom logic here
@@ -1194,9 +1116,7 @@ client.connect((err, result) => {
 
   // turn OFF output pin1 w/ a callback for state confirmation and
   // for additional data processing/filtering with a custom logic
-  device.output(pin1).off((err, state) => {
-    if(err) return console.error('turn OFF output pin1 error:', err.message);
-
+  device.output(pin1).off((state) => {
     console.log(state);
 
     // add custom logic here
@@ -1216,9 +1136,7 @@ const m2m = require('m2m');
 
 let device = new m2m.Device(120);
 
-device.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
-
+device.connect(function(result){
   console.log('result:', result);
 
   // Set GPIO input resources using pin 11 and 13
@@ -1234,9 +1152,7 @@ const m2m = require('m2m');
 
 let device = new m2m.Device(130);
 
-device.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
-
+device.connect(function(result){
   console.log('result:', result);
 
   // Set GPIO output resources using pin 33 and 35
@@ -1251,25 +1167,20 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+client.connect(function(result){
   console.log('result:', result);
 
   let device1 = client.accessDevice(120);
   let device2 = client.accessDevice(130);
 
   // get current state of input pin 13
-  device1.input(13).getState(function(err, state){
-    if(err) return console.error('get input pin 13 state error:', err.message);
-
+  device1.input(13).getState(function(state){
     // show current state of pin 13
     console.log(state);
   });
 
   // watch input pin 13
-  device1.input(13).watch(function(err, state){
-    if(err) return console.error('watch pin 13 error:', err.message);
-
+  device1.input(13).watch(function(state){
     if(state){
       // turn OFF output pin 35
       device2.output(35).off();
@@ -1281,17 +1192,13 @@ client.connect(function(err, result){
   });
 
   // get current state of input pin 11
-  device1.input(11).getState(function(err, state){
-    if(err) return console.error('get input pin 11 state error:', err.message);
-
+  device1.input(11).getState(function(state){
     // show current state of pin 11
     console.log(state);
   });
 
   // watch input pin 11
-  device1.input(11).watch(function(err, state){
-    if(err) return console.error('watch pin 11 error:', err.message);
-
+  device1.input(11).watch(function(state){
     if(state){
       // turn ON output pin 33
       device2.output(33).on();
@@ -1323,27 +1230,21 @@ const led = setOutput(33);
 
 const server = new m2m.Device(200);
 
-server.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+server.connect(function(result){
   console.log('result:', result);
 
   // set 'sw1-state' resource
-  server.setData('sw1-state', function(err, data){
-    if(err) return console.error('sw1-state error:', err.message);
-
+  server.setData('sw1-state', function(data){
     data.send(sw1.state);  
   });
 
   // set 'led-state' resource
-  server.setData('led-state', function(err, data){
-    if(err) return console.error('led-state error:', err.message);
-
+  server.setData('led-state', function(data){
     data.send(led.state);
   });
 
   // set 'led-control' resource
-  server.setData('led-control', function(err, data){
-    if(err) return console.error('led-control error:', err.message);
+  server.setData('led-control', function(data){
     let ledState = null;
 
     if(data.payload === 'on'){
@@ -1363,38 +1264,29 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect(function(err, result){
-  if(err) return console.error('connect error:', err.message);
+client.connect(function(result){
   console.log('result:', result);
 
   let device = client.accessDevice(200);
 
   // monitor sw1 state transitions every 5 secs
-  device.watch('sw1-state', function(err, data){
-    if(err) return console.error('sw1-state error:', err.message);
-
+  device.watch('sw1-state', function(data){
     console.log('sw1-state value', data);
 
     if(data === true){
-      device.sendData('led-control', 'on', function(err, data){
-        if(err) return console.error('led-control on error:', err.message);
-
+      device.sendData('led-control', 'on', function(data){
         console.log('led-control on', data); // true
       });
     }
     else{
-      device.sendData('led-control', 'off', function(err, data){
-        if(err) return console.error('led-control off error:', err.message);
-
+      device.sendData('led-control', 'off', function(data){
         console.log('led-control off', data); // false
       });
     }
   });
 
   // monitor led state transitions every 5 secs
-  device.watch('led-state', function(err, data){
-    if(err) return console.error('led-state error:', err.message);
-
+  device.watch('led-state', function(data){
     console.log('led-state value', data);
   });
 });
@@ -1407,22 +1299,18 @@ const m2m = require('m2m');
 
 const server = new m2m.Device(deviceId);
 
-server.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+server.connect((result) => {
   console.log('result:', result);
 
   // set a GET method resource
-  server.get(path, (err, data) => {
-    if(err) return console.error('path error:', err.message);
-
+  server.get(path, (data) => {
     // set logic for the current path
     // send a response
     data.send(response);
   });
 
   // set a POST method resource
-  server.post(path, (err, data) => {
-    if(err) return console.error('path error:', err.message);
+  server.post(path, (data) => {
 
     // set logic for the current path
 
@@ -1440,23 +1328,18 @@ const m2m = require('m2m');
 
 const client = new m2m.Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+client.connect((result) => {
   console.log('result:', result);
 
   let server = client.accessServer(deviceId);
 
   // GET method request
-  server.get(path, (err, data) => {    
-    if(err) return console.error('path error:', err.message);
-
+  server.get(path, (data) => {    
     console.log('response', data); 
   });
 
   // POST method request 
-  server.post(path, body, (err, data) => {   
-    if(err) return console.error('path error:', err.message);
-
+  server.post(path, body, (data) => {   
     console.log('response', data);
   });
 
@@ -1472,18 +1355,15 @@ const server = new m2m.Device(300);
 
 let currentData = {name:'Jim', age:34};
 
-server.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+server.connect((result) => {
   console.log('result:', result);
 
-  server.get('current/data', (err, data) => {
-    if(err) return console.error('current/data error:', err.message);
+  server.get('current/data', (data) => {
     // send current data as response
     data.send(currentData);
   });
 
-  server.post('data/update', (err, data) => {
-    if(err) return console.error('data/update error:', err.message);
+  server.post('data/update', (data) => {
 
     currentData = data.body;
     // send a 'success' response
@@ -1497,22 +1377,17 @@ const m2m = require('m2m');
 
 const client = new m2m.Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+client.connect((result) => {
   console.log('result:', result);
 
   let server = client.accessDevice(300);
 
-  server.get('current/data', (err, data) => {    
-    if(err) return console.error('current/data error:', err.message);
-
+  server.get('current/data', (data) => {    
     console.log('current/data', data); // {name:'Jim', age:34}
   });
 
   // send {name:'Ed', age:45} as http post body
-  server.post('data/update', {name:'Ed', age:45} , (err, data) => {   
-    if(err) return console.error('data/update error:', err.message);
-
+  server.post('data/update', {name:'Ed', age:45}, (data) => {   
     console.log('data/update', data); // 'success'
   });
 
@@ -1565,12 +1440,10 @@ watchInput(() => {
 });
 
 // m2m device application
-device.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+device.connect((result) => {
   console.log('result:', result);
 
-  device.setData('machine-status', function(err, data){
-    if(err) return console.error('machine-status error:', err.message);
+  device.setData('machine-status', function(data){
 
     status.sensor1 = sensor1.state;
     status.sensor2 = sensor2.state;
@@ -1591,18 +1464,16 @@ const { Client } = require('m2m');
 
 const client = new Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+client.connect((result) => {
   console.log('result:', result);
 
-  client.accessDevice([100, 200, 300], function(err, devices){
+  client.accessDevice([100, 200, 300], function(devices){
     let t = 0;
     devices.forEach((device) => {
       t = t + 100;
       setTimeout(() => {
         // device watch interval is every 10 secs
-        device.watch('machine-status', 10000, (err, data) => {
-          if(err) return console.error(device.id, 'machine-status error:', err.message);
+        device.watch('machine-status', 10000, (data) => {
           console.log(device.id, 'machine-status', data); // 200 machine-status {"sensor1":false,"sensor2":false,"actuator1":false,"actuator2":true}
           /* If one of the machine's status has changed,
            * it will receive only the status from the affected machine
@@ -1703,7 +1574,7 @@ const m2m = require('m2m');
 
 const client = new m2m.Client({name:'Main client', location:'Boston, MA', description:'Test client app'});
 
-client.connect((err, result) => {
+client.connect((result) => {
   ...
 });
 ```
@@ -1714,13 +1585,11 @@ const m2m = require('m2m');
 
 const client = new m2m.Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+client.connect((result) => {
   console.log('result:', result);
 
   // server request to get all registered devices
-  client.getDevices((err, devices) => {
-    if(err) return console.error('getDevices err:', err);
+  client.getDevices((devices) => {
     console.log('devices', devices);
     // devices output
     /*[
@@ -1738,16 +1607,14 @@ const m2m = require('m2m');
 
 const client = new m2m.Client();
 
-client.connect((err, result) => {
-  if(err) return console.error('connect error:', err.message);
+client.connect((result) => {
   console.log('result:', result);
 
   let device = client.accessDevice(300);
 
   // request to get device 300 resources
   // GPIO input/output objects, available channels and HTTP url paths, system information etc.
-  device.resourcesInfo(function(err, data){
-    if(err) return console.log('device1 setup error:', err.message);
+  device.resourcesInfo(function(data){
     console.log('device1 setup data', data);
     // data output
     /*{
@@ -1773,13 +1640,13 @@ client.connect((err, result) => {
 ```js
 ...
 // By default without a url argument, the connect method will use the 'https://www.node-m2m.com' server
-.connect(function(err, result){
+.connect(function(result){
   // application logic
 });
 
 // To connect to a different server, provide a url argument to the connect method
 // e.g. using the 'https://www.my-m2m-server.com' server
-.connect('https://www.my-m2m-server.com', function(err, result){
+.connect('https://www.my-m2m-server.com', function(result){
   // application logic
 });
 ```
