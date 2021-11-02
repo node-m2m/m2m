@@ -134,7 +134,7 @@ The first time you run your application, it will ask for your full credentials.
 ```
 The next time you run your application, it will start automatically using a saved user token.
 
-However, after a grace period of 15 minutes, it will ask again for your credentials  to restart your application for security reason.
+However, after a grace period of 15 minutes, you need to provide your security code to restart your application.
 
 Also at anytime, you can re-authenticate with an *-r* flag with full credentials if you're having difficulty or issues restarting your application as shown below.
 ```js
