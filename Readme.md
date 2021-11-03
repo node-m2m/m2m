@@ -90,9 +90,7 @@ const m2m = require('m2m');
 // this id must must be registered with node-m2m
 let device = new m2m.Device(100);
 
-device.connect((result) => {
-  console.log('result', result);
-
+device.connect(() => {
   // set a channel data resourse named 'random-number'  
   device.setData('random-number', (data) => {
     let rn = Math.floor(Math.random() * 100);
@@ -141,8 +139,7 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect((result) => {
-  console.log('result', result);
+client.connect(() => {
 
   // access the remote device using an alias object
   let device = client.accessDevice(100);
@@ -168,8 +165,7 @@ const m2m = require('m2m');
 
 let client = new m2m.Client();
 
-client.connect((result) => {
-  console.log('result', result);
+client.connect(() => {
 
   // capture 'random-number' data using a pull method
   client.getData(100, 'random-number', (data) => {
@@ -220,8 +216,7 @@ const { Device } = require('m2m');
 
 let device = new Device(200);
 
-device.connect((result) => {
-  console.log('result', result);
+device.connect(() => {
   device.setGpio({mode:'output', pin:33});
 });
 ```
@@ -247,8 +242,7 @@ let sw2 = setInput(13); // OFF switch
 
 let client = new Client();
 
-client.connect((result) => {
-  console.log('result', result);
+client.connect(() => {
 
   let t1 = null;
   let device = client.accessDevice(200);
@@ -307,8 +301,7 @@ const { Device } = require('m2m');
 
 const device = new Device(300);
 
-device.connect((result) => {
-  console.log('result', result);
+device.connect(() => {
 
   device.setData('ipc-channel', (data) => {
 
@@ -484,8 +477,7 @@ const { Client } = require('m2m');
 
 let client = new Client();
 
-client.connect((result) => {
-  console.log('result', result);
+client.connect(() => {
 
   let device = client.accessDevice(300);
 
@@ -554,8 +546,7 @@ watchInput(() => {
 });
 
 // m2m device application
-device.connect((result) => {
-  console.log('result', result);
+device.connect(() => {
 
   device.setData('machine-status', function(data){
 
@@ -578,8 +569,7 @@ const { Client } = require('m2m');
 
 const client = new Client();
 
-client.connect((result) => {
-  console.log('result', result);
+client.connect(() => {
 
   client.accessDevice([100, 200, 300], function(devices){
     let t = 0;
@@ -688,7 +678,7 @@ const m2m = require('m2m');
 
 const client = new m2m.Client({name:'Main client', location:'Boston, MA', description:'Test client app'});
 
-client.connect((result) => {
+client.connect(() => {
   ...
 });
 ```
