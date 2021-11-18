@@ -26,7 +26,7 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
 4. [Quick Tour](#quick-tour)
    1. [Capturing and Watching Data](#capturing-and-watching-data)
    2. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
-   3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](#capturing-data-from-remote-application-through-IPC)
+   3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-web-application-demo)
    4. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
    5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)
 5. [Device Orchestration](#device-orchestration)
