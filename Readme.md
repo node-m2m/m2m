@@ -27,7 +27,8 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
    1. [Capturing and Watching Data](#capturing-and-watching-data)
    2. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](#capturing-data-from-remote-application-through-IPC)
-   4. [m2m integration with web application](https://github.com/EdAlegrid/m2m-web-application-demo)
+   4. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
+   5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)
 5. [Device Orchestration](#device-orchestration)
     * [Remote Machine Monitoring](#remote-machine-monitoring)
 6. [Using the Browser Interface](#using-the-browser-interface)
@@ -133,7 +134,7 @@ $ npm install m2m
 
 **Method 1**
 
-Create an *alias* object using the client's *accessDevice* method as shown in the code below. 
+Create an *alias* object using the client's *accessDevice* method as shown in the code below.
 
 ```js
 const m2m = require('m2m');
@@ -159,7 +160,7 @@ client.connect(() => {
 
 **Method 2**
 
-Instead of creating an alias, you can just provide the *device id* through the various data access methods from the client object. 
+Instead of creating an alias, you can just provide the *device id* through the various data access methods from the client object.
 
 ```js
 const m2m = require('m2m');
@@ -383,7 +384,7 @@ $ node device.js
 ```js
 $ git clone https://github.com/EdAlegrid/m2mQuicktour3.git
 ```
-Check the *main.cpp* source file inside the *m2mQuicktour3* directory as shown below. 
+Check the *main.cpp* source file inside the *m2mQuicktour3* directory as shown below.
 ```js
 /*
  * File:   main.ccp
@@ -683,4 +684,3 @@ client.connect(() => {
   ...
 });
 ```
-
