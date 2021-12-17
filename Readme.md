@@ -24,11 +24,11 @@ Start your first m2m application using the [quick tour](#quick-tour) guide.
 2. [Node.js version requirement](#nodejs-version-requirement)
 3. [Installation](#installation)
 4. [Quick Tour](https://github.com/EdAlegrid/m2m-quicktour)
-   /*1. [Capturing and Watching Data](#capturing-and-watching-data)
+   <!--1. [Capturing and Watching Data](#capturing-and-watching-data)
    2. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
    4. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
-   5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)*/
+   5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)-->
 5. [Device Orchestration](#device-orchestration)
     * [Remote Machine Monitoring](#remote-machine-monitoring)
 6. [Using the Browser Interface](#using-the-browser-interface)
