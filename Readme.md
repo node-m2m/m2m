@@ -52,8 +52,6 @@ Start your first m2m application using the [quick tour](https://github.com/EdAle
 ```js
 $ npm install m2m
 ```
-
-![]()
 ###  Raspberry Pi peripheral access (GPIO, I2C, SPI and PWM). <a name="rpi-peripheral-access"></a>
 For projects requiring raspberry pi peripheral access such as GPIO, I2C, SPI and PWM, you will need to install *array-gpio* module.
 ```js
