@@ -3,11 +3,13 @@
 [![Version npm](https://img.shields.io/npm/v/m2m.svg?logo=npm)](https://www.npmjs.com/package/m2m)
 ![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
 
-m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com). The application will be composed of two or more independent service modules running on their own processes similar to microservices  pattern. 
+m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com). Your application will be composed of two or more independent service modules running on their own processes similar to microservices  pattern. 
 
 It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a lot more.
 
-You can deploy multiple private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. Your device servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
+You can deploy multiple private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. 
+
+Your device servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
 
 You can set multiple *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources on your remote device for client consumption.
 
