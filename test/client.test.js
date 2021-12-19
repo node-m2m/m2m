@@ -97,8 +97,7 @@ describe('\nset test stats ...', function() {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
 
-        client.accessDevice([100], function (err, device){
-				  if(err) throw err;
+        client.accessDevice([100], function (device){
           assert.strictEqual( typeof device, 'object' );
           assert.strictEqual( device.id, 100 );
           assert.notStrictEqual( Array.isArray(device), true );
@@ -125,9 +124,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof client, 'object' );
 
         let arg = [100, 200, 300];
-        client.accessDevice(arg, function (err, device){
-
-          assert.strictEqual( err, null );
+        client.accessDevice(arg, function (device){
           assert.strictEqual( typeof device, 'object' );
           assert.strictEqual( Array.isArray(device), true );
           assert.strictEqual( device instanceof Array, true );
@@ -156,7 +153,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof client, 'object' );
 
         try{
-        	client.accessDevice(100, 200, 300, function (err, device){});
+        	client.accessDevice(100, 200, 300, function (device){});
         }
 			  catch(e){
 				  assert.strictEqual( e.message, 'access id more than 1 must be contained in an array');
@@ -168,8 +165,7 @@ describe('\nset test stats ...', function() {
         const client = new m2m.Client({});
         assert.strictEqual( typeof client, 'object' );
 
-       	client.accessDevice(100, function (err, device){
-          if(err) throw err;
+       	client.accessDevice(100, function (device){
           console.log('device', device);
           assert.strictEqual( device._index, 0);
           assert.strictEqual( device.id, 100);
@@ -178,24 +174,6 @@ describe('\nset test stats ...', function() {
       });
     });
     describe('test local device object method - getData()', function () {
-      it('should throw an error if a callback argument is not provided', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(300);
-        assert.strictEqual( typeof device, 'object' );
-
-        try{
-          device.getData('test1');
-        }
-        catch(e){
-          assert.strictEqual(typeof e, 'object');
-          // 'path: test1 - initial callback is required'
-          // assert.strictEqual( e.message, 'callback argument is required');
-          done();
-        }
-        
-      });
       it('should throw an error if channel argument is not a string', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -204,14 +182,14 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.getData(120, function(err, data){});
+          device.getData(120, function(data){});
         }
         catch(e){
           assert.strictEqual( e.message, 'invalid channel/path');
 				  done();
         }
       });
-      it('should throw an error if channel argument is not an alpha numeric/has an invalid characters', function (done) {
+      it('should throw an error if channel argument is not an alpha numeric or has an invalid characters', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
 
@@ -219,14 +197,13 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.getData('$get', function(err, data){
-            assert.strictEqual( err.message, 'invalid channel/path');
-            assert.strictEqual( data, null);
+          device.getData('$get', function(data){
+            assert.strictEqual( data, 'invalid channel/path');
             done();
           });
         }
         catch(e){
-          throw e;
+            throw e;
         }
       });
       it('should throw an error if callback is not a function', function (done) {
@@ -252,9 +229,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.getData('test-passed', (err, data) => {
-            if(err) throw err;
-            assert.strictEqual( err, null );
+          device.getData('test-passed', (data) => {
             assert.strictEqual( data, 'test-passed' );
             done();
           });
@@ -273,7 +248,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.get(120, function(err, data){});
+          device.get(120, function(data){});
         }
         catch(e){
           assert.strictEqual( e.message, 'invalid channel/path');
@@ -306,7 +281,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.sendData(120, '2.5', function(err, data){});
+          device.sendData(120, '2.5', function(data){});
         }
         catch(e){
           assert.strictEqual( e.message, 'invalid channel/path');
@@ -343,7 +318,7 @@ describe('\nset test stats ...', function() {
           done();
         }
       });
-      it('should throw an error if channel argument is not an alpha numeric/has an invalid characters', function (done) {
+      it('should throw an error if channel argument is not an alpha-numeric or has an invalid characters', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
 
@@ -351,9 +326,8 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.sendData('$invalid channel', '23.45', function(err, data){
-            assert.strictEqual( err.message, 'invalid channel/path');
-            assert.strictEqual( data, null);
+          device.sendData('$invalid channel', '23.45', function(data){
+            assert.strictEqual( data, 'invalid channel/path');
             done();
           });
         }
@@ -433,7 +407,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.post(120, '2.5', function(err, data){});
+          device.post(120, '2.5', function(data){});
         }
         catch(e){
           assert.strictEqual( e.message, 'invalid channel/path');
@@ -542,7 +516,7 @@ describe('\nset test stats ...', function() {
         // api
         // device.watch(channel, interval, cb);
         try{
-		      device.watch(125, function(err, result){});
+		      device.watch(125, function(result){});
         }
         catch(e){
           assert.strictEqual( e.message, 'invalid channel/path');
@@ -559,7 +533,7 @@ describe('\nset test stats ...', function() {
         // api
         // device.watch(channel, interval, cb);
         try{
-		      device.watch('test-channel', '6000', function(err, result){});
+		      device.watch('test-channel', '6000', function(result){});
         }
         catch(e){
           assert.strictEqual( e.message, 'invalid interval');
@@ -574,9 +548,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.watch('test-passed', function(err, result){ 
-				    if(err) throw err;
-            assert.strictEqual( err, null );
+          device.watch('test-passed', function(result){ 
             done();
           });
         }
@@ -592,9 +564,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.watch('test-passed', 6000, function(err, result){ 
-				    if(err) throw err;
-            assert.strictEqual( err, null );
+          device.watch('test-passed', 6000, function(result){ 
             done();
           });
         }
@@ -610,7 +580,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         try{
-          device.watch('test-passed', ()=>{}); // initialize w/ a callback
+          device.watch('test-passed', () => {}); // initialize w/ a callback
         }
         catch(e){
           throw e;
@@ -743,7 +713,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(100);
         assert.strictEqual( typeof device, 'object' );
 
-        let callback = function(err, result){
+        let callback = function(result){
           assert.notStrictEqual(result, null);
         }
 
@@ -786,20 +756,6 @@ describe('\nset test stats ...', function() {
           throw e;
         }
       });
-      it('should execute the method if callback has an error', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(100);
-        assert.strictEqual( typeof device, 'object' );
-
-        device.gpio({mode:'in', pin:16}).state(function(err, state){ 
-          //console.log('err, data );
-          assert.strictEqual( err.message, 'invalid input data');
-          assert.strictEqual( state, null);
-          done();
-        });
-      });
       it('should execute the method if callback has a valid data (using an internal input test)', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -807,9 +763,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(200);
         assert.strictEqual( typeof device, 'object' );
 
-        device.gpio({mode:'in', pin:11}).getState(function(err, state){ 
-          //console.log(err, state );
-          assert.strictEqual( err, null);
+        device.gpio({mode:'in', pin:11}).getState(function(state){ 
           assert.strictEqual( state, true);
           done();
         });
@@ -864,21 +818,6 @@ describe('\nset test stats ...', function() {
           done();
         }
       });
-      it('should execute the method if callback has an error', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(100);
-        assert.strictEqual( typeof device, 'object' );
-
-        // don't use pin 11 and 13 
-        device.gpio({mode:'in', pin:16}).watch(function(err, state){ 
-          //console.log('err, data );
-          assert.strictEqual( err.message, 'invalid input data');
-          assert.strictEqual( state, null);
-          done();
-        });
-      });
       it('should execute the method if callback has a valid data (using an internal test)', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -886,8 +825,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(320);
         assert.strictEqual( typeof device, 'object' );
 
-        device.gpio({mode:'input', pin:13}).watch(function(err, state){ 
-          assert.strictEqual( err, null);
+        device.gpio({mode:'input', pin:13}).watch(function(state){ 
           assert.strictEqual( state, true);
           done();
         });
@@ -932,8 +870,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(130);
         assert.strictEqual( typeof device, 'object' );
 
-        device.gpio({mode:'input', pin:13}).unwatch(function(err, result){ 
-          assert.strictEqual( err, null);
+        device.gpio({mode:'input', pin:13}).unwatch(function(result){ 
           assert.strictEqual( result, true);
           done();
         });
@@ -945,8 +882,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(130);
         assert.strictEqual( typeof device, 'object' );
 
-        device.gpio({mode:'input', pin:16}).unwatch(function(err, result){ 
-          assert.strictEqual( err, null);
+        device.gpio({mode:'input', pin:16}).unwatch(function(result){ 
           assert.strictEqual( result, false);
           done();
         });
@@ -983,20 +919,6 @@ describe('\nset test stats ...', function() {
           done();
         }
       });
-      it('should execute the method if callback has a valid error data (using an internal test)', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(130);
-        assert.strictEqual( typeof device, 'object' );
-
-        device.gpio({mode:'out', pin:16}).getState(function(err, state){ 
-          //console.log(err, state)
-          assert.strictEqual( err.message, 'invalid output data');
-          assert.strictEqual( state, null);
-          done();
-        });
-      });
       it('should execute the method if callback has a valid data (using an internal test)', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -1004,8 +926,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(140);
         assert.strictEqual( typeof device, 'object' );
 
-        device.gpio({mode:'output', pin:33}).getState(function(err, state){ 
-          assert.strictEqual( err, null);
+        device.gpio({mode:'output', pin:33}).getState(function(state){ 
           assert.strictEqual( state, true);
           done();
         });
@@ -1058,20 +979,6 @@ describe('\nset test stats ...', function() {
           throw e;
         }
       });
-      it('should execute the method if callback has a valid error data (using an internal test)', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(130);
-        assert.strictEqual( typeof device, 'object' );
-
-        device.gpio({mode:'out', pin:16}).off(function(err, state){ 
-          //console.log(err, state)
-          assert.strictEqual( err.message, 'invalid output data');
-          assert.strictEqual( state, null);
-          done();
-        });
-      });
       it('should execute the method if callback has a valid data (using an internal test)', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -1079,8 +986,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(140);
         assert.strictEqual( typeof device, 'object' );
 
-        device.gpio({mode:'output', pin:33}).off(function(err, state){ 
-          assert.strictEqual( err, null);
+        device.gpio({mode:'output', pin:33}).off(function(state){ 
           assert.strictEqual( state, true);
           done();
         });
@@ -1092,8 +998,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(130);
         assert.strictEqual( typeof device, 'object' );
 
-        device.output(33).off(function(err, state){ 
-          assert.strictEqual( err, null);
+        device.output(33).off(function(state){ 
           assert.strictEqual( state, true);
           done();
         });
@@ -1208,20 +1113,6 @@ describe('\nset test stats ...', function() {
           throw e;
         }
       });
-      it('should execute the method if callback has a valid error data (using an internal test)', function (done) {
-        const client = new m2m.Client();
-        assert.strictEqual( typeof client, 'object' );
-
-        let device = client.accessDevice(130);
-        assert.strictEqual( typeof device, 'object' );
-
-        device.gpio({mode:'out', pin:16}).on(function(err, state){ 
-          //console.log(err, state)
-          assert.strictEqual( err.message, 'invalid output data');
-          assert.strictEqual( state, null);
-          done();
-        });
-      });
       it('should execute the method if callback has a valid data (using an internal test)', function (done) {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
@@ -1229,8 +1120,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(140);
         assert.strictEqual( typeof device, 'object' );
 
-        device.gpio({mode:'output', pin:33}).on(function(err, state){ 
-          assert.strictEqual( err, null);
+        device.gpio({mode:'output', pin:33}).on(function(state){ 
           assert.strictEqual( state, true);
           done();
         });
@@ -1242,8 +1132,7 @@ describe('\nset test stats ...', function() {
         let device = client.accessDevice(130);
         assert.strictEqual( typeof device, 'object' );
 
-        device.output(33).on(function(err, state){ 
-          assert.strictEqual( err, null);
+        device.output(33).on(function(state){ 
           assert.strictEqual( state, true);
           done();
         });
@@ -1331,7 +1220,7 @@ describe('\nset test stats ...', function() {
         const client = new m2m.Client();
         assert.strictEqual( typeof client, 'object' );
 
-			  client.connect(function(err, result){});
+			  client.connect(function(result){});
 
         let count = 0;
 	      try{
@@ -1370,7 +1259,7 @@ describe('\nset test stats ...', function() {
         const client = new m2m.Client();
         let count = 0;
         assert.strictEqual( typeof client, 'object' );
-        let callback = function(err, result){
+        let callback = function(result){
           if(count === 0 && result === 'success'){
 					  done(); count++;
           }
@@ -1381,8 +1270,7 @@ describe('\nset test stats ...', function() {
         const client = new m2m.Client();
 
         assert.strictEqual( typeof client, 'object' );
-        let callback = function(err, result){
-          assert.strictEqual( err, null );
+        let callback = function(result){
           assert.strictEqual( result, 'success' );
 				  done();
         }
@@ -1392,83 +1280,43 @@ describe('\nset test stats ...', function() {
         const client = new m2m.Client();
 
         assert.strictEqual( typeof client, 'object' );
-        let callback = function(err, result){
-          assert.strictEqual( err, null );
+        let callback = function(result){
           assert.strictEqual( result, 'success' );
 				  done();
         }
         client.connect(callback);
       });
     });
-    describe('create a device object w/ setupInfo() w/ valid recvd data', function () {
-      it('should return w/o an error object', function (done) {
+    describe('get available resources from a remote device using resourcesInfo()', function () {
+      it('the callback should return an array device object', function (done) {
 
         m2mTest.setTestParam('valid');
 
         const client = new m2m.Client();
 
-        client.connect(function(err, result){
+        client.connect(function(result){
 
 		      let device = client.accessDevice(200);
 
-          device.setupInfo(function(err, data){
-            if(err) throw err;
-            assert.strictEqual(err, null);
-            //assert.strictEqual(data, true);
+          device.resourcesInfo(function(data){
             assert.strictEqual(data[0], 100);
             done();
       		});
-    
-        	/*try{
-		      	m2mTest.testEmitter.emit(device.id + 'setupData', {id:device.id, _pid:'setupData', setupData:true});
-				  }
-				  catch(e){
-					  throw e;
-		      }*/
 
       	});
     	});
    	});
-    describe('create a device object w/ setupInfo() w/ error', function () {
-      it('should return w/ an error object', function (done) {
-
-        m2mTest.setTestParam('invalid'); 
-
-        const client = new m2m.Client();
-
-        client.connect(function(err, result){
-
-		      let device = client.accessDevice(200);
-
-          device.setupInfo(function(err, data){
-            if(err){
-              assert.strictEqual(data, null);
-              assert.strictEqual(err.message, 'invalid');
-             	done();
-            }
-      		});
-    
-        	/*try{
-		      	m2mTest.testEmitter.emit(device.id + 'setupData', {id:device.id, error:'invalid devices', _pid:'setupData', setupData:true, devices:[100, 200]});
-				  }
-				  catch(e){
-					  throw e;
-		      }*/
-
-      	});
-    	});
-   	});
-    describe('create a device object invoking device.setupInfo() w/o a callback', function () {
+    describe('create a device object invoking device.() w/o a callback', function () {
       it('should throw an error since callback is required', function (done) {
 
         const client = new m2m.Client();
 
-        client.connect(function(err, result){
+        client.connect(function(result){
 
 		      let device = client.accessDevice(200);
     
         	try{
-            device.setupInfo();
+            device.resourcesInfo();
 				  }
 				  catch(e){
             assert.strictEqual(e.message, 'callback is required');
@@ -1482,9 +1330,8 @@ describe('\nset test stats ...', function() {
 
         const client = new m2m.Client();
 
-        client.connect(function(err, result){
-          client.getDevices(function(err, devices){
-      	    if(err) return console.error('getDevices err:', err);
+        client.connect(function(result){
+          client.getDevices(function(devices){
       	    console.log('devices', devices);
             assert.strictEqual(Array.isArray(devices), true);
             done();
@@ -1493,60 +1340,103 @@ describe('\nset test stats ...', function() {
       	});
      	});
    	});
-    describe('create a client object invoking internal .getRegisteredDevices() method', function () { //Array.isArray([1, 2, 3])
-      it('should return the available devices', function (done) {
+    describe('access remote device directly from client object invoking various methods to capture channel data', function () {
+      it('should execute .getData() method and return a callback w/ a valid data parameter', function (done) {
 
-        const { client } = require('../lib/client.js');
-        const c1 = new m2m.Client();
+        const client = new m2m.Client();
 
-        c1.connect(function(err, result){
-          setTimeout(function(){
-		      client.getRegisteredDevices(function(devices){
-      	    console.log('devices', devices);
-            assert.strictEqual(Array.isArray(devices), true);
+        assert.strictEqual( typeof client, 'object' );
+        assert.strictEqual( typeof client.id, 'string' );
+
+        try{
+          client.getData(340, 'test-passed', (data) => {
+            assert.strictEqual( data, 'test-passed' );
             done();
           });
-          }, dl);
-      	});
-    	});
-   	});
-    describe('create a client object invoking internal .setGetDeviceIdListener() method w/ valid data', function () {
-      it('should accept the data internally if data is an integer or array', function () {
-        const { client } = require('../lib/client.js');
-        const c1 = new m2m.Client();
+        }
+        catch(e){
+          throw e;
+        }
+      });
+      it("the callback should return w/ an error result - 'invalid channel/path'", function (done) {
 
-        c1.connect(function(err, result){
-          assert.strictEqual( err, null );
-          let eventName = 'getDeviceId';
-          m2mTest.testEmitter.emit(eventName, [100, 200]);
-          m2mTest.testEmitter.emit(eventName, 200);
-          
-      	});
-     	});
-   	});
-    describe('create a client object invoking internal .getRemoteDevices() method w/ valid array data', function () {
-      it('should return a valid id internally if array data is valid', function (done) {
-        const { client } = require('../lib/client.js');
-        const c1 = new m2m.Client();
+        const client = new m2m.Client();
 
-        let count = 0;
-        let rxd = {devices:[{id:100}, {id:200}, {id:300}]};
-        c1.connect(function(err, result){
-		      client.getRemoteDevices(rxd, function(id){
-      	    console.log('id', id);
-            assert.strictEqual(typeof id, 'number');
-            setTimeout(function(){
-              if(count === 0){
-                done();
-                count++;
-              }
-            }, dl + 25);
+        assert.strictEqual( typeof client, 'object' );
+        assert.strictEqual( typeof client.id, 'string' );
+
+        try{
+          client.getData(340, '$test-passed', (data) => {
+            assert.strictEqual( data, 'invalid channel/path' );
+            done();
           });
-      	});
-     	});
+        }
+        catch(e){
+          throw e;
+        }
+      });
+      it('should execute .watch() method and return a callback w/ a valid data parameter', function (done) {
+
+        const client = new m2m.Client();
+        assert.strictEqual( typeof client, 'object' );
+
+        try{
+          client.watch(345, 'test-passed', function(data){
+            assert.strictEqual( data, 'test-passed' );
+            done();
+          });
+        }
+        catch(e){
+          throw e;
+        }
+      });
+      it('should execute .sendData() method and return a callback w/ a valid data parameter', function (done) {
+
+        const client = new m2m.Client();
+        assert.strictEqual( typeof client, 'object' );
+
+        try{
+          client.sendData(350, 'test-passed', '3.5', function(data){
+            assert.strictEqual( data, 'test-passed' );
+            done();
+          });
+        }
+        catch(e){
+          throw e;
+        }
+      });
+      it('should execute .get() method and return a callback w/ a valid data parameter', function (done) {
+
+        const client = new m2m.Client();
+        assert.strictEqual( typeof client, 'object' );
+
+        try{
+          client.get(355, 'test-passed', function(data){
+            assert.strictEqual( data, 'test-passed' );
+            done();
+          });
+        }
+        catch(e){
+          throw e;
+        }
+      });
+      it('should execute .post() method and return a callback w/ a valid data parameter', function (done) {
+
+        const client = new m2m.Client();
+        assert.strictEqual( typeof client, 'object' );
+
+        try{
+          client.post(360, 'test-passed', 'test', function(data){
+            assert.strictEqual( data, 'test-passed' );
+            done();
+          });
+        }
+        catch(e){
+          throw e;
+        }
+      });
    	});
   });
-
 });
 
 

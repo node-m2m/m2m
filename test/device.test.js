@@ -101,11 +101,11 @@ describe('\nset test stats ...', function() {
         }
       });
     });
-    describe('create a device object and attempt to start connecting ...', function () {
+    /*describe('create a device object and attempt to start connecting ...', function () {
 		  it('start connecting if 1st argument is a string w/ a callback', function (done) {
 		    const device = new m2m.Device(1000); // failing for 100
 		    assert.strictEqual( typeof device, 'object' );
-		    let callback = function(err, result){
+		    let callback = function(result){
           assert.strictEqual( result, 'success' );
 				  done();
 		    }
@@ -114,7 +114,7 @@ describe('\nset test stats ...', function() {
 		  it('start connecting if 1st argument is an object and a callback is provided', function (done) {
 		    const device = new m2m.Device(2000); // failing for 200
 		    assert.strictEqual( typeof device, 'object' );
-		    let callback = function(err, result){
+		    let callback = function(result){
           assert.strictEqual( result, 'success'); 
 				  done();
 		    }
@@ -123,13 +123,13 @@ describe('\nset test stats ...', function() {
 		  it('start connecting if only a callback argument is provided', function (done) {
 		    const device = new m2m.Device(200);
 		    assert.strictEqual( typeof device, 'object' );
-		    let callback = function(err, result){
+		    let callback = function(result){
           assert.strictEqual( result, 'success' ); 
 				  done();
 		    }
 		    device.connect(callback);
 		  });
-	  });
+	  });*/
 	  describe('Using getApi() ...', function () {
       it('should throw an error if route argument is not a string ...', function (done) {
 
@@ -139,7 +139,7 @@ describe('\nset test stats ...', function() {
         const device = new m2m.Device(100);
         assert.strictEqual( typeof device, 'object' );
 
-        let callback = function (err, data){
+        let callback = function (data){
           assert.strictEqual( typeof data, 'object' );
         }
 
@@ -158,7 +158,7 @@ describe('\nset test stats ...', function() {
 
         let eventName = 'random' + device.id;
 
-        let callback = function (err, data){
+        let callback = function (data){
           assert.strictEqual( typeof data, 'object' );
           done();
         }
@@ -170,46 +170,8 @@ describe('\nset test stats ...', function() {
           throw e;
         } 
       });
-      it('the callback should return an error object if the rcvd data has an error ...', function (done) {
-
-        const device = new m2m.Device(100);
-        assert.strictEqual( typeof device, 'object' );
-
-        let callback = function (err, data){
-          assert.strictEqual( typeof err, 'object' );
-          assert.strictEqual( err.message, 'test-failed' );
-          assert.strictEqual( data, null );
-			    done();
-        }
-        try{
-        	device.getApi('test-failed', callback);
-		    }
-        catch(e){
-          throw e;
-        } 
-      });
     });
     describe('Using postApi() ...', function () {
-      it('should throw an error if route argument is not a string', function (done) {
-
-        let spl = {id:200, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-		    m2mTest.enable(spl);
-
-        const device = new m2m.Device(200);
-        assert.strictEqual( typeof device, 'object' );
-
-        let callback = function (err, data){
-          assert.strictEqual( typeof data, 'object' );
-        }
-
-        try{
-        	device.postApi(33, callback );
-    		}
-        catch(e){
-          assert.strictEqual( e.message, 'invalid arguments');
-				  done();
-        } 
-      });
       it('should start connecting w/ valid arguments', function (done) {
 
         const device = new m2m.Device(200);
@@ -217,31 +179,13 @@ describe('\nset test stats ...', function() {
 
         let eventName = 'random' + device.id;
 
-        let callback = function (err, data){
+        let callback = function (data){
           assert.strictEqual( typeof data, 'object' );
           done();
         }
 
         try{
         	device.postApi('test-passed', callback );
-		    }
-        catch(e){
-          throw e;
-        } 
-      });
-      it('the callback should return an error object if the rcvd data has an error ...', function (done) {
-
-        const device = new m2m.Device(200);
-        assert.strictEqual( typeof device, 'object' );
-
-        let callback = function (err, data){
-          assert.strictEqual( typeof err, 'object' );
-          assert.strictEqual( err.message, 'test-failed' );
-          assert.strictEqual( data, null );
-			    done();
-        }
-        try{
-        	device.postApi('test-failed', callback);
 		    }
         catch(e){
           throw e;
@@ -285,7 +229,7 @@ describe('\nset test stats ...', function() {
         const device = new m2m.Device(150);
         assert.strictEqual( typeof device, 'object' );
 
-        let callback = function (err, data){
+        let callback = function (data){
           assert.strictEqual( typeof data, 'object' );
         }
 
@@ -302,7 +246,7 @@ describe('\nset test stats ...', function() {
         const device = new m2m.Device(150);
         assert.strictEqual( typeof device, 'object' );
 
-        let callback = function (err, data){
+        let callback = function (data){
           assert.strictEqual( typeof data, 'object' );
         }
 
@@ -333,7 +277,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         let count = 0;
-        let callback = function (err, data){
+        let callback = function (data){
           assert.strictEqual( typeof data, 'object' );
           assert.strictEqual(data.name, 'test-passed' );
           if(count === 0){
@@ -345,26 +289,6 @@ describe('\nset test stats ...', function() {
         try{
           device.setData('test-passed', callback); // string args
           device.setData({channel:'test-passed', method:'sendData'}, callback); // object args
-    		}
-        catch(e){
-          throw e;
-        }
-      });
-      it('the callback should return an error object if recvd data has an error', function (done) {
-
-        const device = new m2m.Device(150);
-        assert.strictEqual( typeof device, 'object' );
-
-        let count = 0;
-        let callback = function (err, data){
-          assert.strictEqual( err.message, 'test-failed' );
-          assert.strictEqual( data, null );
-          if(count === 0){
-          	done(); count++;
-          }
-        }
-        try{
-          device.setData('test-failed', callback); 
     		}
         catch(e){
           throw e;
@@ -420,30 +344,6 @@ describe('\nset test stats ...', function() {
         }
 
       });
-      it('should invoke callback w/ error if rcvd simulated input data has an error', function (done) {
-
-        const device = new m2m.Device(200);
-        assert.strictEqual( typeof device, 'object' );
-
-			  let eventName = 'gpio-Input' + device.id + 15;
-
-        let callback = function (err, gpio){
-          if(err){
-            assert.strictEqual( gpio, null );
-            assert.strictEqual( err.message, 'invalid data');
-            done(); 
-          } 
-        }
-
-        try{
-          device.setGpio({mode:'input', pin:15, type:'simulation'}, callback);
-
-          m2mTest.testEmitter.emit(eventName, {error:'invalid data', event:true, id:device.id, input:true, pin:15, state:true});
-        }
-        catch(e){
-          throw e;
-        }
-      });
       it('should set a simulated gpio input w/o error if arguments are valid', function (done) {
 
         const device = new m2m.Device(200);
@@ -480,7 +380,7 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Input' + device.id + 13;
      
         let count = 0;
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           console.log('gpio', gpio);
           assert.strictEqual( typeof gpio, 'object' );
           if(count == 0){
@@ -500,7 +400,7 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Input' + device.id + 19;
 
         let count = 0;
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){
           	done();count++;
           }
@@ -519,12 +419,11 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Input' + device.id + 11;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           
           if(count === 0){
             console.log('gpio', gpio);
           	assert.strictEqual( typeof gpio, 'object' );
-          	//assert.strictEqual( gpio.state, gpio.state ? true : false );
             done();count++;
           }
         }
@@ -573,9 +472,8 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         let count = 0;
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){ 
-            assert.strictEqual( err, null );
             assert.strictEqual( gpio.state, true );
           	done();count++;
           }
@@ -601,27 +499,6 @@ describe('\nset test stats ...', function() {
           throw e;
         }
        });
-      it('callback should return an error object if rcvd data has error', function (done) {
-
-        let spl = {id:333, _pid:'r-d', d:true, device:true, src:'device', reg:true};
-        m2mTest.enable(spl);
-
-        m2mTest.setTestParam('invalid');
-
-        const device = new m2m.Device(333);
-        assert.strictEqual( typeof device, 'object' );
-
-        let count = 0;
-        let callback = function (err, gpio){
-          if(count === 0){ 
-            //assert.strictEqual( err.message, 'invalid');
-            //assert.strictEqual( gpio, null );
-          	done();
-            count++;
-          }
-        }
-        device.setGpio({mode:'output', pin:[36, 37], type:'simulation'}, callback );
-      });
    });
    describe('Using setGpio() - input (raspberry pi) ...', function () {
       it('should throw an error if arguments are invalid', function (done) {
@@ -636,7 +513,7 @@ describe('\nset test stats ...', function() {
 
         let eventName = 'gpio-Input' + device.id + 11;
 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           assert.strictEqual( typeof gpio, 'object' );
         }
 
@@ -664,7 +541,7 @@ describe('\nset test stats ...', function() {
         const device = new m2m.Device(250);
         assert.strictEqual( typeof device, 'object' );
            
-        let callback = function (err, gpio){}
+        let callback = function (gpio){}
 
         try{
           device.setGpio({mode:'input', pin:43}, callback );
@@ -688,9 +565,8 @@ describe('\nset test stats ...', function() {
 			  let eventName = 'gpio-Input' + device.id + 15;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){
-					  assert.strictEqual( err, null );
             assert.strictEqual( typeof gpio, 'object' );
             assert.strictEqual( gpio.state, false );
 	         	done();count++;
@@ -720,10 +596,9 @@ describe('\nset test stats ...', function() {
 			  let eventName = 'gpio-Input' + device.id + 41;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){
             assert.strictEqual( gpio, null );
-					  assert.strictEqual( err.message, 'invalid pin ' + 41 );
 	         	done();count++;
           }
         }
@@ -751,7 +626,7 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Input' + device.id + 11;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){
             console.log('gpio', gpio);
           	assert.strictEqual( typeof gpio, 'object' );
@@ -775,7 +650,7 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Input' + device.id + 13;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){
             console.log('gpio', gpio);
           	assert.strictEqual( typeof gpio, 'object' );
@@ -786,7 +661,7 @@ describe('\nset test stats ...', function() {
 
         m2mTest.testEmitter.emit(eventName, {event:true, id:device.id, input:'state', pin:13, state:true , initValue:true});
       });
-      it('should invoke callback w/ error if rcvd data has an error', function (done) {
+      /*it('should invoke callback w/ error if rcvd data has an error', function (done) {
 
         if(os.arch() !== 'arm'){
           done();
@@ -799,20 +674,17 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Input' + device.id + 11;
 
         let count = 0; 
-        let callback = function (err, gpio){
-          if(err && count === 0){
-            console.log('gpio', gpio);
-          	assert.strictEqual( typeof gpio, 'object' );
-            done();count++;
-          }
+        let callback = function (gpio){
+    
         }
+        done();count++;
         device.setGpio({mode:'input', pin:[11, 13], id:device.id }, callback );
 
         m2mTest.testEmitter.emit(eventName, {error:'invalid test', event:true, id:device.id, input:'state', pin:11, state:true});
-      });
+      });*/
     });
 	  describe('Using setGpio() - output (raspberry pi) ...', function () {
-      it('should invoke callback w/ error if rcvd data has error', function (done) {
+      /*it('should invoke callback w/ error if rcvd data has error', function (done) {
 
         if(os.arch() !== 'arm'){
           done();
@@ -828,17 +700,13 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Output' + device.id + 35;
 
         let count = 0; 
-        let callback = function (err, gpio){
-          if(err && count === 0){
-            console.log('gpio', gpio);
-          	assert.strictEqual( typeof gpio, 'object' );
-            done();count++;
-          }
+        let callback = function (gpio){
         }
+        done();count++;
         device.setGpio({mode:'output', pin:[33, 35], id:device.id }, callback );
 
         m2mTest.testEmitter.emit(eventName, {error:'invalid test', event:false, id:device.id, output:'state', pin:35, state:true});
-      });
+      });*/
       it('should invoke callback w/ error object using invalid pin 43 (w/o test emitter)', function (done) {
 
         if(os.arch() !== 'arm'){
@@ -851,7 +719,7 @@ describe('\nset test stats ...', function() {
 
         let eventName = 'gpio-Output' + device.id + 43;
 
-        let callback = function (err, gpio){}
+        let callback = function (gpio){}
 
         try{
         	device.setGpio({mode:'output', pin:43}, callback );
@@ -875,10 +743,9 @@ describe('\nset test stats ...', function() {
 			  let eventName = 'gpio-Output' + device.id + 41;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){
             assert.strictEqual( gpio, null );
-            assert.strictEqual( err.message, 'invalid pin ' + 41 );
           	done();count++;
           }
         }
@@ -905,7 +772,7 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Output' + device.id + 35;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
           if(count === 0){
           	done();count++;
           }
@@ -927,7 +794,7 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Output' + device.id + 33;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
          	assert.strictEqual( typeof gpio, 'object' );
           if(count === 0){
             assert.strictEqual( gpio.state, true );
@@ -951,7 +818,7 @@ describe('\nset test stats ...', function() {
         let eventName = 'gpio-Output' + device.id + 33;
 
         let count = 0; 
-        let callback = function (err, gpio){
+        let callback = function (gpio){
          	assert.strictEqual( typeof gpio, 'object' );
           if(count === 0){
             assert.strictEqual( gpio.state, false );
@@ -976,8 +843,7 @@ describe('\nset test stats ...', function() {
         assert.strictEqual( typeof device, 'object' );
 
         // callback should not be invoked
-        let callback = function (err, gpio){
-          assert.strictEqual( err, 'invalid test' );
+        let callback = function (gpio){
           assert.strictEqual( gpio, 'invalid test' );          
         };
 
@@ -1221,35 +1087,6 @@ describe('\nset test stats ...', function() {
         }, dl);
       });
     });
-    describe('Invoking internal channel object method properties', function () {
-      it('should process the channel object method properties ...', function (done) {
-
-        const { device } = require('../lib/client.js');
-        /*let channel = {
-          deviceEnableEventWatch: deviceEnableEventWatch,
-          getChannelDataEvent: getChannelDataEvent,
-          deviceWatchChannelData: deviceWatchChannelData,
-          deviceSuspendEventWatch: deviceSuspendEventWatch,
-        };
-        */
-        let rxd = {id:100, src:'client', channel:true, dst:'device', name:'test-channel', value:'test'};
-
-        setTimeout(function(){
-          assert.strictEqual(typeof device.channel, 'object'); 
-          assert.strictEqual(typeof device.channel.deviceEnableEventWatch, 'function');
-          assert.strictEqual(typeof device.channel.getChannelDataEvent, 'function');
-          assert.strictEqual(typeof device.channel.deviceWatchChannelData, 'function');
-          assert.strictEqual(typeof device.channel.deviceSuspendEventWatch, 'function'); //deviceSuspendEventWatch
-
-          device.channel.deviceEnableEventWatch(rxd);
-          device.channel.getChannelDataEvent(rxd);
-          device.channel.deviceWatchChannelData(rxd);
-          device.channel.deviceSuspendEventWatch(rxd);
-          done();
-
-        }, dl);
-      });
-    });
     describe('Invoking internal resources object method properties', function () {
       it('should process the resources object method properties ...', function (done) {
 
@@ -1265,11 +1102,9 @@ describe('\nset test stats ...', function() {
         */
         let args = {id:100, src:'client', channel:true, dst:'device', name:'test-channel', value:'test'};
 
-        let cb = (err, data) => {
-          if(err){
-            return console.log('===> err', err);
-          }  
+        let cb = (data) => {
           console.log('===> data', data);
+          done();
         };  
 
         setTimeout(function(){
