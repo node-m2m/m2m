@@ -1,9 +1,9 @@
 {
   "name": "m2m",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "m2m is a client module for machine-to-machine communication system framework node-m2m.",
   "dependencies": {
-    "colors": "^1.4.0",
+    "colors": "1.4.0",
     "inquirer": "^8.1.2",
     "ws": "^8.2.0"
   },
@@ -31,10 +31,10 @@
     "bcm2835",
     "gpio",
     "pi",
+    "iot",
+    "rpi",
     "raspberry",
-    "raspberrypi",
     "raspberry pi",
-    "raspberry pi 3",
     "rpi",
     "rpio",
     "onoff",
@@ -42,17 +42,20 @@
     "i2c",
     "spi",
     "m2m",
-    "iot",
     "aws",
     "faas",
     "telematics",
     "industry 4.0",
     "telemetry",
     "SCADA",
+    "remote",
+    "automation",  
     "remote control",
     "node-m2m",
-    "machine-to-machine",
     "microservices",
+    "distributed-systems",
+    "pub-sub",
+    "machine-to-machine",
     "industrial control system"
   ]
 }
