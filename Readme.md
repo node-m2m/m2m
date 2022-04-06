@@ -7,9 +7,9 @@ m2m is a lightweight real-time communication library for developing client-serve
 
 It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a lot more.
 
-Deploy private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. 
+Deploy private servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. 
 
-Your servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
+Device servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
 
 Create *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources and services on your remote devices for client consumption.
 
