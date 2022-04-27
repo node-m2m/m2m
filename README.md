@@ -11,8 +11,7 @@
 
 <br>
 
-
-### [API Reference](https://github.com/EdAlegrid/m2m-api)
+[API Reference](https://github.com/EdAlegrid/m2m-api)
 
 ---
 <br>
