@@ -1,5 +1,5 @@
 # M2M Quick Tour
-   1. [Client-Server](#1-.-client-server)
+   1. [Client-Server](#1.-client-server)
    2. [Using a Browser Client](#browser-client)
    3. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
    4. [Monitor Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/cpp-ipc-application-demo)
