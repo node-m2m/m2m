@@ -17,7 +17,7 @@ Access to clients and devices is restricted to authenticated and authorized user
 
 To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
-Start your first m2m application from the [quick tour](https://github.com/EdAlegrid/m2m-quicktour) guide.
+Start developing m2m application using the [quick tour](https://github.com/Node-M2M/M2M-Quicktour) guide.
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
