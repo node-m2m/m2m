@@ -25,7 +25,7 @@ Start developing m2m applications using the [quick tour](https://github.com/Node
 1. [Supported Platform](#supported-platform)
 2. [Node.js version requirement](#nodejs-version-requirement)
 3. [Installation](#installation)
-4. [Quick Tour](https://github.com/EdAlegrid/m2m-quicktour)
+4. [Quick Tour](https://github.com/Node-M2M/M2M-Quicktour)
    <!--1. [Capturing and Watching Data](#capturing-and-watching-data)
    2. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
