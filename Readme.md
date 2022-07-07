@@ -36,7 +36,7 @@ Start developing m2m applications using the [quick tour](https://github.com/Node
    * [Enable Application Auto Restart](#application-auto-restart)
    * [Automatic Configuration for Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
    * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
-7. [API](https://github.com/EdAlegrid/m2m-api)
+7. [API](https://github.com/Node-M2M/M2M-API) 
 ## Supported Platform
 
 * Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
