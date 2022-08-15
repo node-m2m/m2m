@@ -15,7 +15,7 @@ Create *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources and s
 
 <table>
 <tr>
-<th align="center">
+<th align="left">
 <img width="441" height="1">
 <p> 
 <small>
@@ -23,7 +23,7 @@ Client
 </small>
 </p>
 </th>
-<th align="center">
+<th align="left">
 <img width="441" height="1">
 <p> 
 <small>
@@ -41,8 +41,9 @@ const m2m = require('m2m')
 let client = new m2m.Client()
 
 client.connect(() => {
-  client.subscribe({id:100, channel:'random-number'}, (data) => {
-    console.log('getData random-number', data) // 97
+  client.subscribe({id:100, channel:'random-number'}, 
+  (data) => {
+    console.log('random-number', data) // 97
   })
 })
 
@@ -66,10 +67,10 @@ device.connect(() => {
 </td>
 </tr>
 <tr>
-<td align="center">
+<td align="left">
 <!-- Column 1 -->
 </td>
-<td align="center">
+<td align="left">
 <!--Column 2-->
 </td>
 </tr>
@@ -77,7 +78,7 @@ device.connect(() => {
 
 <table>
 <tr>
-<th align="center">
+<th align="left">
 <img width="441" height="1">
 <p> 
 <small>
@@ -85,7 +86,7 @@ Client
 </small>
 </p>
 </th>
-<th align="center">
+<th align="left">
 <img width="441" height="1">
 <p> 
 <small>
@@ -105,8 +106,8 @@ let client = new m2m.Client()
 client.connect(() => {
   // turn on device 200
   client.output({id:200, pin:33}).on();
-  // turn off after 2 secs
-  client.output({id:200, pin:33}).off(2000);
+  // turn off after 3 secs
+  client.output({id:200, pin:33}).off(3000);
 })
 ```
   
