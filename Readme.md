@@ -13,6 +13,131 @@ Device servers will be instantly available and accessible through its user-assig
 
 Create *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources and services on your remote devices for client consumption.
 
+<table>
+<tr>
+<th align="center">
+<img width="441" height="1">
+<p> 
+<small>
+Client
+</small>
+</p>
+</th>
+<th align="center">
+<img width="441" height="1">
+<p> 
+<small>
+Device
+</small>
+</p>
+</th>
+</tr>
+<tr>
+<td>
+
+```js
+const m2m = require('m2m')
+
+let client = new m2m.Client()
+
+client.connect(() => {
+  client.subscribe({id:100, channel:'random-number'}, (data) => {
+    console.log('getData random-number', data) // 97
+  })
+})
+
+```
+</td>
+<td>
+
+```js
+const m2m = require('m2m')
+
+let device = new m2m.Device(100)
+
+device.connect(() => {
+  device.publish('random-number', (data) => {
+    let rn = Math.floor(Math.random() * 100)
+    data.send(rn) // 97
+  });
+ }) 
+```
+  
+</td>
+</tr>
+<tr>
+<td align="center">
+<!-- Column 1 -->
+</td>
+<td align="center">
+<!--Column 2-->
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<th align="center">
+<img width="441" height="1">
+<p> 
+<small>
+Client
+</small>
+</p>
+</th>
+<th align="center">
+<img width="441" height="1">
+<p> 
+<small>
+Device (Raspberry Pi)
+</small>
+</p>
+</th>
+</tr>
+<tr>
+<td>
+
+```js
+const m2m = require('m2m')
+
+let client = new m2m.Client()
+
+client.connect(() => {
+  // turn on device 200
+  client.output({id:200, pin:33}).on();
+  // turn off after 2 secs
+  client.output({id:200, pin:33}).off(2000);
+})
+```
+  
+</td>
+<td>
+
+```js
+const m2m = require('m2m')
+
+let device = new m2m.Device(200)
+
+device.connect(() => {
+  // set gpio pin 33 as output
+  device.setGpio({mode:'output', pin:33})
+})
+
+
+```
+  
+</td>
+</tr>
+<tr>
+<td align="center">
+<!-- Column 1 -->
+</td>
+<td align="center">
+<!--Column 2-->
+</td>
+</tr>
+</table>
+
 Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
 To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
@@ -31,12 +156,17 @@ Start developing m2m applications using the [quick tour](https://github.com/Node
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
    4. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
    5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)-->
-6. [Using the Browser Interface](#using-the-browser-interface)
-   * [Enable Application Code Editing](#remote-application-code-editing)
-   * [Enable Application Auto Restart](#application-auto-restart)
-   * [Automatic Configuration for Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
-   * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
-7. [API](https://github.com/Node-M2M/M2M-API) 
+- [m2m](#m2m)
+- [Table of contents](#table-of-contents)
+  - [Supported Platform](#supported-platform)
+  - [Node.js version requirement](#nodejs-version-requirement)
+  - [Installation](#installation)
+    - [Raspberry Pi peripheral access (GPIO, I2C, SPI and PWM). <a name="rpi-peripheral-access"></a>](#raspberry-pi-peripheral-access-gpio-i2c-spi-and-pwm-)
+  - [Using the Browser Interface](#using-the-browser-interface)
+    - [Remote Application Code Editing](#remote-application-code-editing)
+    - [Application Auto Restart](#application-auto-restart)
+  - [Code Edit and Auto Restart Automatic Configuration](#code-edit-and-auto-restart-automatic-configuration)
+    - [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
 ## Supported Platform
 
 * Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
