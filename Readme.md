@@ -143,7 +143,7 @@ Access to clients and devices is restricted to authenticated and authorized user
 
 To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
-Start developing m2m applications using the [quick tour](https://github.com/Node-M2M/M2M-Quicktour) guide.
+Start your first m2m application from the [quick tour](https://github.com/EdAlegrid/m2m-quicktour) guide.
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
@@ -157,17 +157,12 @@ Start developing m2m applications using the [quick tour](https://github.com/Node
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
    4. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
    5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)-->
-- [m2m](#m2m)
-- [Table of contents](#table-of-contents)
-  - [Supported Platform](#supported-platform)
-  - [Node.js version requirement](#nodejs-version-requirement)
-  - [Installation](#installation)
-    - [Raspberry Pi peripheral access (GPIO, I2C, SPI and PWM). <a name="rpi-peripheral-access"></a>](#raspberry-pi-peripheral-access-gpio-i2c-spi-and-pwm-)
-  - [Using the Browser Interface](#using-the-browser-interface)
-    - [Remote Application Code Editing](#remote-application-code-editing)
-    - [Application Auto Restart](#application-auto-restart)
-  - [Code Edit and Auto Restart Automatic Configuration](#code-edit-and-auto-restart-automatic-configuration)
-    - [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
+6. [Using the Browser Interface](#using-the-browser-interface)
+   * [Enable Application Code Editing](#remote-application-code-editing)
+   * [Enable Application Auto Restart](#application-auto-restart)
+   * [Automatic Configuration for Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
+   * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
+7. [API](https://github.com/Node-M2M/M2M-API)
 ## Supported Platform
 
 * Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
