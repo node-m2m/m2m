@@ -157,8 +157,8 @@ Start your first m2m application from the [quick tour](https://github.com/EdAleg
    3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
    4. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
    5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)-->
-6. [Using the Browser Interface](#using-the-browser-interface)
-   <!-- * [Enable Application Code Editing](#remote-application-code-editing)
+<!--6. [Using the Browser Interface](#using-the-browser-interface)
+   * [Enable Application Code Editing](#remote-application-code-editing)
    * [Enable Application Auto Restart](#application-auto-restart) -->
    * [Automatic Configuration for Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
    * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
