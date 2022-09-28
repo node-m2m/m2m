@@ -152,17 +152,18 @@ Start your first m2m application from the [quick tour](https://github.com/EdAleg
 2. [Node.js version requirement](#nodejs-version-requirement)
 3. [Installation](#installation)
 4. [Quick Tour](https://github.com/Node-M2M/M2M-Quicktour)
-   <!--1. [Capturing and Watching Data](#capturing-and-watching-data)
-   2. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
-   3. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
-   4. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
-   5. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)-->
-<!--6. [Using the Browser Interface](#using-the-browser-interface)
+5. [API](https://github.com/Node-M2M/M2M-API)
+<!--6. [Capturing and Watching Data](#capturing-and-watching-data)
+   7. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
+   8. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
+   9. [m2m integration with http web application](https://github.com/EdAlegrid/m2m-web-application-demo)
+   10. [m2m integration with websocket  application](https://github.com/EdAlegrid/m2m-websocket-application-demo)-->
+<!--11. [Using the Browser Interface](#using-the-browser-interface)
    * [Enable Application Code Editing](#remote-application-code-editing)
-   * [Enable Application Auto Restart](#application-auto-restart) -->
+   * [Enable Application Auto Restart](#application-auto-restart) 
    * [Automatic Configuration for Code Editing and Auto Restart](#code-edit-and-auto-restart-automatic-configuration)
-   * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes)
-7. [API](https://github.com/Node-M2M/M2M-API)
+   * [Naming your Client Application for Tracking Purposes](#naming-your-client-application-for-tracking-purposes) -->
+
 ## Supported Platform
 
 * Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
