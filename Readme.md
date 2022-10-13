@@ -91,6 +91,8 @@ Client
 <p> 
 <small>
 Device (Raspberry Pi)
+<small>
+Device (Raspberry Pi)
 </small>
 </p>
 </th>
@@ -113,8 +115,8 @@ client.connect(() => {
   
 </td>
 <td>
+
 ```js
-  
 const m2m = require('m2m')
 
 let device = new m2m.Device(200)
@@ -123,7 +125,6 @@ device.connect(() => {
   // set gpio pin 33 as output
   device.setGpio({mode:'output', pin:33})
 })
-
 
 ```
   
