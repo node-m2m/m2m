@@ -125,6 +125,7 @@ device.connect(() => {
   // set gpio pin 33 as output
   device.setGpio({mode:'output', pin:33})
 })
+  
 
 ```
   
