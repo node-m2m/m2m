@@ -105,15 +105,14 @@ let client = new m2m.Client()
 
 client.connect(() => {
   // turn on device 200
-  client.output({id:200, pin:33}).on();
+  client.output({id:200, pin:33}).on()
   // turn off after 3 secs
-  client.output({id:200, pin:33}).off(3000);
+  client.output({id:200, pin:33}).off(3000)
 })
 ```
   
 </td>
 <td>
-
 ```js
 const m2m = require('m2m')
 
