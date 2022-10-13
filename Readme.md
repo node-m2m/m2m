@@ -114,6 +114,7 @@ client.connect(() => {
 </td>
 <td>
 ```js
+  
 const m2m = require('m2m')
 
 let device = new m2m.Device(200)
