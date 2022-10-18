@@ -9,7 +9,7 @@ Your application will be composed of two or more independent service modules run
 
 Deploy private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. 
 
-Your device servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
+Your device servers will be instantly available and accessible through its user-assigned *device id* from your client applications from anywhere.
 
 Create *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources and services on your remote devices for client consumption.
 
