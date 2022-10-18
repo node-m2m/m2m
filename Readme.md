@@ -3,143 +3,15 @@
 [![Version npm](https://img.shields.io/npm/v/m2m.svg?logo=npm)](https://www.npmjs.com/package/m2m)
 ![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
 
-m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com). Your application will be composed of two or more independent service modules running on their own processes similar to microservices pattern. 
+m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-It uses a FaaS (Function-as-a-Service) API also called *serverless* allowing anyone to easily create, prototype and test applications in IoT, telematics, data acquisition, process automation and a lot more.
+Your application will be composed of two or more independent service modules running on their own processes similar to microservices pattern. 
 
 Deploy private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. 
 
 Your device servers will be instantly available and accessible through its user-assigned *device id* from your client applications.
 
 Create *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources and services on your remote devices for client consumption.
-
-<table>
-<tr>
-<th align="left">
-<img width="441" height="1">
-<p> 
-<small>
-Client
-</small>
-</p>
-</th>
-<th align="left">
-<img width="441" height="1">
-<p> 
-<small>
-Device
-</small>
-</p>
-</th>
-</tr>
-<tr>
-<td>
-
-```js
-const m2m = require('m2m')
-
-let client = new m2m.Client()
-
-client.connect(() => {
-  client.subscribe({id:100, channel:'random-number'}, 
-  (data) => {
-    console.log('random-number', data) // 97
-  })
-})
-
-```
-</td>
-<td>
-
-```js
-const m2m = require('m2m')
-
-let device = new m2m.Device(100)
-
-device.connect(() => {
-  device.publish('random-number', (data) => {
-    let rn = Math.floor(Math.random() * 100)
-    data.send(rn) // 97
-  });
- }) 
-```
-  
-</td>
-</tr>
-<tr>
-<td align="left">
-<!-- Column 1 -->
-</td>
-<td align="left">
-<!--Column 2-->
-</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<th align="left">
-<img width="441" height="1">
-<p> 
-<small>
-Client
-</small>
-</p>
-</th>
-<th align="left">
-<img width="441" height="1">
-<p> 
-<small>
-Device (Raspberry Pi)
-<small>
-Device (Raspberry Pi)
-</small>
-</p>
-</th>
-</tr>
-<tr>
-<td>
-
-```js
-const m2m = require('m2m')
-
-let client = new m2m.Client()
-
-client.connect(() => {
-  // turn on device 200
-  client.output({id:200, pin:33}).on()
-  // turn off after 3 secs
-  client.output({id:200, pin:33}).off(3000)
-})
-```
-  
-</td>
-<td>
-
-```js
-const m2m = require('m2m')
-
-let device = new m2m.Device(200)
-
-device.connect(() => {
-  // set gpio pin 33 as output
-  device.setGpio({mode:'output', pin:33})
-})
-  
-
-```
-  
-</td>
-</tr>
-<tr>
-<td align="center">
-<!-- Column 1 -->
-</td>
-<td align="center">
-<!--Column 2-->
-</td>
-</tr>
-</table>
 
 Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
