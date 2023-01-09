@@ -5,7 +5,13 @@
 
 m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-Your application will be composed of two or more independent service modules running on their own processes similar to microservices pattern. 
+Connect two machines or endpoints instantly from anywhere around the world using a client-server or publish-subscribe communication model.
+<br> 
+The endpoints by default are accessible from the cloud and communicates with each other through the internet. 
+<br>
+They can be easily configured as edge devices communicating through a local network for a super-fast low latency edge computing environment.
+<br>
+Its api-driven and software defined computing environment makes it easy to define any communication routes and switch accordingly depending on your application and business requirements.  <!--business requirements.-->
 
 Deploy private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. 
 
