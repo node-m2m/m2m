@@ -6,22 +6,25 @@
 m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
 Connect two machines or endpoints instantly from anywhere around the world using a client-server or publish-subscribe communication model.
-<br> 
 The endpoints by default are accessible from the cloud and communicates with each other through the internet. 
-<br>
+
 They can be easily configured as edge devices communicating through a local network for a super-fast low latency edge computing environment.
-<br>
+
 Its api-driven and software defined computing environment makes it easy to define any communication routes and switch accordingly depending on your application and business requirements.  <!--business requirements.-->
 
-Deploy private device servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise physical servers. 
+Deploy on-premise private servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise edge servers. 
+Your m2m endpoints are instantly available and accessible through its user-assigned *device id* from anywhere.
 
-Create *Channel*, *HTTP* and *GPIO* ( for Raspberry Pi devices ) resources on your remote devices for client consumption.
+Access to endpoints is restricted to authenticated and authorized users only. All communications traffic between endpoints are fully encrypted using TLS.
 
-Your device servers will be instantly available and accessible through its user-assigned *device id* from anywhere.
+Easily create secure applications in industrial IoT, factory automation, distributed systems, workflow orchestration and many others.
+Capture sensor data, control machines, send alerts, check warehouse inventory, diagnose equipments, access data from anywhere for analytics and more. 
+Setup a resilient private backbone communications infrastructure complementing your organization's existing distributed communications systems. 
 
-Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
+You can deploy your applications on-premises, bare-metal, containerized or deploy them in the cloud for a global distributed systems.
+Quickly provision any device, machine or computer node as part of your organizations's digital transformation.
 
-To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
+To use this library, users need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
 Start your first m2m application from the [quick tour](https://github.com/Node-M2M/M2M-Quicktour) guide.
 
