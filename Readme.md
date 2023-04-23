@@ -5,26 +5,17 @@
 
 m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-Connect two machines or endpoints instantly from anywhere around the world using a client-server or publish-subscribe communication model.
-The endpoints by default are accessible from the cloud and communicates with each other through the internet. 
+Connect two machines or any endpoints instantly from anywhere communicating through the internet in real-time.
 
-They can be easily configured as edge devices communicating through a local network for a super-fast low latency edge computing environment.
+Your device servers will be instantly available and accessible through its user-assigned *device id*.
 
-Its api-driven and software defined computing environment makes it easy to define any communication routes and switch accordingly depending on your application and business requirements.  <!--business requirements.-->
+Configure the endpoints as edge devices communicating through a local area network for a super-fast low latency edge computing environment.
 
-Deploy on-premise private servers on the fly from anywhere without the usual heavy infrastructure involved in provisioning an on-premise edge servers. 
-Your m2m endpoints are instantly available and accessible through its user-assigned *device id* from anywhere.
+Its api-driven and software defined computing environment makes it easy to define any communication paths and switch accordingly depending on your application requirements.
 
-Access to endpoints is restricted to authenticated and authorized users only. All communications traffic between endpoints are fully encrypted using TLS.
+Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
 
-Easily create secure applications in industrial IoT, factory automation, distributed systems, workflow orchestration and many others.
-Capture sensor data, control machines, send alerts, check warehouse inventory, diagnose equipments, access data from anywhere for analytics and more. 
-Setup a resilient private backbone communications infrastructure complementing your organization's existing distributed communications systems. 
-
-You can deploy your applications on-premises, bare-metal, containerized or deploy them in the cloud for a global distributed systems.
-Quickly provision any device, machine or computer node as part of your organizations's digital transformation.
-
-To use this library, users need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
+To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
 Start your first m2m application from the [quick tour](https://github.com/Node-M2M/M2M-Quicktour) guide.
 
@@ -35,7 +26,7 @@ Start your first m2m application from the [quick tour](https://github.com/Node-M
 2. [Node.js version requirement](#nodejs-version-requirement)
 3. [Installation](#installation)
 4. [Quick Tour](https://github.com/Node-M2M/M2M-Quicktour)
-5. [API](https://github.com/Node-M2M/M2M-API)
+<!--5. [API](https://github.com/Node-M2M/M2M-API)-->
 <!--6. [Capturing and Watching Data](#capturing-and-watching-data)
    7. [Raspberry Pi Remote Control](#raspberry-pi-remote-control)
    8. [Capturing Data from Remote C/C++ Application through IPC (inter-process communication)](https://github.com/EdAlegrid/m2m-ipc-application-demo)
