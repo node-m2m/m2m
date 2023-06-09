@@ -1,12 +1,13 @@
 {
   "name": "m2m",
-  "version": "2.1.4",
-  "description": "m2m is a client module for machine-to-machine communication system framework node-m2m.",
+  "version": "2.3.2",
+  "description": "m2m is a client module for machine-to-machine communication framework node-m2m for cloud and edge computing.",
   "dependencies": {
-    "colors": "1.4.0",
-    "inquirer": "^8.1.2",
-    "ws": "^8.2.0",
-    "ip": "^1.1.8"
+    "ws": "^8.13.0",
+    "inquirer": "^8.2.5",
+    "node-edge": "^1.4.3",
+    "ip": "^1.1.8",
+    "colors": "1.4.0"
   },
   "devDependencies": {
     "mocha": "^9.1.0",
@@ -45,6 +46,7 @@
     "m2m",
     "aws",
     "faas",
+    "dcs",
     "telematics",
     "industry 4.0",
     "telemetry",
@@ -56,6 +58,7 @@
     "microservices",
     "distributed-systems",
     "pub-sub",
+    "client-server",
     "machine-to-machine",
     "industrial control system"
   ]
