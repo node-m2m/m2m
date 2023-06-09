@@ -5,15 +5,15 @@
 
 m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-Connect two machines or any endpoints instantly from anywhere communicating through the internet in real-time.
+Connect two machines or any endpoints instantly from anywhere communicating through the internet, WAN or LAN in near real-time.
 
 Your device servers will be instantly available and accessible through its user-assigned *device id*.
 
 Configure the endpoints as edge devices communicating through a local area network for a super-fast low latency edge computing environment.
 
-Its api-driven and software defined computing environment makes it easy to define any communication paths and switch accordingly depending on your application requirements.
+Its api-driven and software defined computing environment makes it easy to define any communication path and switch accordingly based on the application demands.
 
-Access to clients and devices is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS.
+Access to endpoints is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS and a combination of standard public and private encryption methods.
 
 To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
