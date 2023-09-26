@@ -3,17 +3,19 @@
 [![Version npm](https://img.shields.io/npm/v/m2m.svg?logo=npm)](https://www.npmjs.com/package/m2m)
 ![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
 
-m2m is a lightweight real-time communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
+m2m is a lightweight communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
 
-Connect two machines or any endpoints instantly from anywhere communicating through the internet, WAN or LAN in near real-time.
+Connect two machines or any endpoints instantly from anywhere communicating through the internet, WAN or LAN in real-time.
 
-Your device servers will be instantly available and accessible through its user-assigned *device id*.
+Create m2m applications where clients can instantly access device servers through its user-assigned *device id* traversing the internet using http/websocket.
 
-Configure the endpoints as edge devices communicating through a local area network for a super-fast low latency edge computing environment.
+Create edge applications where devices communicate with each other through a private *ip address* using tcp traversing local area network for a super-fast low latency edge computing environment.
 
-Its api-driven and software defined computing environment makes it easy to define any communication path and switch accordingly based on the application demands.
+Its api-driven and software defined computing environment makes it easy to create any communication path on-demand based on your application needs.
 
-Access to endpoints is restricted to authenticated and authorized users only. All communications traffic between clients and devices are fully encrypted using TLS and a combination of standard public and private encryption methods.
+Access to endpoints is restricted to authenticated and authorized users only. 
+
+All communication traffic between endpoint devices are fully encrypted using TLS or a combination of standard public and private encryptions.
 
 To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
