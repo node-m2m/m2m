@@ -1,11 +1,11 @@
 {
   "name": "m2m",
-  "version": "2.4.0",
+  "version": "2.4.2",
   "description": "m2m is a client module for machine-to-machine communication framework node-m2m for cloud and edge computing.",
   "dependencies": {
     "ws": "^8.16.0",
     "inquirer": "^8.2.6",
-    "node-edge": "^1.4.7",
+    "node-edge": "^1.4.9",
     "ip": "^1.1.8",
     "colors": "1.4.0"
   },
