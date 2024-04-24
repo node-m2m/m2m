@@ -1,6 +1,6 @@
 {
   "name": "m2m",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "m2m is a client module for machine-to-machine communication framework node-m2m for cloud and edge computing.",
   "dependencies": {
     "ws": "^8.16.0",
@@ -22,17 +22,14 @@
     "email": "ealegrid@node-m2m.com"
   },
   "keywords": [
-    "bcm2835",
+    "plc",
     "edge",
     "edge-computing",
     "cloud-computing",  
     "gpio",
     "pi",
     "iot",
-    "raspberry",
     "raspberry pi",
-    "rpio",
-    "onoff",
     "m2m",
     "aws",
     "dcs",
@@ -46,6 +43,7 @@
     "node-m2m",
     "microservices",
     "distributed-systems",
+    "distributed-control-systems",
     "pub-sub",
     "client-server",
     "machine-to-machine",
