@@ -11,7 +11,7 @@ Create *m2m applications* where endpoints distributed around the globe communica
 
 Create *edge applications* where endpoints communicate through local area networks using tcp or udp protocol for a super-fast low latency edge computing environment.
 
-Its simple api and software-defined computing environment makes it easy to create any applications requiring a secure dynamic networking path that can traverse any regional boundaries using the public internet and private LANs.
+Its simple api and software-defined computing environment makes it easy to create any applications requiring a secure dynamic networking path that can traverse any regional boundaries.
 
 Access to endpoints is restricted to authenticated and authorized users only ensuring a secure endpoint access (SEA) everytime.
 
