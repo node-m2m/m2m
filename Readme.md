@@ -3,7 +3,7 @@
 [![Version npm](https://img.shields.io/npm/v/m2m.svg?logo=npm)](https://www.npmjs.com/package/m2m)
 ![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
 
-m2m is a lightweight communication library for developing client-server or pub-sub applications using the machine-to-machine framework [node-m2m](https://www.node-m2m.com).
+m2m is a node.js communication library for developing client-server or pub-sub applications using the machine-to-machine and edge framework [node-m2m](https://www.node-m2m.com).
 
 Instantly connect machines or endpoints from anywhere communicating through the internet, WAN or LAN in real-time.
 
