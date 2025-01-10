@@ -5,17 +5,15 @@
 
 m2m is a node.js communication library for developing client-server or pub-sub applications using the machine-to-machine and edge framework [node-m2m](https://www.node-m2m.com).
 
-Instantly connect machines or endpoints from anywhere communicating through the internet, WAN or LAN in real-time.
+Its simple api and software-defined computing environment makes it easy to create any distributed applications requiring a secure networking path that can traverse any regional and local area network boundaries using the public internet and private LANs.
 
 Create *m2m applications* where endpoints distributed around the globe communicate and exchange data traversing the internet/WAN using a combination of http and websocket protocol.
 
 Create *edge applications* where endpoints communicate through local area networks using tcp or udp protocol for a super-fast low latency edge computing environment.
 
-Its simple api and software-defined computing environment makes it easy to create any applications requiring a secure dynamic networking path that can traverse any regional boundaries.
+Access to endpoints is restricted to authenticated and authorized users only.
 
-Access to endpoints is restricted to authenticated and authorized users only ensuring a secure endpoint access (SEA) everytime.
-
-All communications traffic between endpoint devices are fully encrypted using TLS or a combination of standard public and private encryptions based on NIST.
+All communications traffic between endpoints are encrypted using TLS or hybrid encryption based on NIST.
 
 To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
