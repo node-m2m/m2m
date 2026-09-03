@@ -11,7 +11,7 @@ Create *distributed cloud applications* where endpoints distributed around the g
 
 Create *distributed edge applications* where endpoints communicate through local area networks using tcp or udp protocol for a super-fast low latency edge computing environment.
 
-Combining *cloud* and *edge* distributed communications pattern in your application is seamless unlocking an unlimited potential on what you can do to meet your business goals.    
+Combining *cloud* and *edge* distributed systems is seamless using node-m2m unlocking an unlimited potential on what you can do to meet your business goals.    
 
 Access to endpoints is restricted to authenticated and authorized users only.
 
