@@ -11,7 +11,7 @@ Create *distributed cloud applications* where endpoints distributed around the g
 
 Create *distributed edge applications* where endpoints communicate through local area networks using tcp or udp protocol for a super-fast low latency edge computing environment.
 
-Combining *cloud* and *edge* distributed systems is seamless using node-m2m unlocking an unlimited potential on what you can do to meet your business goals.    
+Combining cloud and edge computing creates a powerful hybrid architecture where the edge handles immediate, real-time actions and the cloud manages long-term data storage, heavy analytics, and model training.
 
 Access to endpoints is restricted to authenticated and authorized users only.
 
@@ -19,7 +19,7 @@ All communications traffic between endpoints are encrypted using TLS or hybrid e
 
 To use this library, users will need to <a href="https://www.node-m2m.com/m2m/account/create" target="_blank">register</a> with node-m2m.
 
-Start your first distributed m2m application from the [quick tour](https://github.com/Node-M2M/M2M-Quicktour) guide.
+Start your first distributed m2m applications from the [quick tour](https://github.com/Node-M2M/M2M-Quicktour) guide.
 
 [](https://raw.githubusercontent.com/EdoLabs/src/master/m2mSystem2.svg?sanitize=true)
 
@@ -31,14 +31,13 @@ Start your first distributed m2m application from the [quick tour](https://githu
 
 ## Supported Platform
 
-* Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
 * Linux
 * Windows
 * Mac
 
 ## Node.js version requirement
 
-* Node.js versions: Ideally the latest LTS version.
+* Node.js version: Ideally the latest LTS version.
 
 ## Installation
 ```js
